@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:id="@+id/FrameLayout">
+
+    <ImageView
+        android:id="@+id/BackGround"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/blank" 
+        android:scaleType="center"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/blank"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <ImageView
+                android:id="@+id/clockView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/blank" 
+                android:scaleType="center"/>
+
+            <ImageView
+                android:id="@+id/ampmView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/clockView"
+                android:src="@drawable/blank" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/dateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@drawable/blank" 
+                android:scaleType="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/SettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/blank"
+        android:padding="10dp" />
+
+</FrameLayout>

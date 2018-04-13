@@ -1,0 +1,21 @@
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 17
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+        applicationId "com.sd.sddigiclock"
+        minSdkVersion 17
+        targetSdkVersion 12
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+}

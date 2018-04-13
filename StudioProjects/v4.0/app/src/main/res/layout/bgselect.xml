@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:id="@+id/BGSscrollview">
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:id="@+id/BGselect0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/LinearLayout06"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blank" android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/time" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivCB0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:src="@drawable/checkbox" android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/BGselect1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/LinearLayout04"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clearbg" >
+
+                <ImageView
+                    android:id="@+id/ImageView08"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/time" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivCB1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:paddingLeft="20dp"
+                android:src="@drawable/checkedbox" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/BGselect2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp" android:layout_gravity="center_horizontal">
+
+            <LinearLayout
+                android:id="@+id/LinearLayout01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/icsblue" >
+
+                <ImageView
+                    android:id="@+id/ImageView01"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/time" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivCB2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="20dp"
+                android:src="@drawable/checkbox" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/BGSelect3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp" android:layout_gravity="center_horizontal">
+
+            <LinearLayout
+                android:id="@+id/LinearLayout03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/stock" >
+
+                <ImageView
+                    android:id="@+id/ImageView02"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/time" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivCB3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="20dp"
+                android:src="@drawable/checkbox" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

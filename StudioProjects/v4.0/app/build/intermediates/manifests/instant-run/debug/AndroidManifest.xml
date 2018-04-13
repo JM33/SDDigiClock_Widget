@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sd.sddigiclock"
+    android:versionCode="4"
+    android:versionName="4.0" >
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="12" />
+
+    <application
+        android:debuggable="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:testOnly="true" >
+        <activity
+            android:name="com.sd.sddigiclock.DigiClockPrefs"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="com.sd.sddigiclock.DigiClockProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
+
+        <service android:name="com.sd.sddigiclock.UpdateWidgetService" />
+
+        <provider
+            android:name="com.android.tools.ir.server.InstantRunContentProvider"
+            android:authorities="com.sd.sddigiclock.com.android.tools.ir.server.InstantRunContentProvider"
+            android:multiprocess="true" />
+    </application>
+
+</manifest>

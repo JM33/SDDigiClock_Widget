@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">SD Digiclock</string>
+
+    <string name="p_Title">DigiClock Settings</string> 
+    
+    <string name="p_clock_title">Clock Settings</string>
+    <string name="p_clock_color">Clock Text Color</string>
+    <string name="p_clock_size">Clock Text Size</string>
+    <string name="p_date_title">Date Settings</string>
+    <string name="p_date_color">Date Text Color</string>
+    <string name="p_date_size">Date Text Size</string>
+    <string name="p_date_format">Date Format</string>
+    <string name="p_military">24 Hour Time</string>
+    <string name="p_show_date">Show Date</string>
+    <string name="p_show_ampm">Show AM/PM</string>
+    <string name="p_choose_bg">Choose Background</string>
+    <string name="p_bg_fill_title">Fill background</string>
+    <string name="p_bg_fill_sum_on">The background will fill widget\'s cells</string>
+    <string name="p_bg_fill_sum_off">The background will wrap the text</string>
+    
+    <string name="bgs_ok">OK</string>
+    <string name="bgs_title">Choose Background</string>
+    
+    <string name="p_save">Save</string>
+    <string name="p_cancel">Cancel</string>
+    <string name="hello">hello</string>
+
+    <string name="fontcustom">Custom</string>
+    <string name="fontdefault">Default</string>
+    <string name="chantilli_aqua">Chantilli</string>
+    <string name="roboto">Roboto</string>
+    <string name="robotofont">Roboto</string>
+    <string name="droidsans">Droid Sans</string>
+    <string name="droidserif">Droid Serif</string>
+    
+    <string name="bytes">256 Bytes</string>
+    <string name="brushstroke">Brush Stroke</string>
+    <string name="carbon">Carbon</string>
+    <string name="dist_galaxy">Distant Galaxy</string>
+    <string name="good_times">Good Times</string>
+    <string name="jester">Jester</string>
+    <string name="komika">Komika</string>
+    <string name="olde_english">Olde English</string>
+    <string name="weezer">Weezer</string>
+    <string name="custom_color">Custom Color</string>
+    <string name="digital">Digital</string>
+
+    <string name="p_dateformat_MMMMDD">January 23</string>
+    <string name="p_dateformat_MMDD">Jan 23</string>
+    <string name="p_dateformat_MM_DD">01-23</string>
+    <string name="p_dateformat_DD_MM">23-01</string>
+
+    <string name="p_dateformat_DAY_MMMMDD">Tuesday January 23</string>
+    <string name="p_dateformat_DAY_MMDD">Tuesday Jan 23</string>
+    <string name="p_dateformat_DAY_MM_DD">Tuesday 01-23</string>
+    <string name="p_dateformat_DAY_DD_MM">Tuesday 23-01</string>
+
+    <string name="p_dateformat_DY_MMMMDD">Tue January 23</string>
+    <string name="p_dateformat_DY_MMDD">Tue Jan 23</string>
+    <string name="p_dateformat_DY_MM_DD">Tue 01-23</string>
+    <string name="p_dateformat_DY_DD_MM">Tue 23-01</string>
+
+    <string name="p_dateformat_MMMMDDYYYY">January 23, 2018</string>
+    <string name="p_dateformat_MMDDYYYY">Jan 23, 2018</string>
+    <string name="p_dateformat_MM_DD_YYYY">01-23-2018</string>
+    <string name="p_dateformat_MM_DD_YY">01-23-18</string>
+    <string name="p_dateformat_DD_MM_YYYY">23-01-2018</string>
+    <string name="p_dateformat_DD_MM_YY">23-01-18</string>
+
+
+    <string name="p_dateformat_DAY_MMMMDDYYYY">Tuesday January 23, 2018</string>
+    <string name="p_dateformat_DAY_MMDDYYYY">Tuesday Jan 23, 2018</string>
+    <string name="p_dateformat_DAY_MM_DD_YYYY">Tuesday 01-23-2018</string>
+    <string name="p_dateformat_DAY_MM_DD_YY">Tuesday 01-23-18</string>
+    <string name="p_dateformat_DAY_DD_MM_YYYY">Tuesday 23-01-2018</string>
+    <string name="p_dateformat_DAY_DD_MM_YY">Tuesday 23-01-18</string>
+
+    <string name="p_dateformat_DY_MMMMDDYYYY">Tue January 23, 2018</string>
+    <string name="p_dateformat_DY_MMDDYYYY">Tue Jan 23, 2018</string>
+    <string name="p_dateformat_DY_MM_DD_YYYY">Tue 01-23-2018</string>
+    <string name="p_dateformat_DY_MM_DD_YY">Tue 01-23-18</string>
+    <string name="p_dateformat_DY_DD_MM_YYYY">Tue 23-01-2018</string>
+    <string name="p_dateformat_DY_DD_MM_YY">Tue 23-01-18</string>
+
+
+    <string name="p_date_format_close">Close</string>
+
+</resources>
