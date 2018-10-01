@@ -4,12 +4,19 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
+import android.media.AudioFormat;
+import android.media.AudioManager;
+import android.media.AudioRecord;
+import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.media.audiofx.AcousticEchoCanceler;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -37,7 +44,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setVolumeControlStream(AudioManager.MODE_IN_COMMUNICATION);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -50,6 +57,8 @@ public class MainActivity extends Activity {
         setContentView(mMouthView);
 
         mSoundManager = new SoundManager();
+
+
         mSoundManager.start();
 
     }
@@ -73,14 +82,30 @@ public class MainActivity extends Activity {
     public class SoundManager {
 
         private MediaRecorder mRecorder = null;
+        private MediaPlayer   mPlayer = null;
+        private String mFileName = "";
+        public boolean mStartPlaying = false;
+
+        boolean isRecording = false;
+        AudioManager audioManager;
+        AudioRecord record = null;
+        AudioTrack track = null;
+
+        public void onCreate(){
+
+        }
 
         public void start() {
+            // Record to the external cache directory for visibility
+            mFileName = getExternalCacheDir().getAbsolutePath();
+            mFileName += "/audiorecordtest.3gp";
+
             if (mRecorder == null) {
                 mRecorder = new MediaRecorder();
                 mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                 mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
                 mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-                mRecorder.setOutputFile("/dev/null");
+                mRecorder.setOutputFile(mFileName);
                 try {
                     mRecorder.prepare();
                 } catch (IOException e) {
@@ -88,6 +113,71 @@ public class MainActivity extends Activity {
                 }
                 mRecorder.start();
             }
+
+            audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+            audioManager.setSpeakerphoneOn(true);
+
+
+            /*
+            initRecordAndTrack();
+
+            (new Thread()
+            {
+                @Override
+                public void run()
+                {
+                    recordAndPlay();
+                }
+            }).start();
+            startRecordAndPlay();
+            */
+
+            startPlaying();
+        }
+
+        private void initRecordAndTrack()
+        {
+            int min = AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+            record = new AudioRecord(MediaRecorder.AudioSource.VOICE_COMMUNICATION, 8000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT,
+                    min);
+            if (AcousticEchoCanceler.isAvailable())
+            {
+                AcousticEchoCanceler echoCancler = AcousticEchoCanceler.create(record.getAudioSessionId());
+                echoCancler.setEnabled(true);
+            }
+            int maxJitter = AudioTrack.getMinBufferSize(8000, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);
+            track = new AudioTrack(AudioManager.MODE_IN_COMMUNICATION, 8000, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, maxJitter,
+                    AudioTrack.MODE_STREAM);
+        }
+
+        private void recordAndPlay()
+        {
+            short[] lin = new short[1024];
+            int num = 0;
+            audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+            while (true)
+            {
+                if (isRecording)
+                {
+                    //Log.d("SoundManager", "recordAndPlay");
+                    num = record.read(lin, 0, 1024);
+                    track.write(lin, 0, num);
+                }
+            }
+        }
+
+        private void startRecordAndPlay()
+        {
+            record.startRecording();
+            track.play();
+            isRecording = true;
+        }
+
+        private void stopRecordAndPlay()
+        {
+            record.stop();
+            track.pause();
+            isRecording = false;
         }
 
         public void stop() {
@@ -95,6 +185,11 @@ public class MainActivity extends Activity {
                 mRecorder.stop();
                 mRecorder.release();
                 mRecorder = null;
+            }
+
+            if (mPlayer != null) {
+                mPlayer.release();
+                mPlayer = null;
             }
         }
 
@@ -104,6 +199,35 @@ public class MainActivity extends Activity {
             else
                 return 0;
 
+        }
+
+        private void onPlay(boolean start) {
+            if (start) {
+                startPlaying();
+            } else {
+                stopPlaying();
+            }
+        }
+
+        private void startPlaying() {
+            mPlayer = new MediaPlayer();
+            try {
+                //audioManager.setSpeakerphoneOn(true);
+                //mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mPlayer.setDataSource(mFileName);
+                //PlaybackParams playbackParams  = new PlaybackParams();
+                //mPlayer.set
+                mPlayer.prepare();
+                mPlayer.start();
+                Log.e("SoundManager", "mediaplayer started");
+            } catch (IOException e) {
+                Log.e("SoundManager", "mediaplayer prepare() failed");
+            }
+        }
+
+        private void stopPlaying() {
+            mPlayer.release();
+            mPlayer = null;
         }
     }
 
@@ -120,7 +244,7 @@ public class MainActivity extends Activity {
         public static final int MODE_SILENT = -1000;
         public static final int MODE_TALK = 1000;
         public static final int MODE_WOW = 2000;
-        public static final int MODE_OMG = 3000;
+        public static final int MODE_SPOOKY = 3000;
 
         public static final int MODE_SMILE = 4000;
         public static final int MODE_FROWN = 5000;
@@ -131,6 +255,7 @@ public class MainActivity extends Activity {
         double lastAmplitude = 0;
         double currentAmplitude = 0;
         long mouthCloseTime = -1;
+        Typeface tf;
 
         // CONSTRUCTOR
         public MouthView(Context context) {
@@ -172,7 +297,7 @@ public class MainActivity extends Activity {
                 }
             }
 
-            //mouthMode = MODE_TALK;
+            //mouthMode = MODE_SPOOKY;
 
             int count = 0;
             int color = 0;
@@ -217,6 +342,10 @@ public class MainActivity extends Activity {
                     break;
 
                 case MODE_TALK:
+                    if(!mSoundManager.mStartPlaying){
+                        mSoundManager.mStartPlaying = true;
+                        mSoundManager.onPlay(mSoundManager.mStartPlaying);
+                    }
                     // opacity
                    p.setAlpha(50); //
                    p.setStrokeWidth(1);
@@ -317,17 +446,49 @@ public class MainActivity extends Activity {
                     canvas.drawText("WOW", xPos, yPos, textPaint);
                     break;
 
-                case MODE_OMG:
+                case MODE_SPOOKY:
                     // opacity
                     //p.setAlpha(0x80); //
                     textPaint = new Paint();
                     textPaint.setColor(Color.rgb(red, grn, blu));
                     textPaint.setTextAlign(Paint.Align.CENTER);
-                    //textPaint.setTypeface();
-                    textPaint.setTextSize(300);
+                    tf = Typeface.createFromAsset(this.getContext().getAssets(), "fonts/ShockShimmy.ttf");
+                    textPaint.setTypeface(tf);
+                    textPaint.setTextSize(400);
+                    count = updateCount*25;
+                    while(count > canvas.getWidth()*2){
+                        count -= canvas.getWidth() * 2;
+                    }
+                    xPos = (int) (count - (canvas.getWidth()*0.5f));
+                    yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2) ) ;
+                    canvas.drawText("SPOOKY", xPos, yPos, textPaint);
+
+                    tf = Typeface.createFromAsset(this.getContext().getAssets(), "fonts/SILBT.TTF");
+                    textPaint.setTypeface(tf);
+                    textPaint.setTextSize(400);
+                    count = updateCount*25;
+                    while(count > canvas.getWidth()*2){
+                        count -= canvas.getWidth() * 2;
+                    }
+                    xPos = (int) (canvas.getWidth() -  (count - (canvas.getWidth()*0.5f)));
+                    yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2) -350) ;
+                    canvas.drawText("A A A", xPos, yPos, textPaint);
+                    canvas.drawText("D   E", canvas.getWidth()*0.5f, yPos +700, textPaint);
+                    break;
+
+                case MODE_HALLOWEEN:
+                    // opacity
+                    //p.setAlpha(0x80); //
+                    textPaint = new Paint();
+                    textPaint.setColor(Color.rgb(red, grn, blu));
+                    textPaint.setTextAlign(Paint.Align.CENTER);
+                    tf = Typeface.createFromAsset(this.getContext().getAssets(), "fonts/NamelessHarbor.ttf");
+                    textPaint.setTypeface(tf);
+                    textPaint.setTextSize(250 + (int)(Math.cos(updateCount *.1f) * 50));
                     xPos = (canvas.getWidth() / 2);
                     yPos = (int) ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
-                    canvas.drawText("OMG", xPos, yPos, textPaint);
+                    canvas.drawText("HAPPY", xPos, yPos + textPaint.ascent(), textPaint);
+                    canvas.drawText("HALLOWEEN", xPos, yPos - textPaint.ascent(), textPaint);
                     break;
             }
 
@@ -344,10 +505,10 @@ public class MainActivity extends Activity {
                     mouthMode = MouthView.MODE_SILENT;
                 }
                 else if(keyCode == KeyEvent.KEYCODE_BUTTON_X) {
-                    mouthMode = MouthView.MODE_WOW;
+                    mouthMode = MouthView.MODE_HALLOWEEN;
                 }
                 else if(keyCode == KeyEvent.KEYCODE_BUTTON_Y) {
-                    mouthMode = MouthView.MODE_OMG;
+                    mouthMode = MouthView.MODE_SPOOKY;
                 }
                 // Trigger a redraw.
                 invalidate();
@@ -377,5 +538,82 @@ public class MainActivity extends Activity {
             }
             return super.onKeyDown(keyCode, event);
         }
+    }
+
+    /////////////////////////////////////////-----------------------------------------------------------------
+
+    /*
+ * Thread to manage live recording/playback of voice input from the device's microphone.
+ */
+    private class Audio extends Thread
+    {
+        private boolean stopped = false;
+
+        /**
+         * Give the thread high priority so that it's not canceled unexpectedly, and start it
+         */
+        private Audio()
+        {
+            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
+            start();
+        }
+
+        @Override
+        public void run()
+        {
+            Log.i("Audio", "Running Audio Thread");
+            AudioRecord recorder = null;
+            AudioTrack track = null;
+            short[][]   buffers  = new short[256][160];
+            int ix = 0;
+
+        /*
+         * Initialize buffer to hold continuously recorded audio data, start recording, and start
+         * playback.
+         */
+            try
+            {
+                int N = AudioRecord.getMinBufferSize(8000,AudioFormat.CHANNEL_IN_MONO,AudioFormat.ENCODING_PCM_16BIT);
+                recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, 8000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, N*10);
+                track = new AudioTrack(AudioManager.STREAM_MUSIC, 8000,
+                        AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, N*10, AudioTrack.MODE_STREAM);
+                recorder.startRecording();
+                track.play();
+            /*
+             * Loops until something outside of this thread stops it.
+             * Reads the data from the recorder and writes it to the audio track for playback.
+             */
+                while(!stopped)
+                {
+                    Log.i("Map", "Writing new data to buffer");
+                    short[] buffer = buffers[ix++ % buffers.length];
+                    N = recorder.read(buffer,0,buffer.length);
+                    track.write(buffer, 0, buffer.length);
+                }
+            }
+            catch(Throwable x)
+            {
+                Log.w("Audio", "Error reading voice audio", x);
+            }
+        /*
+         * Frees the thread's resources after the loop completes so that it can be run again
+         */
+            finally
+            {
+                recorder.stop();
+                recorder.release();
+                track.stop();
+                track.release();
+            }
+        }
+
+        /**
+         * Called from outside of the thread in order to stop the recording/playback loop
+         */
+        private void close()
+        {
+            stopped = true;
+        }
+
     }
 }
