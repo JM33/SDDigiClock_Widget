@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -125,10 +126,12 @@ public class MainActivity extends Activity {
         public static final int MODE_FROWN = 5000;
         public static final int MODE_HALLOWEEN = 6000;
 
-        public static int mouthWidth = 500;
+        public static float mouthWidth = 500;
         public static int mouthHeight = 10;
         double lastAmplitude = 0;
         double currentAmplitude = 0;
+        long mouthCloseTime = -1;
+
         // CONSTRUCTOR
         public MouthView(Context context) {
             super(context);
@@ -144,7 +147,7 @@ public class MainActivity extends Activity {
             int centerY=(canvas.getHeight())/2;//for vertical position
 
             currentAmplitude = mSoundManager.getAmplitude();
-            Log.d("MainActivity", "CurrentAmplitude = " + currentAmplitude);
+            //Log.d("MainActivity", "CurrentAmplitude = " + currentAmplitude);
             //Log.d("MainActivity", "updateCount = " + updateCount);
 
             canvas.drawColor(mouthcolor);
@@ -166,8 +169,6 @@ public class MainActivity extends Activity {
             if(mouthMode == MODE_TALK || mouthMode == MODE_SILENT) {
                 if (currentAmplitude > 1500) {
                     mouthMode = MODE_TALK;
-                } else {
-                    mouthMode = MODE_SILENT;
                 }
             }
 
@@ -192,11 +193,14 @@ public class MainActivity extends Activity {
             }else{
                 blu =count+250;
             }
+            red = 255;
+            grn = 120;
+            blu = 0;
             switch(mouthMode){
                 case MODE_SILENT:
                     // opacity
                     //p.setAlpha(0x80); //
-                    p.setStrokeWidth(5);
+                    p.setStrokeWidth(20);
                     count = updateCount;
                     while(count >255) {
                         count -= 255;
@@ -207,47 +211,76 @@ public class MainActivity extends Activity {
                     //p.setColor(Color.);
                      for (int i = 0; i < canvas.getWidth(); i++){
 
-                         canvas.drawPoint(i, centerY - (int)(Math.cos(( (i) * updateCount * 10f))  *50), p);
+                         canvas.drawPoint(i, centerY - (int)(Math.sin(((count *0.5f) -(0.005f*i)))  *50), p);
                      }
                     //canvas.drawCircle(centerX, centerY, mouthWidth, p);
                     break;
 
                 case MODE_TALK:
                     // opacity
-                   p.setAlpha(180); //
-                   p.setStrokeWidth(3);
+                   p.setAlpha(50); //
+                   p.setStrokeWidth(1);
 
-
+                    count = updateCount;
+                    while(count >255) {
+                        count -= 255;
+                    }
                     //color = (int)(Math.cos(count));
                     //p.setColor(Color.rgb(color, color+100, color+155));
                     p.setColor(Color.rgb(red, grn, blu));
+                    //p.setColor(Color.);
+                    for (int i = 0; i < canvas.getWidth(); i++){
+
+                        canvas.drawPoint(i, centerY - (int)(Math.sin(((count *0.5f) -(0.005f*i)))  *50), p);
+                    }
+
                     if(currentAmplitude > 30000){
-                        p.setStrokeWidth(45);
-                        canvas.drawCircle(centerX, centerY, 450, p);
+                        p.setStrokeWidth(60);
+                        mouthWidth = 450;
+                        mouthCloseTime = -1;
                     }else {
                         if (currentAmplitude > 20000) {
-                            p.setStrokeWidth(40);
-                            canvas.drawCircle(centerX, centerY, 425, p);
+                            p.setStrokeWidth(55);
+                            mouthWidth = 425;
+                            mouthCloseTime = -1;
                         } else {
                             if (currentAmplitude > 13000) {
-                                p.setStrokeWidth(30);
-                                canvas.drawCircle(centerX, centerY, 400, p);
+                                p.setStrokeWidth(50);
+                                mouthWidth = 400;
+                                mouthCloseTime = -1;
                             } else {
                                 if (currentAmplitude > 7500) {
-                                    p.setStrokeWidth(25);
-                                    canvas.drawCircle(centerX, centerY, 375, p);
+                                    p.setStrokeWidth(45);
+                                    mouthWidth = 375;
+                                    mouthCloseTime = -1;
                                 } else {
                                     if (currentAmplitude > 5000) {
-                                        p.setStrokeWidth(20);
-                                        canvas.drawCircle(centerX, centerY, 350, p);
+                                        p.setStrokeWidth(40);
+                                        mouthWidth = 350;
+                                        mouthCloseTime = -1;
                                     } else {
                                         if (currentAmplitude > 3000) {
-                                            p.setStrokeWidth(10);
-                                            canvas.drawCircle(centerX, centerY, 300, p);
+                                            p.setStrokeWidth(35);
+                                            mouthWidth = 300;
+                                            mouthCloseTime = -1;
                                         } else {
                                             if (currentAmplitude > 1500) {
-                                                p.setStrokeWidth(5);
-                                                canvas.drawCircle(centerX, centerY, 250, p);
+                                                p.setStrokeWidth(25);
+                                                mouthWidth = 250;
+                                                mouthCloseTime = -1;
+                                            }
+                                            else{
+                                                if(mouthCloseTime == -1){
+                                                    mouthCloseTime = System.currentTimeMillis();
+                                                }
+                                                mouthWidth = Lerp.lerp(mouthWidth, 0, 250, System.currentTimeMillis() - mouthCloseTime);
+                                                p.setStrokeWidth(15);
+                                                if(mouthWidth < 10){
+                                                    mouthWidth = 0;
+                                                    mouthCloseTime = -1;
+                                                    mouthMode = MODE_SILENT;
+                                                }
+                                                Log.d("MainActivity", "Mouth Width = " + mouthWidth);
                                             }
                                         }
                                     }
@@ -256,11 +289,15 @@ public class MainActivity extends Activity {
                         }
                     }
 
+                    RectF mouthRect = new RectF(centerX - mouthWidth * 1.75f, centerY - mouthWidth, centerX + mouthWidth  *1.75f , centerY + mouthWidth);
+                    //Log.d("MainActivity", "Mouth Width = " + mouthWidth);
 
-                    Log.d("MainActivity", "Amplitude = " + currentAmplitude);
+                    canvas.drawArc(mouthRect, 0, 360, false, p);
+                    //canvas.drawCircle(centerX, centerY, mouthWidth, p);
+                    //Log.d("MainActivity", "Amplitude = " + currentAmplitude);
 
                     //p.setStrokeWidth(25);
-                    //canvas.drawCircle(centerX, centerY, mouthWidth, p);
+
 
                     lastAmplitude = currentAmplitude;
                     currentAmplitude -= 50f;
