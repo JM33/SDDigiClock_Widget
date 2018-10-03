@@ -292,7 +292,7 @@ public class MainActivity extends Activity {
 
 
             if(mouthMode == MODE_TALK || mouthMode == MODE_SILENT) {
-                if (currentAmplitude > 1500) {
+                if (currentAmplitude > 1000) {
                     mouthMode = MODE_TALK;
                 }
             }
@@ -398,18 +398,32 @@ public class MainActivity extends Activity {
                                                 mouthWidth = 250;
                                                 mouthCloseTime = -1;
                                             }
-                                            else{
-                                                if(mouthCloseTime == -1){
-                                                    mouthCloseTime = System.currentTimeMillis();
-                                                }
-                                                mouthWidth = Lerp.lerp(mouthWidth, 0, 250, System.currentTimeMillis() - mouthCloseTime);
-                                                p.setStrokeWidth(15);
-                                                if(mouthWidth < 10){
-                                                    mouthWidth = 0;
+                                            else {
+                                                if (currentAmplitude > 1000) {
+                                                    p.setStrokeWidth(20);
+                                                    mouthWidth = 200;
                                                     mouthCloseTime = -1;
-                                                    mouthMode = MODE_SILENT;
+                                                }else {
+                                                    if (currentAmplitude > 1000) {
+                                                        p.setStrokeWidth(20);
+                                                        mouthWidth = 200;
+                                                        mouthCloseTime = -1;
+                                                    } else {
+                                                        if (mouthCloseTime == -1) {
+                                                            mouthCloseTime = System.currentTimeMillis();
+                                                        }
+
+                                                        mouthWidth = Lerp.lerp(mouthWidth, 0, 250, System.currentTimeMillis() - mouthCloseTime);
+                                                        p.setStrokeWidth(15);
+                                                        if (mouthWidth < 10) {
+                                                            mouthWidth = 0;
+                                                            mouthCloseTime = -1;
+                                                            mouthMode = MODE_SILENT;
+                                                        }
+
+                                                    }
                                                 }
-                                                Log.d("MainActivity", "Mouth Width = " + mouthWidth);
+                                                //Log.d("MainActivity", "Mouth Width = " + mouthWidth);
                                             }
                                         }
                                     }
@@ -419,11 +433,13 @@ public class MainActivity extends Activity {
                     }
 
                     RectF mouthRect = new RectF(centerX - mouthWidth * 1.75f, centerY - mouthWidth, centerX + mouthWidth  *1.75f , centerY + mouthWidth);
+
                     //Log.d("MainActivity", "Mouth Width = " + mouthWidth);
 
-                    canvas.drawArc(mouthRect, 0, 360, false, p);
+                    canvas.drawArc(mouthRect, 20, 140, false, p); //bottom lip
+                    canvas.drawArc(mouthRect, 200, 140, false, p); //top lip
                     //canvas.drawCircle(centerX, centerY, mouthWidth, p);
-                    //Log.d("MainActivity", "Amplitude = " + currentAmplitude);
+                    Log.d("MainActivity", "Amplitude = " + currentAmplitude);
 
                     //p.setStrokeWidth(25);
 
