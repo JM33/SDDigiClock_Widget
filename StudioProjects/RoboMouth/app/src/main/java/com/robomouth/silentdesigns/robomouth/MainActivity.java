@@ -399,30 +399,21 @@ public class MainActivity extends Activity {
                                                 mouthCloseTime = -1;
                                             }
                                             else {
-                                                if (currentAmplitude > 1000) {
-                                                    p.setStrokeWidth(20);
-                                                    mouthWidth = 200;
-                                                    mouthCloseTime = -1;
-                                                }else {
-                                                    if (currentAmplitude > 1000) {
-                                                        p.setStrokeWidth(20);
-                                                        mouthWidth = 200;
-                                                        mouthCloseTime = -1;
-                                                    } else {
-                                                        if (mouthCloseTime == -1) {
-                                                            mouthCloseTime = System.currentTimeMillis();
-                                                        }
 
-                                                        mouthWidth = Lerp.lerp(mouthWidth, 0, 250, System.currentTimeMillis() - mouthCloseTime);
-                                                        p.setStrokeWidth(15);
-                                                        if (mouthWidth < 10) {
-                                                            mouthWidth = 0;
-                                                            mouthCloseTime = -1;
-                                                            mouthMode = MODE_SILENT;
-                                                        }
-
-                                                    }
+                                                if (mouthCloseTime == -1) {
+                                                    mouthCloseTime = System.currentTimeMillis();
                                                 }
+
+                                                mouthWidth = Lerp.lerp(mouthWidth, 0, 250, System.currentTimeMillis() - mouthCloseTime);
+                                                p.setStrokeWidth(15);
+                                                if (mouthWidth < 10) {
+                                                    mouthWidth = 0;
+                                                    mouthCloseTime = -1;
+                                                    mouthMode = MODE_SILENT;
+                                                }
+
+
+
                                                 //Log.d("MainActivity", "Mouth Width = " + mouthWidth);
                                             }
                                         }
