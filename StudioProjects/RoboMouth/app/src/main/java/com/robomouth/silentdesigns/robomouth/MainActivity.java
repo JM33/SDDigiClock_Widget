@@ -268,8 +268,8 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onDraw(Canvas canvas) {
-            int centerX= (canvas.getWidth())/2;//for horisontal position
-            int centerY=(canvas.getHeight())/2;//for vertical position
+            int centerX= (int) ((canvas.getWidth())*0.5f);//for horisontal position
+            int centerY= (int) ((canvas.getHeight())*0.5f);//for vertical position
 
             currentAmplitude = mSoundManager.getAmplitude();
             //Log.d("MainActivity", "CurrentAmplitude = " + currentAmplitude);
@@ -297,7 +297,7 @@ public class MainActivity extends Activity {
                 }
             }
 
-            //mouthMode = MODE_SPOOKY;
+            //mouthMode = MODE_FROWN;
 
             int count = 0;
             int color = 0;
@@ -321,6 +321,8 @@ public class MainActivity extends Activity {
             red = 255;
             grn = 120;
             blu = 0;
+
+
             switch(mouthMode){
                 case MODE_SILENT:
                     // opacity
@@ -453,6 +455,64 @@ public class MainActivity extends Activity {
                     canvas.drawText("WOW", xPos, yPos, textPaint);
                     break;
 
+                case MODE_SMILE:
+                    // opacity
+                    //p.setAlpha(0x80); //
+                    // opacity
+                    //p.setAlpha(0x80); //
+                    p.setStrokeWidth(50);
+                    p.setColor(Color.rgb(red, grn, blu));
+
+
+                    count = updateCount;
+                    while(count > 250){
+                        count -= 150;
+                    }
+                    if(count > 200){
+                        count = 200;
+                    }
+                    if(count < 100) {
+                        count = 100;
+                    }
+
+
+                    RectF smileRect = new RectF(centerX - (canvas.getWidth() *0.45F), centerY - (canvas.getHeight() *0.45F), centerX + (canvas.getWidth() *0.45F) , centerY + (canvas.getHeight() *0.25F));
+
+                    //Log.d("MainActivity", "Mouth Width = " + mouthWidth);
+
+                    canvas.drawArc(smileRect, 90 - (count *0.5f), count, false, p); //bottom lip
+
+                    break;
+
+                case MODE_FROWN:
+                    // opacity
+                    //p.setAlpha(0x80); //
+                    // opacity
+                    //p.setAlpha(0x80); //
+                    p.setStrokeWidth(50);
+                    p.setColor(Color.rgb(red, grn, blu));
+
+
+                    count = updateCount;
+                    while(count > 250){
+                        count -= 150;
+                    }
+                    if(count > 200){
+                        count = 200;
+                    }
+                    if(count < 100) {
+                        count = 100;
+                    }
+
+
+                    RectF frownRect = new RectF(centerX - (canvas.getWidth() *0.45F), centerY - (canvas.getHeight() *0.25F), centerX + (canvas.getWidth() *0.45F) , centerY + (canvas.getHeight() *0.45F));
+
+                    //Log.d("MainActivity", "Mouth Width = " + mouthWidth);
+
+                    canvas.drawArc(frownRect, 270 - (count *0.5f), count, false, p); //bottom lip
+
+                    break;
+
                 case MODE_SPOOKY:
                     // opacity
                     //p.setAlpha(0x80); //
@@ -507,9 +567,9 @@ public class MainActivity extends Activity {
             //Debug: Log.d("JOY", event.toString());
             if(event.getAction() == KeyEvent.ACTION_DOWN) {
                 if(keyCode == KeyEvent.KEYCODE_BUTTON_A) {
-                    mouthMode = MouthView.MODE_TALK;
+                    mouthMode = MouthView.MODE_FROWN;
                 } else if(keyCode == KeyEvent.KEYCODE_BUTTON_B) {
-                    mouthMode = MouthView.MODE_SILENT;
+                    mouthMode = MouthView.MODE_SMILE;
                 }
                 else if(keyCode == KeyEvent.KEYCODE_BUTTON_X) {
                     mouthMode = MouthView.MODE_HALLOWEEN;
