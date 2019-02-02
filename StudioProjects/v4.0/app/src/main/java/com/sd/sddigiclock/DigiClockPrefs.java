@@ -86,6 +86,7 @@ public class DigiClockPrefs extends Activity{
 
 	static int cColor;
 	static int dColor;
+	static int dateFormatIndex = 1;
 
 	private TabHost tabhost;
 
@@ -188,6 +189,7 @@ public class DigiClockPrefs extends Activity{
 
 		clocktextsize = prefs.getInt("ClockTextSize"+appWidgetId, 15);
 		datetextsize = prefs.getInt("DateTextSize"+appWidgetId, 12);
+		dateFormatIndex = prefs.getInt("DateFormat" +appWidgetId, 1);
 
 		cColor = prefs.getInt("cColor"+appWidgetId, -1);
 		dColor = prefs.getInt("dColor"+appWidgetId, -1);
@@ -378,15 +380,19 @@ public class DigiClockPrefs extends Activity{
 			public void onClick(View v) {
 				AlertDialog.Builder alt_bld = new AlertDialog.Builder(DCP);
 				//alt_bld.setIcon(R.drawable.icon);
-				final CharSequence[] grpname= new CharSequence[] {"MMDDYYYY", "MMDDYY"};
-				final int selected = 1;
-				alt_bld.setTitle("Select a Group Name");
-				alt_bld.setSingleChoiceItems(grpname, selected, new DialogInterface
+				final String[] formats = DCP.getResources().getStringArray(R.array.date_formats);
+				//final CharSequence[] grpname= DCP.getResources().obtainTypedArray(formats);
+
+				final int selected = dateFormatIndex;
+				alt_bld.setTitle("Select a Date Format");
+				alt_bld.setSingleChoiceItems(formats, selected, new DialogInterface
 						.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
 
+						dateFormatIndex = item;
+
 						Toast.makeText(getApplicationContext(),
-								"Group Name = "+grpname[item], Toast.LENGTH_SHORT).show();
+								"Date Format = "+formats[item], Toast.LENGTH_SHORT).show();
 						dialog.dismiss();// dismiss the alertbox after chose option
 
 					}
@@ -418,6 +424,9 @@ public class DigiClockPrefs extends Activity{
 
 	    		datetextsize = btdtsize.getProgress();
 	    		edit.putInt("DateTextSize"+appWidgetId, datetextsize);
+
+	    		edit.putInt("DateFormat"+appWidgetId, dateFormatIndex);
+
 	    		edit.commit();
 
 	    		final AlarmManager m = (AlarmManager) self.getSystemService(Context.ALARM_SERVICE);

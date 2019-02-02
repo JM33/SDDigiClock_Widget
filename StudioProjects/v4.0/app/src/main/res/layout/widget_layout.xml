@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/blank" 
+        android:src="@drawable/blank"
         android:scaleType="center"/>
 
     <LinearLayout
@@ -25,6 +25,15 @@
             android:padding="10dp" >
 
             <ImageView
+                android:id="@+id/ampmView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/clockView"
+                android:paddingLeft="5dp"
+                android:src="@drawable/blank" />
+
+            <ImageView
                 android:id="@+id/clockView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,13 +41,6 @@
                 android:src="@drawable/blank" 
                 android:scaleType="center"/>
 
-            <ImageView
-                android:id="@+id/ampmView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/clockView"
-                android:src="@drawable/blank" />
         </RelativeLayout>
 
         <LinearLayout

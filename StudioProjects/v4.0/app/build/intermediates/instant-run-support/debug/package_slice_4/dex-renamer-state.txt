@@ -1,4 +1,4 @@
-#Thu Apr 12 20:54:31 HST 2018
-base.0=C\:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\4
+#Sat Dec 29 17:01:46 HST 2018
+base.0=C\:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\4
 path.0=classes.dex
 renamed.0=classes.dex

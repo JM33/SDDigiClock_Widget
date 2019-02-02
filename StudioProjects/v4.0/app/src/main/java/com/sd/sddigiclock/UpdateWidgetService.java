@@ -3,12 +3,14 @@ package com.sd.sddigiclock;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -20,8 +22,13 @@ import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -31,6 +38,7 @@ import android.text.format.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /*
  * Author Brian Kimmel
@@ -72,7 +80,9 @@ public class UpdateWidgetService extends Service {
 	private Display mDisplay;
 	private int dateheight;
 	private int clockheight;
-	private String dateFormat;
+	//private String dateFormat;
+
+	boolean mIsPortraitOrientation;
 	
 	 @Override  
 	    public void onCreate()  
@@ -129,7 +139,7 @@ public class UpdateWidgetService extends Service {
 		Bg = prefs.getInt("Bg"+appWidgetId, 3);
 		Fontfile = prefs.getString("Font"+appWidgetId, "Roboto-Regular.ttf");
 		mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
-		dateFormat = prefs.getString("DateFormat", "MMMMDDYYYY");
+		//dateFormat = prefs.getString("DateFormat", "MMMMDDYYYY");
 		//getPrefs();
 		setText();
 		
@@ -137,17 +147,20 @@ public class UpdateWidgetService extends Service {
 		
 	    view = new RemoteViews(getPackageName(), R.layout.widget_layout);  
 	    
-	    view.setImageViewBitmap(R.id.clockView, buildClockUpdate(shours + ":" + sminutes));
-	    view.setImageViewBitmap(R.id.ampmView, buildAMPMUpdate(ampm));
-		view.setImageViewBitmap(R.id.dateView, buildDateUpdate(sdate));
-	    //view.setTextViewText(R.id.ClockText, (shours + ":" + sminutes));
+	    view.setImageViewBitmap(R.id.BackGround, buildClockUpdate(shours + ":" + sminutes, ampm, sdate, bgColor));
+		//view.setImageViewBitmap(R.id.clockView, buildClockUpdate(shours + ":" + sminutes);
+	    //view.setImageViewBitmap(R.id.ampmView, buildAMPMUpdate(ampm));
+		//view.setImageViewBitmap(R.id.dateView, buildDateUpdate(sdate));
+
+
+		//view.setTextViewText(R.id.ClockText, (shours + ":" + sminutes));
 		//view.setTextColor(R.id.ClockText, cColor);
 		//view.setTextColor(R.id.AMPMText, cColor);
 		//view.setTextColor(R.id.DateText, dColor);
 		//view.setTextViewText(R.id.DateText, sdate);
 		//view.setTextViewText(R.id.AMPMText, ampm);
 		
-		
+		/*
 		if(Bg == 0){
 			//view.setInt(R.id.linearLayout2, "setBackgroundResource", getImage(Bg));
 			view.setImageViewBitmap(R.id.BackGround, buildBGUpdate(bgColor));
@@ -174,7 +187,7 @@ public class UpdateWidgetService extends Service {
 			}
 		}
 		
-		
+		*/
 		
 		//float ctsize = clocktextsize*1.5f + 6;
 		//float dtsize = datetextsize;
@@ -259,46 +272,351 @@ public class UpdateWidgetService extends Service {
 	    return super.onStartCommand(intent, flags, startId);
 	}
 
-		public Bitmap buildClockUpdate(String time){
+		public Bitmap buildClockUpdate(String time, String ampm, String date, int  color){
+
+	 	/* Get Device and Widget orientation.
+           This is done by adding a boolean value to
+           a port resource directory like values-port/bools.xml */
+
+	 		boolean mIsKeyguard;
+
+			if(getScreenHeight() > getScreenWidth()) {
+				mIsPortraitOrientation = true;
+			}else{
+				mIsPortraitOrientation = false;
+			}
+
+			// Get min dimensions from provider info
+			AppWidgetProviderInfo providerInfo = AppWidgetManager.getInstance(
+					getApplicationContext()).getAppWidgetInfo(appWidgetId);
+
+			// Since min and max is usually the same, just take min
+			int mWidgetLandWidth = providerInfo.minWidth;
+			int mWidgetPortHeight = providerInfo.minHeight;
+			int mWidgetPortWidth = providerInfo.minWidth;
+			int mWidgetLandHeight = providerInfo.minHeight;
+
+			// Get current dimensions (in DIP, scaled by DisplayMetrics) of this
+			// Widget, if API Level allows to
+			AppWidgetManager mAppWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
+			Bundle mAppWidgetOptions = null;
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+				mAppWidgetOptions = mAppWidgetManager.getAppWidgetOptions(appWidgetId);
+
+			if (mAppWidgetOptions != null
+					&& mAppWidgetOptions
+					.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH) > 0) {
+
+					Log.d("UWS",
+							"appWidgetOptions not null, getting widget sizes...");
+				// Reduce width by a margin of 8dp (automatically added by
+				// Android, can vary with third party launchers)
+
+            /* Actually Min and Max is a bit irritating,
+               because it depends on the homescreen orientation
+               whether Min or Max should be used: */
+
+				mWidgetPortWidth = mAppWidgetOptions
+						.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+				mWidgetLandWidth = mAppWidgetOptions
+						.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
+				mWidgetLandHeight = mAppWidgetOptions
+						.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+				mWidgetPortHeight = mAppWidgetOptions
+						.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+
+				// Get the value of OPTION_APPWIDGET_HOST_CATEGORY
+				int category = mAppWidgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY, -1);
+
+				// If the value is WIDGET_CATEGORY_KEYGUARD, it's a lockscreen
+				// widget (dumped with Android-L preview :-( ).
+				mIsKeyguard = category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD;
+
+			} else {
+				//if (D.DEBUG_SERVICE)
+					Log.d("UWS",
+							"No AppWidgetOptions for this widget, using minimal dimensions from provider info!");
+				// For some reason I had to set this again here, may be obsolete
+				mWidgetLandWidth = providerInfo.minWidth;
+				mWidgetPortHeight = providerInfo.minHeight;
+				mWidgetPortWidth = providerInfo.minWidth;
+				mWidgetLandHeight = providerInfo.minHeight;
+			}
+
+			Log.d("UWS", "Dimensions of the Widget in DIP: portWidth =  "
+						+ mWidgetPortWidth + ", landWidth = " + mWidgetLandWidth
+						+ "; landHeight = " + mWidgetLandHeight
+						+ ", portHeight = " + mWidgetPortHeight);
+
+			// If device is in port oriantation, use port sizes
+			int mWidgetWidthPerOrientation = mWidgetPortWidth;
+			int mWidgetHeightPerOrientation = mWidgetPortHeight;
+
+			if (!mIsPortraitOrientation)
+			{
+				// Not Portrait, so use landscape sizes
+				mWidgetWidthPerOrientation = mWidgetLandWidth;
+				mWidgetHeightPerOrientation = mWidgetLandHeight;
+			}
+
+
+
+
 			// font size
-			   float fontSize = clocktextsize*5;
+			   float fontSize = clocktextsize*10;
 			  
-		    Paint paint = new Paint();
+		    Paint Clockpaint = new Paint();
 			SharedPreferences prefs = getApplicationContext().getSharedPreferences(
 					"prefs", 0);
 			int mfont = prefs.getInt("mFont"+appWidgetId, 0);
 			Typeface font;
 		    font = Typeface.createFromAsset(this.getAssets(), Fontfile);
 
-		    paint.setAntiAlias(true);
-		    paint.setSubpixelText(true);
+			Clockpaint.setAntiAlias(true);
+			Clockpaint.setSubpixelText(true);
 		    if(mFont == 0)
-		    	paint.setTypeface(Typeface.DEFAULT);
+				Clockpaint.setTypeface(Typeface.DEFAULT);
 		    else
-		    	paint.setTypeface(font);
-		    paint.setStyle(Paint.Style.FILL);
-		    paint.setColor(cColor);
-		    paint.setTextSize((int)fontSize);
-		    paint.setShadowLayer(3f, 2f, 2f, Color.BLACK);
-		    paint.setTextAlign(Align.LEFT);
+				Clockpaint.setTypeface(font);
+			Clockpaint.setStyle(Paint.Style.FILL);
+			Clockpaint.setColor(cColor);
+			Clockpaint.setTextSize((int)fontSize);
+			Clockpaint.setShadowLayer(3f, 2f, 2f, Color.BLACK);
+			Clockpaint.setTextAlign(Align.LEFT);
 		    
 		 // min. rect of text
-		    Rect textBounds = new Rect();
-		    paint.getTextBounds(time, 0, time.length(), textBounds);
+		    Rect textBoundsClock = new Rect();
+			Clockpaint.getTextBounds(time, 0, time.length(), textBoundsClock);
+			Paint.FontMetrics fm = Clockpaint.getFontMetrics();
+			float height = fm.descent - fm.ascent;
 		    // create bitmap for text
-		    Bitmap bm = Bitmap.createBitmap((textBounds.width()+30), textBounds.height()+2, Bitmap.Config.ARGB_8888);
+		    //Bitmap bm = Bitmap.createBitmap((int) (Clockpaint.measureText(time)+30), textBoundsClock.height(), Bitmap.Config.ARGB_8888);
 		    // canvas
-		    Canvas canvas = new Canvas(bm);
+		    //Canvas canvas = new Canvas(bm);
 		    //canvas.drawARGB(255, 0, 255, 0);// for visualization
-		    
-		    canvas.drawText(time, 10, textBounds.height()-textBounds.bottom, paint);
-		    clockheight = textBounds.height()+2;
+		    Log.d("UWS", "CLOCK UPDATE");
+			Log.d("UWS", "FontSize = " + fontSize);
+			Log.d("UWS", "Height = " + height);
+			Log.d("UWS", "Width-MeasureText = " + Clockpaint.measureText(time));
+			Log.d("UWS", "TextBounds Top= " + textBoundsClock.top);
+			Log.d("UWS", "TextBounds Bottom = " + textBoundsClock.bottom);
+			Log.d("UWS", "TextBounds Height= " + textBoundsClock.height());
+
+		    //canvas.drawText(time, 10, textBoundsClock.height()-textBoundsClock.bottom, Clockpaint);
+		    clockheight = (int)height+2;
+
+		/////AMPM UPDATE
+
+			// font size
+			fontSize = clocktextsize*2;
+			//fontSize+=fontSize*0.2f;
+			//Bitmap myBitmap = Bitmap.createBitmap(clocktextsize*2, clocktextsize+20, Bitmap.Config.ARGB_4444);
+			//Canvas myCanvas = new Canvas(myBitmap);
+			Paint AMPMpaint = new Paint();
+
+
+			//mfont = prefs.getInt("mFont"+appWidgetId, 0);
+			//font = Typeface.createFromAsset(this.getAssets(), Fontfile);
+
+
+			AMPMpaint.setAntiAlias(true);
+			AMPMpaint.setSubpixelText(true);
+			if(mFont == 0)
+				AMPMpaint.setTypeface(Typeface.DEFAULT);
+			else
+				AMPMpaint.setTypeface(font);
+			AMPMpaint.setStyle(Paint.Style.FILL);
+			AMPMpaint.setColor(cColor);
+			AMPMpaint.setTextSize((int)fontSize);
+			AMPMpaint.setShadowLayer(3f, 2f, 2f, Color.BLACK);
+			AMPMpaint.setTextAlign(Align.LEFT);
+
+
+			// min. rect of text
+			Rect textBoundsAMPM = new Rect();
+			AMPMpaint.getTextBounds(ampm, 0, ampm.length(), textBoundsAMPM);
+
+			fm = AMPMpaint.getFontMetrics();
+			height = fm.descent - fm.ascent;
+			// create bitmap for text
+
+			//bm = Bitmap.createBitmap((textBoundsAMPM.width()+20), textBoundsAMPM.height(), Bitmap.Config.ARGB_8888);
+			// canvas
+			//canvas = new Canvas(bm);
+			//canvas.drawARGB(255, 0, 255, 0);// for visualization
+
+			//canvas.drawText(ampm, 10, textBounds.height()-textBounds.bottom, AMPMpaint);
+
+
+		////// DATE UPDATE
+
+			// font size
+			fontSize = datetextsize*6;
+
+			//Bitmap myBitmap = Bitmap.createBitmap(clocktextsize*2, clocktextsize+20, Bitmap.Config.ARGB_4444);
+			//Canvas myCanvas = new Canvas(myBitmap);
+			//Paint Datepaint = new Paint();
+
+			//SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+			//		"prefs", 0);
+			mfont = prefs.getInt("mFont"+appWidgetId, 0);
+			font = Typeface.createFromAsset(this.getAssets(), Fontfile);
+
+
+			TextPaint Datepaint= new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+			Datepaint.setSubpixelText(true);
+			if(mFont == 0)
+				Datepaint.setTypeface(Typeface.DEFAULT);
+			else
+				Datepaint.setTypeface(font);
+			Datepaint.setStyle(Paint.Style.FILL);
+			Datepaint.setColor(dColor);
+			Datepaint.setTextSize((int)fontSize);
+			Datepaint.setShadowLayer(3f, 2f, 2f, Color.BLACK);
+			Datepaint.setTextAlign(Align.CENTER);
+
+
+			//Bitmap bm;
+			// min. rect of text
+			Rect textBoundsDate = new Rect();
+			Rect displayBounds = new Rect();
+			mDisplay.getRectSize(displayBounds);
+			Datepaint.getTextBounds(time, 0, time.length(), textBoundsDate);
+
+			fm = Datepaint.getFontMetrics();
+			height = (int)(fm.descent - fm.ascent);
+
+			Log.i("UWS", Float.toString(textBoundsDate.width()));
+			int maxwidth = displayBounds.width()-100;
+
+			Log.i("UWS", "Maxwidth =" + Integer.toString(maxwidth) + " Orientation = " + Integer.toString(mDisplay.getRotation()));
+			if(Datepaint.measureText(time)+20 >= maxwidth){
+				time = (month_name + " " + String.valueOf(day) + ",");
+				Datepaint.getTextBounds(time, 0, time.length(), textBoundsDate);
+				//bm = Bitmap.createBitmap((int)Datepaint.measureText(time)+100, (int)(height+2)*2, Bitmap.Config.ARGB_8888);
+				Rect textBounds2 = new Rect();
+				Datepaint.getTextBounds(String.valueOf(year), 0, String.valueOf(year).length(), textBounds2);
+
+				//canvas = new Canvas(bm);
+
+				//canvas.drawText(time, textBoundsDate.width()/2+50, height-textBoundsDate.bottom, Datepaint);
+				//canvas.drawText(String.valueOf(year), textBoundsDate.width()/2+50, textBoundsDate.height()*2, Datepaint);
+				dateheight = (int)(height+2)*2;
+			}else{
+				// create bitmap for text
+				//bm = Bitmap.createBitmap(((int)Datepaint.measureText(time)+100), (int)(height+2), Bitmap.Config.ARGB_8888);
+				//canvas = new Canvas(bm);
+				//canvas.drawText(time, textBoundsDate.width()/2+50, height-textBoundsDate.bottom, Datepaint);
+				dateheight = (int)(height+2);
+			}
+
+			float scale = getResources().getDisplayMetrics().density;
+			int textWidth = getScreenWidth() - (int) (16 * scale);
+			StaticLayout textLayout = new StaticLayout(
+					date, Datepaint, textWidth, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
+
+			// get height of multiline text
+			int textHeight = textLayout.getHeight();
+
+
+			float x = textWidth/2;
+			float y = (clockheight);
+			dateheight = textHeight;
+
+		////// BACKGROUND UPDATE
+
+			//Bitmap myBitmap = Bitmap.createBitmap(clocktextsize*2, clocktextsize+20, Bitmap.Config.ARGB_4444);
+			//Canvas myCanvas = new Canvas(myBitmap);
+			Paint BGpaint = new Paint();
+
+
+
+			new Rect();
+			displayBounds = new Rect();
+			mDisplay.getRectSize(displayBounds);
+			//int height;
+			if(dateshown){
+				height = clockheight + dateheight + 50;
+			}else{
+				height = clockheight + 50;
+			}
+			Shader shader = null;
+			int aw = Color.argb(200, 255, 255, 255);
+			int ab = Color.argb(200, 0, 0, 0);
+			switch(Bg){
+				case 0:
+
+					shader = new LinearGradient(0, 0, 0, height,
+							new int[]{Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT},
+							new float[]{0,0.45f,.55f,1}, Shader.TileMode.REPEAT);
+					break;
+				case 1:
+					shader = new LinearGradient(0, 0, 0, height,
+							new int[]{aw, Color.TRANSPARENT, Color.TRANSPARENT, ab},
+							new float[]{0.0f,0.45f,.55f,1.0f}, Shader.TileMode.REPEAT);
+					break;
+				case 2:
+					shader = new LinearGradient(0, 0, 0, height,
+							new int[]{aw, color, color, ab},
+							new float[]{0.0f,0.45f,.55f,1.0f}, Shader.TileMode.REPEAT);
+					break;
+				case 3:
+					shader = new LinearGradient(0, 0, 0, height,
+							new int[]{color, color, color, color},
+							new float[]{0.0f,0.45f,.55f,1.0f}, Shader.TileMode.REPEAT);
+					break;
+			}
+
+			BGpaint.setShader(shader);
+
+
+			// min. rect of text
+			//Rect textBounds = new Rect();
+			//paint.getTextBounds(time, 0, time.length(), textBounds);
+			// create bitmap for text
+			int w = 0;
+
+
+
+			if(getScreenWidth() > getScreenHeight()){
+				w=getScreenWidth();
+			} else{
+				w = getScreenHeight();
+			}
+			Log.d("UWS", "W = "+ w);
+			Log.d("UWS", "getW = "+ getScreenWidth());
+			Log.d("UWS", "getH = "+ getScreenHeight());
+
+			Bitmap bm = Bitmap.createBitmap(getScreenWidth(), (int)height, Bitmap.Config.ARGB_8888);
+
+
+			// canvas
+			Canvas canvas = new Canvas(bm);
+			canvas.drawPaint(BGpaint);
+
+			canvas.drawText(time, canvas.getWidth()*0.5f - (Clockpaint.measureText(time)*0.5f), textBoundsClock.height()-textBoundsClock.bottom+50, Clockpaint);
+			canvas.drawText(ampm, canvas.getWidth()*0.5f + (Clockpaint.measureText(time)*0.5f) + 20, (textBoundsClock.height() *0.5f) +textBoundsAMPM.height()-textBoundsAMPM.bottom+50, AMPMpaint);
+
+
+
+
+			// draw text to the Canvas center
+			canvas.save();
+			canvas.translate(x, y);
+			textLayout.draw(canvas);
+			canvas.restore();
+			//canvas.drawText(date, canvas.getWidth()*0.5f, (textBoundsDate.height()-textBoundsDate.bottom) + clockheight+50, Datepaint);
+			// for visualization
+			//canvas.drawPaint(paint);
+			//canvas.drawText(time, 5, textBounds.height()-textBounds.bottom, paint);
+
+			new BitmapDrawable(mContext.getResources(), bm);
 		    return bm;
 		}
 
 		public Bitmap buildAMPMUpdate(String time){
 			// font size
-			   float fontSize = clocktextsize;
+			   float fontSize = clocktextsize*2;
 			   //fontSize+=fontSize*0.2f;
 		    //Bitmap myBitmap = Bitmap.createBitmap(clocktextsize*2, clocktextsize+20, Bitmap.Config.ARGB_4444);
 		    //Canvas myCanvas = new Canvas(myBitmap);
@@ -326,9 +644,12 @@ public class UpdateWidgetService extends Service {
 		 // min. rect of text
 		    Rect textBounds = new Rect();
 		    paint.getTextBounds(time, 0, time.length(), textBounds);
+
+			Paint.FontMetrics fm = paint.getFontMetrics();
+			float height = fm.descent - fm.ascent;
 		    // create bitmap for text
 		    
-		    Bitmap bm = Bitmap.createBitmap((textBounds.width()+20), textBounds.height()+2, Bitmap.Config.ARGB_8888);
+		    Bitmap bm = Bitmap.createBitmap((textBounds.width()+20), textBounds.height(), Bitmap.Config.ARGB_8888);
 		    // canvas
 		    Canvas canvas = new Canvas(bm);
 		    //canvas.drawARGB(255, 0, 255, 0);// for visualization
@@ -340,7 +661,7 @@ public class UpdateWidgetService extends Service {
 		
 		public Bitmap buildDateUpdate(String time){
 			// font size
-			   float fontSize = datetextsize*3;
+			   float fontSize = datetextsize*6;
 			   
 		    //Bitmap myBitmap = Bitmap.createBitmap(clocktextsize*2, clocktextsize+20, Bitmap.Config.ARGB_4444);
 		    //Canvas myCanvas = new Canvas(myBitmap);
@@ -371,27 +692,31 @@ public class UpdateWidgetService extends Service {
 		    Rect displayBounds = new Rect();
 		    mDisplay.getRectSize(displayBounds);
 		    paint.getTextBounds(time, 0, time.length(), textBounds);
+
+			Paint.FontMetrics fm = paint.getFontMetrics();
+			int height = (int)(fm.descent - fm.ascent);
+
 		    Log.i("UWS", Float.toString(textBounds.width()));
 		    int maxwidth = displayBounds.width()-100;
 		    
 		    Log.i("UWS", "Maxwidth =" + Integer.toString(maxwidth) + " Orientation = " + Integer.toString(mDisplay.getRotation()));
-			if(textBounds.width()+20 >= maxwidth){
+			if(paint.measureText(time)+20 >= maxwidth){
 		    	time = (month_name + " " + String.valueOf(day) + ",");
 		    	paint.getTextBounds(time, 0, time.length(), textBounds);
-		    	bm = Bitmap.createBitmap(textBounds.width()+100, (textBounds.height()+2)*2, Bitmap.Config.ARGB_8888);
+		    	bm = Bitmap.createBitmap((int)paint.measureText(time)+100, (height+2)*2, Bitmap.Config.ARGB_8888);
 		    	Rect textBounds2 = new Rect();
 			    paint.getTextBounds(String.valueOf(year), 0, String.valueOf(year).length(), textBounds2);
 		    	
 		    	Canvas canvas = new Canvas(bm);
-		    	canvas.drawText(time, textBounds.width()/2+50, textBounds.height()-textBounds.bottom, paint);
+		    	canvas.drawText(time, textBounds.width()/2+50, height-textBounds.bottom, paint);
 		    	canvas.drawText(String.valueOf(year), textBounds.width()/2+50, textBounds.height()*2, paint);
-		    	dateheight = (textBounds.height()+2)*2;
+		    	dateheight = (height+2)*2;
 		    }else{
 		    // create bitmap for text
-		    	bm = Bitmap.createBitmap((textBounds.width()+100), (textBounds.height()+2), Bitmap.Config.ARGB_8888);
+		    	bm = Bitmap.createBitmap(((int)paint.measureText(time)+100), (height+2), Bitmap.Config.ARGB_8888);
 		    	Canvas canvas = new Canvas(bm);
-		    	canvas.drawText(time, textBounds.width()/2+50, textBounds.height()-textBounds.bottom, paint);
-		    	dateheight = (textBounds.height()+2);
+		    	canvas.drawText(time, textBounds.width()/2+50, height-textBounds.bottom, paint);
+		    	dateheight = (height+2);
 		    }
 		    // canvas
 		    
@@ -416,9 +741,9 @@ public class UpdateWidgetService extends Service {
 		    mDisplay.getRectSize(displayBounds);
 		    int height;
 			if(dateshown){
-		    	height = clockheight + dateheight + 100;
+		    	height = clockheight + dateheight + 25;
 		    }else{
-		    	height = clockheight + 100;
+		    	height = clockheight + 50;
 		    }
 		    Shader shader = null;
 		    int aw = Color.argb(200, 255, 255, 255);
@@ -454,7 +779,20 @@ public class UpdateWidgetService extends Service {
 		    //Rect textBounds = new Rect();
 		    //paint.getTextBounds(time, 0, time.length(), textBounds);
 		    // create bitmap for text
-		    Bitmap bm = Bitmap.createBitmap(2000, height, Bitmap.Config.ARGB_8888);
+            int w = 0;
+
+
+
+            if(getScreenWidth() > getScreenHeight()){
+                w=getScreenWidth();
+            } else{
+                w = getScreenHeight();
+            }
+            Log.d("UWS", "W = "+ w);
+            Log.d("UWS", "getW = "+ getScreenWidth());
+            Log.d("UWS", "getH = "+ getScreenHeight());
+
+		    Bitmap bm = Bitmap.createBitmap((int)(w*1.5f), height, Bitmap.Config.ARGB_8888);
 		    
 		    
 		    // canvas
@@ -500,8 +838,10 @@ public class UpdateWidgetService extends Service {
 			sminutes = Integer.toString(cal.get(Calendar.MINUTE));
 			int hours = cal.get(Calendar.HOUR_OF_DAY);
 			int minutes = cal.get(Calendar.MINUTE);
-			
-			
+
+			SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
+			String weekDay = dayFormat.format(cal.getTime());
+
 			day = cal.get(Calendar.DAY_OF_MONTH);
 			year = cal.get(Calendar.YEAR);
 			
@@ -509,12 +849,14 @@ public class UpdateWidgetService extends Service {
 			//SimpleDateFormat month_date = new SimpleDateFormat("MMMMM");
 			//month_name = month_date.format(cal.getTime());
 			DateFormat format = new DateFormat();
-			month_name = (String) DateFormat.format("MMMM",  cal); // Jun
+			month_name = (String) DateFormat.format("M",  cal); // Jun
 			Log.d("SDDC", "CurrentMonth: "+ month_name);
 
+			SimpleDateFormat yearFormat = new SimpleDateFormat("yy", Locale.US);
+			String year_name = yearFormat.format(cal.getTime());
 			
 			
-			sdate = (month_name + " " + String.valueOf(day) + ", " + String.valueOf(year));
+			sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
 			
 			
 			
@@ -551,9 +893,22 @@ public class UpdateWidgetService extends Service {
 			}
 	    }
 
-		@Override  
+	public int getScreenWidth() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        mWindowManager.getDefaultDisplay().getMetrics(metrics);
+		return metrics.widthPixels;
+	}
+    public int getScreenHeight() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        mWindowManager.getDefaultDisplay().getMetrics(metrics);
+        return metrics.heightPixels;
+    }
+
+	@Override
 	    public IBinder onBind(Intent intent)  
 	    {  
 	        return null;  
 	    }
+
+
 }

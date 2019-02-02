@@ -85,7 +85,7 @@ public class DigiClockProvider extends AppWidgetProvider{
 	        Log.d("SDCP","Clearing all preferences for:" + "prefs");
         	SharedPreferences prefs=context.getSharedPreferences("prefs", 0);
         	Log.d("SDCP","Number of preferences:" + prefs.getAll().size());
-            SharedPreferences.Editor prefsEdit = prefs.edit(); 
+            SharedPreferences.Editor prefsEdit = prefs.edit();
             prefsEdit.clear();
             //finally commit the values
             prefsEdit.commit();

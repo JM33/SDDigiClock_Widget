@@ -1,0 +1,4 @@
+TO-DO:
+----------
+
+Merge bitmaps into one
