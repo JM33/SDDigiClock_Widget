@@ -8,6 +8,7 @@
     <string name="p_clock_color">Clock Text Color</string>
     <string name="p_clock_size">Clock Text Size</string>
     <string name="p_date_title">Date Settings</string>
+    <string name="p_date_match_clock_color">Match Clock Color</string>
     <string name="p_date_color">Date Text Color</string>
     <string name="p_date_size">Date Text Size</string>
     <string name="p_date_format">Date Format</string>

@@ -57,6 +57,7 @@ public class UpdateWidgetService extends Service {
 	private int datetextsize;
 	private int cColor;
 	private int dColor;
+	private boolean dateMatchClockColor;
 	//private PackageManager packageManager;
 	private Intent alarmClockIntent;
 	
@@ -80,6 +81,7 @@ public class UpdateWidgetService extends Service {
 	private Display mDisplay;
 	private int dateheight;
 	private int clockheight;
+
 	//private String dateFormat;
 
 	boolean mIsPortraitOrientation;
@@ -131,7 +133,8 @@ public class UpdateWidgetService extends Service {
 		fillbg = true;
 		clocktextsize = prefs.getInt("ClockTextSize"+appWidgetId, 15);
 		datetextsize = prefs.getInt("DateTextSize"+appWidgetId, 12);
-		
+		dateMatchClockColor = prefs.getBoolean("DateMatchClockColor"+appWidgetId, true);
+
 		cColor = prefs.getInt("cColor"+appWidgetId, -1);
 		dColor = prefs.getInt("dColor"+appWidgetId, -1);
 		bgColor = prefs.getInt("bgColor"+appWidgetId, Color.BLACK);
@@ -148,7 +151,8 @@ public class UpdateWidgetService extends Service {
 	    view = new RemoteViews(getPackageName(), R.layout.widget_layout);  
 	    
 	    view.setImageViewBitmap(R.id.BackGround, buildClockUpdate(shours + ":" + sminutes, ampm, sdate, bgColor));
-		//view.setImageViewBitmap(R.id.clockView, buildClockUpdate(shours + ":" + sminutes);
+
+	    //view.setImageViewBitmap(R.id.clockView, buildClockUpdate(shours + ":" + sminutes);
 	    //view.setImageViewBitmap(R.id.ampmView, buildAMPMUpdate(ampm));
 		//view.setImageViewBitmap(R.id.dateView, buildDateUpdate(sdate));
 
@@ -470,6 +474,11 @@ public class UpdateWidgetService extends Service {
 			else
 				Datepaint.setTypeface(font);
 			Datepaint.setStyle(Paint.Style.FILL);
+			if(dateMatchClockColor){
+				Datepaint.setColor(cColor);
+			}else{
+				Datepaint.setColor(dColor);
+			}
 			Datepaint.setColor(dColor);
 			Datepaint.setTextSize((int)fontSize);
 			Datepaint.setShadowLayer(3f, 2f, 2f, Color.BLACK);

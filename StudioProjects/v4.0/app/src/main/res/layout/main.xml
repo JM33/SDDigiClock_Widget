@@ -15,6 +15,95 @@
     <FrameLayout android:id="@android:id/tabcontent" android:layout_width="fill_parent" android:layout_height="fill_parent">
 
         <LinearLayout
+            android:id="@+id/tab2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:paddingTop="60dp">
+
+            <ScrollView
+                android:id="@+id/scrollView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/blackbg"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/LinearLayout05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/TextView01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/p_date_size"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="25dp" />
+                    </LinearLayout>
+
+                    <SeekBar
+                        android:id="@+id/DateSizeSB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:progress="50" />
+
+                    <Button
+                        android:id="@+id/matchClockColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/blackbg"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/checkedbox"
+                        android:paddingLeft="30dp"
+                        android:text="@string/p_date_match_clock_color"
+                        android:textSize="25dp" />
+
+                    <Button
+                        android:id="@+id/DateTextColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/blackbg"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="30dp"
+                        android:text="@string/p_date_color"
+                        android:textSize="25dp" />
+
+                    <Button
+                        android:id="@+id/DateFormat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/blackbg"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="30dp"
+                        android:text="@string/p_date_format"
+                        android:textSize="25dp" />
+                    <!--
+                <Button android:id="@+id/DateFormat" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/blackbg" android:drawablePadding="10dp" android:paddingLeft="30dp" android:text="@string/p_date_format" android:textSize="25dp" />
+           -->
+
+                    <Button
+                        android:id="@+id/ShowDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/blackbg"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/checkedbox"
+                        android:paddingLeft="30dp"
+                        android:text="@string/p_show_date"
+                        android:textSize="25dp" />
+                </LinearLayout>
+            </ScrollView>
+          </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/tab4"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -160,7 +249,7 @@
                             android:id="@+id/Font7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/brushstroke"
+                            android:text="Weezer"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:textColor="#FFFFFF" />
 
@@ -336,28 +425,7 @@
                             android:src="@drawable/checkedbox" />
                     </FrameLayout>
 
-                    <FrameLayout
-                        android:id="@+id/FontSelect14"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp" >
 
-                        <TextView
-                            android:id="@+id/Font14"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/weezer"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textColor="#FFFFFF" />
-
-                        <ImageView
-                            android:id="@+id/ivFCB14"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:paddingLeft="20dp"
-                            android:src="@drawable/checkedbox" />
-                    </FrameLayout>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
@@ -409,23 +477,6 @@
           </LinearLayout>
         </ScrollView>
       </LinearLayout>
-      <LinearLayout android:id="@+id/tab2" android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" android:paddingTop="60dp">
-        <ScrollView android:id="@+id/scrollView1" android:layout_width="match_parent" android:layout_height="wrap_content">
-          <LinearLayout android:id="@+id/linearLayout3" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/blackbg" android:orientation="vertical">
-            <LinearLayout android:id="@+id/LinearLayout05" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:orientation="vertical">
-              <TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/p_date_size" android:textAppearance="?android:attr/textAppearanceLarge" android:textSize="25dp" />
-            </LinearLayout>
-            <SeekBar android:id="@+id/DateSizeSB" android:layout_width="match_parent" android:layout_height="wrap_content" android:progress="50" />
-            <Button android:id="@+id/DateTextColor" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/blackbg" android:drawablePadding="10dp" android:paddingLeft="30dp" android:text="@string/p_date_color" android:textSize="25dp" />
-              <Button android:id="@+id/DateFormat" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/blackbg" android:drawablePadding="10dp" android:paddingLeft="30dp" android:text="@string/p_date_format" android:textSize="25dp" />
-              <!--
-                <Button android:id="@+id/DateFormat" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/blackbg" android:drawablePadding="10dp" android:paddingLeft="30dp" android:text="@string/p_date_format" android:textSize="25dp" />
-           -->
-
-              <Button android:id="@+id/ShowDate" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/blackbg" android:drawablePadding="10dp" android:drawableRight="@drawable/checkedbox" android:paddingLeft="30dp" android:text="@string/p_show_date" android:textSize="25dp" />
-            </LinearLayout>
-          </ScrollView>
-        </LinearLayout>
-      </FrameLayout>
+    </FrameLayout>
     </TabHost>
   </LinearLayout>

@@ -70,6 +70,8 @@ public class DigiClockPrefs extends Activity{
 	private SeekBar btdtsize;
 	private Button btccolor;
 	private Button btdcolor;
+	private Button btdatematchcolor;
+	private boolean dateMatchClockColor;
 	private static PendingIntent service = null;
 	private Button btchoosebg;
 	private ImageButton btsave;
@@ -193,6 +195,7 @@ public class DigiClockPrefs extends Activity{
 
 		cColor = prefs.getInt("cColor"+appWidgetId, -1);
 		dColor = prefs.getInt("dColor"+appWidgetId, -1);
+		dateMatchClockColor = prefs.getBoolean("DateMatchClockColor"+appWidgetId, true);
 		bgColor = prefs.getInt("bgColor"+appWidgetId, Color.BLACK);
 
 		Bg = prefs.getInt("Bg"+appWidgetId, 3);
@@ -213,6 +216,7 @@ public class DigiClockPrefs extends Activity{
 		bts24 = (Button)DCP.findViewById(R.id.TwentyFour);
 		btccolor = (Button)DCP.findViewById(R.id.ClockTextColor);
 		btdcolor = (Button)DCP.findViewById(R.id.DateTextColor);
+		btdatematchcolor = (Button)DCP.findViewById(R.id.matchClockColor);
 		btctsize = (SeekBar)DCP.findViewById(R.id.ClockSizeSB);
 		btdtsize = (SeekBar)DCP.findViewById(R.id.DateSizeSB);
 		btsave = (ImageButton)DCP.findViewById(R.id.btSave);
@@ -255,6 +259,14 @@ public class DigiClockPrefs extends Activity{
 			btsdate.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkbox,0);
 		}
 
+		if(dateMatchClockColor){
+			btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
+			btsdate.setEnabled(false);
+		}else{
+			btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkbox,0);
+			btsdate.setEnabled(true);
+		}
+
 		if(ampmshown){
 			btsampm.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
 		}else{
@@ -288,6 +300,29 @@ public class DigiClockPrefs extends Activity{
 			    }
 	    	}
 	    });
+
+		btdatematchcolor.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				if(!dateMatchClockColor){
+					btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
+					dateMatchClockColor = true;
+					btsdate.setEnabled(false);
+					SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+					SharedPreferences.Editor edit = prefs.edit();
+					edit.putBoolean("DateMatchClockColor"+appWidgetId, dateMatchClockColor);
+					edit.commit();
+
+				}else{
+					btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkbox,0);
+					dateMatchClockColor = false;
+					btsdate.setEnabled(true);
+					SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+					SharedPreferences.Editor edit = prefs.edit();
+					edit.putBoolean("DateMatchClockColor"+appWidgetId, dateMatchClockColor);
+					edit.commit();
+				}
+			}
+		});
 
 		btsampm.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
@@ -660,12 +695,12 @@ public class DigiClockPrefs extends Activity{
         ImageView fcb11 = (ImageView)DCP.findViewById(R.id.ivFCB11);
         ImageView fcb12 = (ImageView)DCP.findViewById(R.id.ivFCB12);
         ImageView fcb13 = (ImageView)DCP.findViewById(R.id.ivFCB13);
-        ImageView fcb14 = (ImageView)DCP.findViewById(R.id.ivFCB14);
+        //ImageView fcb14 = (ImageView)DCP.findViewById(R.id.ivFCB14);
 
 
         checkboxesfonts = new ImageView []{fcb1, fcb2, fcb3, fcb4, fcb5,
         		fcb6, fcb7, fcb8, fcb9, fcb10,
-        		fcb11, fcb12, fcb13, fcb14};
+        		fcb11, fcb12, fcb13};
         mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
         for(int i =0; i<checkboxesfonts.length; i++){
         	//Log.i("SDC", "i = " + Integer.toString(i) + ", Bg = " + Integer.toString(Bg));
@@ -957,7 +992,7 @@ public class DigiClockPrefs extends Activity{
 	    	}
 
         });
-
+		/*
         FrameLayout fontview14 = (FrameLayout)DCP.findViewById(R.id.FontSelect14);
         fontview14.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -978,7 +1013,7 @@ public class DigiClockPrefs extends Activity{
                 edit.commit();
 	    	}
 		        });
-
+		*/
 
 
 
@@ -1005,9 +1040,9 @@ public class DigiClockPrefs extends Activity{
         txt = (TextView) findViewById(R.id.Font6);
         font = Typeface.createFromAsset(getAssets(), "256BYTES.TTF");
         txt.setTypeface(font);
-        //txt = (TextView) findViewById(R.id.Font7);
-        //font = Typeface.createFromAsset(getAssets(), "BRUSHSTP.TTF");
-        //txt.setTypeface(font);
+        txt = (TextView) findViewById(R.id.Font7);
+        font = Typeface.createFromAsset(getAssets(), "weezerfont.ttf");
+        txt.setTypeface(font);
         txt = (TextView) findViewById(R.id.Font8);
         font = Typeface.createFromAsset(getAssets(), "CARBONBL.ttf");
         txt.setTypeface(font);
@@ -1026,9 +1061,9 @@ public class DigiClockPrefs extends Activity{
         txt = (TextView) findViewById(R.id.Font13);
         font = Typeface.createFromAsset(getAssets(), "DS-DIGIB.TTF");
         txt.setTypeface(font);
-        txt = (TextView) findViewById(R.id.Font14);
-        font = Typeface.createFromAsset(getAssets(), "weezerfont.ttf");
-        txt.setTypeface(font);
+        //txt = (TextView) findViewById(R.id.Font14);
+        //font = Typeface.createFromAsset(getAssets(), "weezerfont.ttf");
+        //txt.setTypeface(font);
 	}
 
 
