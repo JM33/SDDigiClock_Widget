@@ -819,7 +819,7 @@ public class DigiClockPrefs extends Activity{
 	    				checkboxesfonts[i].setImageResource(R.drawable.checkbox);
 	    			}
 	    		}
-	    		Fontfile = "BRUSHSTP.TTF";
+	    		Fontfile = "weezerfont.ttf";
 	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
@@ -970,7 +970,7 @@ public class DigiClockPrefs extends Activity{
 	    				checkboxesfonts[i].setImageResource(R.drawable.checkbox);
 	    			}
 	    		}
-	    		Fontfile = "weezerfont.ttf";
+	    		Fontfile = "weezerfont.ttf"; //<--moved to 7
 	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);

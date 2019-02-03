@@ -487,7 +487,7 @@ public class UpdateWidgetService extends Service {
 			height = (int)(fm.descent - fm.ascent);
 
 			Log.i("UWS", Float.toString(textBoundsDate.width()));
-			int maxwidth = displayBounds.width()-100;
+			int maxwidth = displayBounds.width()-50;
 
 			Log.i("UWS", "Maxwidth =" + Integer.toString(maxwidth) + " Orientation = " + Integer.toString(mDisplay.getRotation()));
 			if(Datepaint.measureText(time)+20 >= maxwidth){
@@ -513,7 +513,7 @@ public class UpdateWidgetService extends Service {
 			float scale = getResources().getDisplayMetrics().density;
 			int textWidth = getScreenWidth() - (int) (16 * scale);
 			StaticLayout textLayout = new StaticLayout(
-					date, Datepaint, textWidth, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
+					date, Datepaint, textWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
 			// get height of multiline text
 			int textHeight = textLayout.getHeight();
@@ -536,9 +536,9 @@ public class UpdateWidgetService extends Service {
 			mDisplay.getRectSize(displayBounds);
 			//int height;
 			if(dateshown){
-				height = clockheight + dateheight + 50;
+				height = (int) ((clockheight + dateheight)*1.1f);
 			}else{
-				height = clockheight + 50;
+				height = (int) ((clockheight)*1.1f);
 			}
 			Shader shader = null;
 			int aw = Color.argb(200, 255, 255, 255);
@@ -574,37 +574,30 @@ public class UpdateWidgetService extends Service {
 			//Rect textBounds = new Rect();
 			//paint.getTextBounds(time, 0, time.length(), textBounds);
 			// create bitmap for text
-			int w = 0;
 
 
 
-			if(getScreenWidth() > getScreenHeight()){
-				w=getScreenWidth();
-			} else{
-				w = getScreenHeight();
-			}
-			Log.d("UWS", "W = "+ w);
-			Log.d("UWS", "getW = "+ getScreenWidth());
-			Log.d("UWS", "getH = "+ getScreenHeight());
-
-			Bitmap bm = Bitmap.createBitmap(getScreenWidth(), (int)height, Bitmap.Config.ARGB_8888);
+			Bitmap bm = Bitmap.createBitmap((int)(getScreenWidth()*1.5f), (int)height, Bitmap.Config.ARGB_8888);
 
 
 			// canvas
 			Canvas canvas = new Canvas(bm);
 			canvas.drawPaint(BGpaint);
 
-			canvas.drawText(time, canvas.getWidth()*0.5f - (Clockpaint.measureText(time)*0.5f), textBoundsClock.height()-textBoundsClock.bottom+50, Clockpaint);
-			canvas.drawText(ampm, canvas.getWidth()*0.5f + (Clockpaint.measureText(time)*0.5f) + 20, (textBoundsClock.height() *0.5f) +textBoundsAMPM.height()-textBoundsAMPM.bottom+50, AMPMpaint);
+			canvas.drawText(time, canvas.getWidth()*0.5f - (Clockpaint.measureText(time)*0.5f), textBoundsClock.height()-textBoundsClock.bottom+(height*0.1f), Clockpaint);
+			if(ampmshown) {
+				canvas.drawText(ampm, canvas.getWidth() * 0.5f + (Clockpaint.measureText(time) * 0.5f) + 20, (textBoundsClock.height() * 0.5f) + textBoundsAMPM.height() - textBoundsAMPM.bottom+(height*0.1f), AMPMpaint);
+			}
 
 
+			if(dateshown) {
+				// draw text to the Canvas center
+				canvas.save();
+				canvas.translate((canvas.getWidth() * 0.5f), y);
+				textLayout.draw(canvas);
+				canvas.restore();
 
-
-			// draw text to the Canvas center
-			canvas.save();
-			canvas.translate(x, y);
-			textLayout.draw(canvas);
-			canvas.restore();
+			}
 			//canvas.drawText(date, canvas.getWidth()*0.5f, (textBoundsDate.height()-textBoundsDate.bottom) + clockheight+50, Datepaint);
 			// for visualization
 			//canvas.drawPaint(paint);
