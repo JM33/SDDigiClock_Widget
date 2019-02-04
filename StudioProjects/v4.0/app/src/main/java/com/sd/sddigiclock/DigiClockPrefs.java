@@ -88,7 +88,7 @@ public class DigiClockPrefs extends Activity{
 
 	static int cColor;
 	static int dColor;
-	static int dateFormatIndex = 1;
+	static int dateFormatIndex = 0;
 
 	private TabHost tabhost;
 
@@ -191,7 +191,7 @@ public class DigiClockPrefs extends Activity{
 
 		clocktextsize = prefs.getInt("ClockTextSize"+appWidgetId, 15);
 		datetextsize = prefs.getInt("DateTextSize"+appWidgetId, 12);
-		dateFormatIndex = prefs.getInt("DateFormat" +appWidgetId, 1);
+		dateFormatIndex = prefs.getInt("DateFormat" +appWidgetId, 2);
 
 		cColor = prefs.getInt("cColor"+appWidgetId, -1);
 		dColor = prefs.getInt("dColor"+appWidgetId, -1);
@@ -261,10 +261,10 @@ public class DigiClockPrefs extends Activity{
 
 		if(dateMatchClockColor){
 			btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
-			btsdate.setEnabled(false);
+			btdcolor.setEnabled(false);
 		}else{
 			btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkbox,0);
-			btsdate.setEnabled(true);
+			btdcolor.setEnabled(true);
 		}
 
 		if(ampmshown){
@@ -306,7 +306,7 @@ public class DigiClockPrefs extends Activity{
 				if(!dateMatchClockColor){
 					btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
 					dateMatchClockColor = true;
-					btsdate.setEnabled(false);
+					btdcolor.setEnabled(false);
 					SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
 					SharedPreferences.Editor edit = prefs.edit();
 					edit.putBoolean("DateMatchClockColor"+appWidgetId, dateMatchClockColor);
@@ -315,7 +315,7 @@ public class DigiClockPrefs extends Activity{
 				}else{
 					btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkbox,0);
 					dateMatchClockColor = false;
-					btsdate.setEnabled(true);
+					btdcolor.setEnabled(true);
 					SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
 					SharedPreferences.Editor edit = prefs.edit();
 					edit.putBoolean("DateMatchClockColor"+appWidgetId, dateMatchClockColor);

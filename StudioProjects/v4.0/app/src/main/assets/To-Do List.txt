@@ -1,5 +1,8 @@
 TO-DO:
 ----------
 
-Date color match clock
+
 date formats - apply to text
+
+
+DONE -Date color match clock
