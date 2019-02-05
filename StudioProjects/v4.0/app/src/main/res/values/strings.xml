@@ -41,48 +41,12 @@
     <string name="dist_galaxy">Distant Galaxy</string>
     <string name="good_times">Good Times</string>
     <string name="jester">Jester</string>
-    <string name="komika">Komika</string>
     <string name="olde_english">Olde English</string>
     <string name="weezer">Weezer</string>
     <string name="custom_color">Custom Color</string>
     <string name="digital">Digital</string>
 
-    <string name="p_dateformat_MMMMDD">January 23</string>
-    <string name="p_dateformat_MMDD">Jan 23</string>
-    <string name="p_dateformat_MM_DD">01-23</string>
-    <string name="p_dateformat_DD_MM">23-01</string>
 
-    <string name="p_dateformat_DAY_MMMMDD">Tuesday January 23</string>
-    <string name="p_dateformat_DAY_MMDD">Tuesday Jan 23</string>
-    <string name="p_dateformat_DAY_MM_DD">Tuesday 01-23</string>
-    <string name="p_dateformat_DAY_DD_MM">Tuesday 23-01</string>
-
-    <string name="p_dateformat_DY_MMMMDD">Tue January 23</string>
-    <string name="p_dateformat_DY_MMDD">Tue Jan 23</string>
-    <string name="p_dateformat_DY_MM_DD">Tue 01-23</string>
-    <string name="p_dateformat_DY_DD_MM">Tue 23-01</string>
-
-    <string name="p_dateformat_MMMMDDYYYY">January 23, 2018</string>
-    <string name="p_dateformat_MMDDYYYY">Jan 23, 2018</string>
-    <string name="p_dateformat_MM_DD_YYYY">01-23-2018</string>
-    <string name="p_dateformat_MM_DD_YY">01-23-18</string>
-    <string name="p_dateformat_DD_MM_YYYY">23-01-2018</string>
-    <string name="p_dateformat_DD_MM_YY">23-01-18</string>
-
-
-    <string name="p_dateformat_DAY_MMMMDDYYYY">Tuesday January 23, 2018</string>
-    <string name="p_dateformat_DAY_MMDDYYYY">Tuesday Jan 23, 2018</string>
-    <string name="p_dateformat_DAY_MM_DD_YYYY">Tuesday 01-23-2018</string>
-    <string name="p_dateformat_DAY_MM_DD_YY">Tuesday 01-23-18</string>
-    <string name="p_dateformat_DAY_DD_MM_YYYY">Tuesday 23-01-2018</string>
-    <string name="p_dateformat_DAY_DD_MM_YY">Tuesday 23-01-18</string>
-
-    <string name="p_dateformat_DY_MMMMDDYYYY">Tue January 23, 2018</string>
-    <string name="p_dateformat_DY_MMDDYYYY">Tue Jan 23, 2018</string>
-    <string name="p_dateformat_DY_MM_DD_YYYY">Tue 01-23-2018</string>
-    <string name="p_dateformat_DY_MM_DD_YY">Tue 01-23-18</string>
-    <string name="p_dateformat_DY_DD_MM_YYYY">Tue 23-01-2018</string>
-    <string name="p_dateformat_DY_DD_MM_YY">Tue 23-01-18</string>
 
 
     <string name="p_date_format_close">Close</string>
@@ -104,7 +68,6 @@
         <item>1-23-18</item>
         <item>1/23/18</item>
         <item>January 23</item>
-        <item>Jan 23, 2018</item>
         <item>1-23</item>
         <item>1/23</item>
         <item>Tue January 23</item>
@@ -127,5 +90,14 @@
         <item>Tue 23/1</item>
         <item>Tuesday 23-13</item>
         <item>Tuesday 23/13</item>
+        <item>Tue 1-23-18</item>
+        <item>Tue 1/23/18</item>
+        <item>Tuesday 1-23-18</item>
+        <item>Tuesday 1/23/18</item>
+        <item>Tue 23-1-18</item>
+        <item>Tue 23/1/18</item>
+        <item>Tuesday 23-1-18</item>
+        <item>Tuesday 23/1/18</item>
+
     </string-array>
 </resources>
