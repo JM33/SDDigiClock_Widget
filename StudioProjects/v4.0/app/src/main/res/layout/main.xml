@@ -377,30 +377,7 @@
                             android:src="@drawable/checkedbox" />
                     </FrameLayout>
 
-                    <FrameLayout
-                        android:id="@+id/FontSelect12"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:visibility="gone" >
 
-                        <TextView
-                            android:id="@+id/Font12"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/komika"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textColor="#FFFFFF"
-                            android:visibility="visible" />
-
-                        <ImageView
-                            android:id="@+id/ivFCB12"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:paddingLeft="20dp"
-                            android:src="@drawable/checkedbox" />
-                    </FrameLayout>
 
                     <FrameLayout
                         android:id="@+id/FontSelect13"

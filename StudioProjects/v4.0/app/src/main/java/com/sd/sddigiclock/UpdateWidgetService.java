@@ -242,7 +242,7 @@ public class UpdateWidgetService extends Service {
 		        {"Standard Alarm Clock", "com.android.deskclock", "com.android.deskclock.DeskClock"},
 		        {"Froyo Nexus Alarm Clock", "com.google.android.deskclock", "com.android.deskclock.DeskClock"},
 		        {"Moto Blur Alarm Clock", "com.motorola.blur.alarmclock",  "com.motorola.blur.alarmclock.AlarmClock"},
-		        {"Samsung Galaxy Clock", "com.sec.android.app.clockpackage","com.sec.android.app.clockpackage.ClockPackage"},
+		        //{"Samsung Galaxy Clock","com.sec.android.app.clockpackage","com.sec.android.app.clockpackage.ClockPackage",} //
 		        //{"ICS Nexus Alarm Clock", "com.google.android.deskclock", "com.android.deskclockgoogle.DeskClockGoogle"}
 		};
 		boolean foundClockImpl = false;

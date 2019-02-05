@@ -223,7 +223,7 @@ public class DigiClockPrefs extends Activity{
 		btcancel = (ImageButton)DCP.findViewById(R.id.btCancel);
 		btdtformat = (Button)DCP.findViewById(R.id.DateFormat);
 
-        mDateFormatFrameLayout = (FrameLayout)DCP.findViewById(R.id.DateFormatFrameLayout);
+        //mDateFormatFrameLayout = (FrameLayout)DCP.findViewById(R.id.DateFormatFrameLayout);
 
 		btctsize.setProgress(clocktextsize);
 		btdtsize.setProgress(datetextsize);
@@ -693,14 +693,14 @@ public class DigiClockPrefs extends Activity{
         ImageView fcb9 = (ImageView)DCP.findViewById(R.id.ivFCB9);
         ImageView fcb10 = (ImageView)DCP.findViewById(R.id.ivFCB10);
         ImageView fcb11 = (ImageView)DCP.findViewById(R.id.ivFCB11);
-        ImageView fcb12 = (ImageView)DCP.findViewById(R.id.ivFCB12);
+        //ImageView fcb12 = (ImageView)DCP.findViewById(R.id.ivFCB12);
         ImageView fcb13 = (ImageView)DCP.findViewById(R.id.ivFCB13);
         //ImageView fcb14 = (ImageView)DCP.findViewById(R.id.ivFCB14);
 
 
         checkboxesfonts = new ImageView []{fcb1, fcb2, fcb3, fcb4, fcb5,
         		fcb6, fcb7, fcb8, fcb9, fcb10,
-        		fcb11, fcb12, fcb13};
+        		fcb11, fcb13};
         mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
         for(int i =0; i<checkboxesfonts.length; i++){
         	//Log.i("SDC", "i = " + Integer.toString(i) + ", Bg = " + Integer.toString(Bg));

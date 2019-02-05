@@ -16,12 +16,12 @@
         "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\layout\\bgselect.xml"
     },
     {
-        "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ambilwarna_cursor.png.flat",
-        "source": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable\\ambilwarna_cursor.png"
-    },
-    {
         "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ambilwarna_target.png.flat",
         "source": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-xhdpi\\ambilwarna_target.png"
+    },
+    {
+        "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ambilwarna_cursor.png.flat",
+        "source": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable\\ambilwarna_cursor.png"
     },
     {
         "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_clearbg.9.png.flat",
@@ -40,12 +40,12 @@
         "source": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\src\\main\\res\\layout\\widget_layout.xml"
     },
     {
-        "merged": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ambilwarna_cursor.png.flat",
-        "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-hdpi\\ambilwarna_cursor.png"
-    },
-    {
         "merged": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_checkedbox.png.flat",
         "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-hdpi\\checkedbox.png"
+    },
+    {
+        "merged": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ambilwarna_cursor.png.flat",
+        "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-hdpi\\ambilwarna_cursor.png"
     },
     {
         "merged": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ambilwarna_hue.png.flat",
@@ -120,24 +120,20 @@
         "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-hdpi\\widget_preview.png"
     },
     {
-        "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_layout_date_format.xml.flat",
-        "source": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\src\\main\\res\\layout\\layout_date_format.xml"
-    },
-    {
         "merged": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_time.png.flat",
         "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-hdpi\\time.png"
     },
     {
-        "merged": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-xhdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_blank.png.flat",
+        "source": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-hdpi\\blank.png"
     },
     {
         "merged": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_main2.xml.flat",
         "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\layout\\main2.xml"
     },
     {
-        "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_blank.png.flat",
-        "source": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-hdpi\\blank.png"
+        "merged": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-xhdpi\\ic_launcher.png"
     },
     {
         "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ambilwarna_cursor.png.flat",
@@ -164,12 +160,12 @@
         "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\layout\\main.xml"
     },
     {
-        "merged": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_clearbg.9.png.flat",
-        "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-hdpi\\clearbg.9.png"
-    },
-    {
         "merged": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ambilwarna_cursor.png.flat",
         "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-ldpi\\ambilwarna_cursor.png"
+    },
+    {
+        "merged": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_clearbg.9.png.flat",
+        "source": "C:\\Users\\Brian\\StudioProjects\\v4.0\\app\\src\\main\\res\\drawable-hdpi\\clearbg.9.png"
     },
     {
         "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\layout-land_ambilwarna_dialog.xml.flat",
