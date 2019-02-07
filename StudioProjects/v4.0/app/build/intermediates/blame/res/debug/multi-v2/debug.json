@@ -16,16 +16,16 @@
             ]
         },
         {
-            "outputFile": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\values-tl_values-tl.arsc.flat",
+            "outputFile": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\values-hi_values-hi.arsc.flat",
             "map": [
                 {
-                    "source": "C:\\Users\\Brian\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-23.2.1.aar\\0af4c7a798d8aa741aaabd86185beb87\\res\\values-tl\\values-tl.xml",
+                    "source": "C:\\Users\\Brian\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-23.2.1.aar\\0af4c7a798d8aa741aaabd86185beb87\\res\\values-hi\\values-hi.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,174,282,405,513,630,718,824,945,1024,1102,1186,1295,1406,1507,1617,1734,1842,1965,2067",
-                        "endColumns": "118,107,122,107,116,87,105,120,78,77,83,108,110,100,109,116,107,122,101,100",
-                        "endOffsets": "169,277,400,508,625,713,819,940,1019,1097,1181,1290,1401,1502,1612,1729,1837,1960,2062,2163"
+                        "startOffsets": "55,172,280,403,508,615,700,802,924,1001,1079,1169,1278,1380,1478,1588,1688,1803,1928,2034",
+                        "endColumns": "116,107,122,104,106,84,101,121,76,77,89,108,101,97,109,99,114,124,105,100",
+                        "endOffsets": "167,275,398,503,610,695,797,919,996,1074,1164,1273,1375,1473,1583,1683,1798,1923,2029,2130"
                     }
                 }
             ]
@@ -47,16 +47,16 @@
             ]
         },
         {
-            "outputFile": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\values-hi_values-hi.arsc.flat",
+            "outputFile": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\values-tl_values-tl.arsc.flat",
             "map": [
                 {
-                    "source": "C:\\Users\\Brian\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-23.2.1.aar\\0af4c7a798d8aa741aaabd86185beb87\\res\\values-hi\\values-hi.xml",
+                    "source": "C:\\Users\\Brian\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-23.2.1.aar\\0af4c7a798d8aa741aaabd86185beb87\\res\\values-tl\\values-tl.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,172,280,403,508,615,700,802,924,1001,1079,1169,1278,1380,1478,1588,1688,1803,1928,2034",
-                        "endColumns": "116,107,122,104,106,84,101,121,76,77,89,108,101,97,109,99,114,124,105,100",
-                        "endOffsets": "167,275,398,503,610,695,797,919,996,1074,1164,1273,1375,1473,1583,1683,1798,1923,2029,2130"
+                        "startOffsets": "55,174,282,405,513,630,718,824,945,1024,1102,1186,1295,1406,1507,1617,1734,1842,1965,2067",
+                        "endColumns": "118,107,122,107,116,87,105,120,78,77,83,108,110,100,109,116,107,122,101,100",
+                        "endOffsets": "169,277,400,508,625,713,819,940,1019,1097,1181,1290,1401,1502,1612,1729,1837,1960,2062,2163"
                     }
                 }
             ]
@@ -245,21 +245,6 @@
             ]
         },
         {
-            "outputFile": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\values-fr_values-fr.arsc.flat",
-            "map": [
-                {
-                    "source": "C:\\Users\\Brian\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-23.2.1.aar\\0af4c7a798d8aa741aaabd86185beb87\\res\\values-fr\\values-fr.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,166,274,397,512,623,705,811,941,1024,1104,1190,1300,1412,1515,1626,1733,1840,1962,2061",
-                        "endColumns": "110,107,122,114,110,81,105,129,82,79,85,109,111,102,110,106,106,121,98,100",
-                        "endOffsets": "161,269,392,507,618,700,806,936,1019,1099,1185,1295,1407,1510,1621,1728,1835,1957,2056,2157"
-                    }
-                }
-            ]
-        },
-        {
             "outputFile": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\values-hy-rAM_values-hy-rAM.arsc.flat",
             "map": [
                 {
@@ -270,6 +255,21 @@
                         "startOffsets": "55,158,266,389,490,600,690,796,911,993,1074,1159,1266,1373,1472,1582,1689,1790,1910,2009",
                         "endColumns": "102,107,122,100,109,89,105,114,81,80,84,106,106,98,109,106,100,119,98,100",
                         "endOffsets": "153,261,384,485,595,685,791,906,988,1069,1154,1261,1368,1467,1577,1684,1785,1905,2004,2105"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\values-fr_values-fr.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\Users\\Brian\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-23.2.1.aar\\0af4c7a798d8aa741aaabd86185beb87\\res\\values-fr\\values-fr.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,166,274,397,512,623,705,811,941,1024,1104,1190,1300,1412,1515,1626,1733,1840,1962,2061",
+                        "endColumns": "110,107,122,114,110,81,105,129,82,79,85,109,111,102,110,106,106,121,98,100",
+                        "endOffsets": "161,269,392,507,618,700,806,936,1019,1099,1185,1295,1407,1510,1621,1728,1835,1957,2056,2157"
                     }
                 }
             ]

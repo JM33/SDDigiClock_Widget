@@ -238,7 +238,7 @@ public class UpdateWidgetService extends Service {
 		};
 		boolean foundClockImpl = false;
 
-		Intent appchooserintent=new Intent(UpdateWidgetService.this,AppChooserActivity.class);
+		Intent appchooserintent=new Intent(UpdateWidgetService.this,AppSelector.class);
 	
 		for(int i=0; i<clockImpls.length; i++) {
 		    String vendor = clockImpls[i][0];
@@ -263,7 +263,7 @@ public class UpdateWidgetService extends Service {
 			view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);
 
 		}
-
+		/*
 		if (foundClockImpl) {
 		    PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, alarmClockIntent, 0);
 		    view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);
@@ -271,6 +271,8 @@ public class UpdateWidgetService extends Service {
 		else{
 			view.setOnClickPendingIntent(R.id.BackGround, pendingIntent);
 		}
+		*/
+
 		AppWidgetManager manager = AppWidgetManager.getInstance(this);  
 		//ComponentName thisWidget = new ComponentName(this, DigiClockProvider.class);
 	    

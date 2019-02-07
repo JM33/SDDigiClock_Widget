@@ -34,9 +34,8 @@
         <service android:name=".UpdateWidgetService" />
 
         <activity
-            android:name=".AppChooserActivity"
-            android:label="@string/title_activity_app_chooser"
-            android:theme="@style/AppThemeDialog"></activity>
+            android:name=".AppSelector"
+            android:theme="@style/AppThemeDialog" />
     </application>
 
 </manifest>
