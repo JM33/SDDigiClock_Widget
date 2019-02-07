@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
@@ -38,6 +39,7 @@ import android.text.format.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /*
@@ -59,7 +61,7 @@ public class UpdateWidgetService extends Service {
 	private int dColor;
 	private boolean dateMatchClockColor;
 	//private PackageManager packageManager;
-	private Intent alarmClockIntent;
+	public static Intent alarmClockIntent;
 	
 	private Intent prefsIntent;
 	
@@ -83,6 +85,10 @@ public class UpdateWidgetService extends Service {
 	private int dateheight;
 	private int clockheight;
 	private int dateFormatIndex;
+
+	private String clockButtonApp;
+
+	List<ApplicationInfo> packages;
 
 	//private String dateFormat;
 
@@ -145,8 +151,9 @@ public class UpdateWidgetService extends Service {
 		Bg = prefs.getInt("Bg"+appWidgetId, 3);
 		Fontfile = prefs.getString("Font"+appWidgetId, "Roboto-Regular.ttf");
 		mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
-		//dateFormat = prefs.getString("DateFormat", "MMMMDDYYYY");
-		//getPrefs();
+
+		clockButtonApp = prefs.getString("ClockButtonApp" + appWidgetId, "NONE");
+
 		setText();
 		
 		
@@ -167,34 +174,7 @@ public class UpdateWidgetService extends Service {
 		//view.setTextViewText(R.id.DateText, sdate);
 		//view.setTextViewText(R.id.AMPMText, ampm);
 		
-		/*
-		if(Bg == 0){
-			//view.setInt(R.id.linearLayout2, "setBackgroundResource", getImage(Bg));
-			view.setImageViewBitmap(R.id.BackGround, buildBGUpdate(bgColor));
-		}
-		
-		else{
-			if(Bg == 1){
-				//view.setInt(R.id.linearLayout2, "setBackgroundResource", getImage(Bg));
-				view.setImageViewBitmap(R.id.BackGround, buildBGUpdate(bgColor));
-				
-			}else{
-				if(Bg == 2){
-					
-					//view.setInt(R.id.linearLayout2, "setBackgroundResource", getImage(0));
-					view.setImageViewBitmap(R.id.BackGround, buildBGUpdate(bgColor));
-				}
-				else{
-					if(Bg == 3){
-					
-						//view.setInt(R.id.linearLayout2, "setBackgroundResource", getImage(0));
-						view.setImageViewBitmap(R.id.BackGround, buildBGUpdate(bgColor));
-					}
-				}
-			}
-		}
-		
-		*/
+
 		
 		//float ctsize = clocktextsize*1.5f + 6;
 		//float dtsize = datetextsize;
@@ -235,7 +215,18 @@ public class UpdateWidgetService extends Service {
 		//DATE INTENT on click date
 		//PendingIntent pendingIntentD = PendingIntent.getActivity(mContext, 0, prefsIntent, 0);
 	    //view.setOnClickPendingIntent(R.id.dateView, pendingIntentD);
-	    
+
+		final PackageManager pm = getPackageManager();
+	//get a list of installed apps.
+		packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+
+		for (ApplicationInfo packageInfo : packages) {
+			Log.d("UWS", "Installed package :" + packageInfo.packageName);
+			Log.d("UWS", "Source dir : " + packageInfo.sourceDir);
+			Log.d("UWS", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
+		}
+// the getLaunchIntentForPackage returns an intent that you can use with startActivity()
+
 	    
 		String clockImpls[][] = {
 		        {"HTC Alarm Clock", "com.htc.android.worldclock", "com.htc.android.worldclock.WorldClockTabControl" },
@@ -246,6 +237,8 @@ public class UpdateWidgetService extends Service {
 		        //{"ICS Nexus Alarm Clock", "com.google.android.deskclock", "com.android.deskclockgoogle.DeskClockGoogle"}
 		};
 		boolean foundClockImpl = false;
+
+		Intent appchooserintent=new Intent(UpdateWidgetService.this,AppChooserActivity.class);
 	
 		for(int i=0; i<clockImpls.length; i++) {
 		    String vendor = clockImpls[i][0];
@@ -261,7 +254,16 @@ public class UpdateWidgetService extends Service {
 		        Log.d("SDDC", vendor + " does not exists");
 		    }
 		}
-	
+
+		if(clockButtonApp == "NONE"){
+			PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, appchooserintent, 0);
+			view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);
+		}else{
+			PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, alarmClockIntent, 0);
+			view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);
+
+		}
+
 		if (foundClockImpl) {
 		    PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, alarmClockIntent, 0);
 		    view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);

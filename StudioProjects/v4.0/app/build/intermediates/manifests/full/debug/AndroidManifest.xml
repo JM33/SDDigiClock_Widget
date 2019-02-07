@@ -8,6 +8,10 @@
         android:minSdkVersion="17"
         android:targetSdkVersion="12" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:debuggable="true"
         android:icon="@drawable/ic_launcher"
@@ -32,6 +36,11 @@
         </receiver>
 
         <service android:name="com.sd.sddigiclock.UpdateWidgetService" />
+
+        <activity
+            android:name="com.sd.sddigiclock.AppChooserActivity"
+            android:label="@string/title_activity_app_chooser"
+            android:theme="@style/AppThemeDialog" />
     </application>
 
 </manifest>

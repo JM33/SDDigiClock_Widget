@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">SD Digiclock</string>
+    <string name="app_name">SD Digiclock</string>
 
-    <string name="p_Title">DigiClock Settings</string> 
-    
+    <string name="p_Title">DigiClock Settings</string>
+
     <string name="p_clock_title">Clock Settings</string>
     <string name="p_clock_color">Clock Text Color</string>
     <string name="p_clock_size">Clock Text Size</string>
@@ -19,10 +19,10 @@
     <string name="p_bg_fill_title">Fill background</string>
     <string name="p_bg_fill_sum_on">The background will fill widget\'s cells</string>
     <string name="p_bg_fill_sum_off">The background will wrap the text</string>
-    
+
     <string name="bgs_ok">OK</string>
     <string name="bgs_title">Choose Background</string>
-    
+
     <string name="p_save">Save</string>
     <string name="p_cancel">Cancel</string>
     <string name="hello">hello</string>
@@ -34,7 +34,7 @@
     <string name="robotofont">Roboto</string>
     <string name="droidsans">Droid Sans</string>
     <string name="droidserif">Droid Serif</string>
-    
+
     <string name="bytes">256 Bytes</string>
     <string name="brushstroke">Brush Stroke</string>
     <string name="carbon">Carbon</string>
@@ -45,8 +45,6 @@
     <string name="weezer">Weezer</string>
     <string name="custom_color">Custom Color</string>
     <string name="digital">Digital</string>
-
-
 
 
     <string name="p_date_format_close">Close</string>
@@ -100,4 +98,6 @@
         <item>Tuesday 23/1/18</item>
 
     </string-array>
+    <string name="title_activity_app_chooser">AppChooserActivity</string>
+    <string name="choose_app_title">Select An Application</string>
 </resources>
