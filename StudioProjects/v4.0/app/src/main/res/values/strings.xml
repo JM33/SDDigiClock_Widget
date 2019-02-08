@@ -100,4 +100,5 @@
     </string-array>
     <string name="title_activity_app_chooser">AppChooserActivity</string>
     <string name="choose_app_title">Select An Application</string>
+    <string name="clock_click_app">Clock Click App</string>
 </resources>

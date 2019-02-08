@@ -1,17 +1,17 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-43:12
+ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-41:12
+INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-41:12
+INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-41:12
+INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-41:12
 MERGED from [com.android.support:appcompat-v7:23.2.1] C:\Users\Brian\.gradle\caches\transforms-1\files-1.1\appcompat-v7-23.2.1.aar\0af4c7a798d8aa741aaabd86185beb87\AndroidManifest.xml:17:1-27:12
 MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\Brian\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\d0ece523b2d92221ad06a94bdbdfbe5a\AndroidManifest.xml:2:1-11:12
 MERGED from [com.android.support:animated-vector-drawable:23.2.1] C:\Users\Brian\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-23.2.1.aar\f125ee5541ec39c98bcbf833cc5bd6e3\AndroidManifest.xml:2:1-9:12
 MERGED from [com.android.support:support-vector-drawable:23.2.1] C:\Users\Brian\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-23.2.1.aar\8c6920f797cad1f1508ed67ddaf723d4\AndroidManifest.xml:2:1-9:12
 MERGED from [com.android.support:support-v4:23.2.1] C:\Users\Brian\.gradle\caches\transforms-1\files-1.1\support-v4-23.2.1.aar\00c47e2622a2318b944577a546821251\AndroidManifest.xml:17:1-24:12
-INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-43:12
-INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-43:12
+INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-41:12
+INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-41:12
+INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:2:1-41:12
 	package
 		ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:3:5-33
 		INJECTED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml
@@ -65,7 +65,7 @@ ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidMani
 	android:name
 		ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:11:22-77
 application
-ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:13:5-41:19
+ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:13:5-39:19
 MERGED from [com.android.support:appcompat-v7:23.2.1] C:\Users\Brian\.gradle\caches\transforms-1\files-1.1\appcompat-v7-23.2.1.aar\0af4c7a798d8aa741aaabd86185beb87\AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:appcompat-v7:23.2.1] C:\Users\Brian\.gradle\caches\transforms-1\files-1.1\appcompat-v7-23.2.1.aar\0af4c7a798d8aa741aaabd86185beb87\AndroidManifest.xml:25:5-20
 MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\Brian\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.3.aar\d0ece523b2d92221ad06a94bdbdfbe5a\AndroidManifest.xml:9:5-20
@@ -112,15 +112,9 @@ service#com.sd.sddigiclock.UpdateWidgetService
 ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:34:9-56
 	android:name
 		ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:34:18-53
-activity#com.sd.sddigiclock.AppChooserActivity
-ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:36:9-39:53
-	android:label
-		ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:38:13-63
-	android:theme
-		ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:39:13-50
-	android:name
-		ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:37:13-47
 activity#com.sd.sddigiclock.AppSelector
-ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:40:9-58
+ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:36:9-38:53
+	android:theme
+		ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:38:13-50
 	android:name
-		ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:40:19-46
+		ADDED from C:\Users\Brian\Documents\StudioProjects\v4.0\app\src\main\AndroidManifest.xml:37:13-40

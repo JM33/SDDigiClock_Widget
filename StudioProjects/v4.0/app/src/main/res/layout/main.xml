@@ -15,6 +15,106 @@
     <FrameLayout android:id="@android:id/tabcontent" android:layout_width="fill_parent" android:layout_height="fill_parent">
 
         <LinearLayout
+            android:id="@+id/tab1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="60dp">
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout4"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/blackbg"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/p_clock_size"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="25dp" />
+                        </LinearLayout>
+
+                        <SeekBar
+                            android:id="@+id/ClockSizeSB"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:progress="50" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/LinearLayout02"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/ClockTextColor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/blackbg"
+                            android:drawablePadding="10dp"
+                            android:paddingLeft="30dp"
+                            android:text="@string/p_clock_color"
+                            android:textSize="25dp" />
+
+                        <Button
+                            android:id="@+id/TwentyFour"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/blackbg"
+                            android:drawablePadding="10dp"
+                            android:drawableRight="@drawable/checkedbox"
+                            android:paddingLeft="30dp"
+                            android:text="24 Hour Clock"
+                            android:textSize="25dp" />
+
+                        <Button
+                            android:id="@+id/ShowAMPM"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/blackbg"
+                            android:drawablePadding="10dp"
+                            android:drawableRight="@drawable/checkedbox"
+                            android:paddingLeft="30dp"
+                            android:text="@string/p_show_ampm"
+                            android:textSize="25dp" />
+
+                        <Button
+                            android:id="@+id/ClockClickApp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/blackbg"
+                            android:drawablePadding="10dp"
+                            android:paddingLeft="30dp"
+                            android:text="@string/clock_click_app"
+                            android:textSize="25dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/tab2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -433,23 +533,6 @@
                 <ImageView android:id="@+id/ImageView08" android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/time" />
               </LinearLayout>
               <ImageView android:id="@+id/ivCB1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="right|center_vertical" android:paddingLeft="20dp" android:src="@drawable/checkedbox" />
-            </LinearLayout>
-          </LinearLayout>
-        </ScrollView>
-      </LinearLayout>
-      <LinearLayout android:id="@+id/tab1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingTop="60dp">
-        <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
-          <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
-            <LinearLayout android:id="@+id/linearLayout4" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_gravity="center" android:background="@drawable/blackbg" android:orientation="vertical">
-              <LinearLayout android:id="@+id/linearLayout2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:orientation="vertical">
-                <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/p_clock_size" android:textAppearance="?android:attr/textAppearanceLarge" android:textSize="25dp" />
-              </LinearLayout>
-              <SeekBar android:id="@+id/ClockSizeSB" android:layout_width="match_parent" android:layout_height="wrap_content" android:progress="50" />
-            </LinearLayout>
-            <LinearLayout android:id="@+id/LinearLayout02" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
-              <Button android:id="@+id/ClockTextColor" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/blackbg" android:drawablePadding="10dp" android:paddingLeft="30dp" android:text="@string/p_clock_color" android:textSize="25dp" />
-              <Button android:id="@+id/TwentyFour" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/blackbg" android:drawablePadding="10dp" android:drawableRight="@drawable/checkedbox" android:paddingLeft="30dp" android:text="24 Hour Clock" android:textSize="25dp" />
-              <Button android:id="@+id/ShowAMPM" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/blackbg" android:drawablePadding="10dp" android:drawableRight="@drawable/checkedbox" android:paddingLeft="30dp" android:text="@string/p_show_ampm" android:textSize="25dp" />
             </LinearLayout>
           </LinearLayout>
         </ScrollView>

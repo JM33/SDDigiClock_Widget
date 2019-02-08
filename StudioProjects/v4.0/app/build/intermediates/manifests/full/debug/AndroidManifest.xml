@@ -15,7 +15,8 @@
     <application
         android:debuggable="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:testOnly="true" >
         <activity
             android:name="com.sd.sddigiclock.DigiClockPrefs"
             android:label="@string/app_name" >
@@ -37,10 +38,8 @@
         <service android:name="com.sd.sddigiclock.UpdateWidgetService" />
 
         <activity
-            android:name="com.sd.sddigiclock.AppChooserActivity"
-            android:label="@string/title_activity_app_chooser"
+            android:name="com.sd.sddigiclock.AppSelector"
             android:theme="@style/AppThemeDialog" />
-        <activity android:name="com.sd.sddigiclock.AppSelector" />
     </application>
 
 </manifest>

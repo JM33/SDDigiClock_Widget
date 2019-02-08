@@ -1252,10 +1252,6 @@
         "source": "C:\\Users\\Brian\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-23.2.1.aar\\0af4c7a798d8aa741aaabd86185beb87\\res\\drawable-hdpi-v4\\abc_ic_menu_selectall_mtrl_alpha.png"
     },
     {
-        "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_app_chooser.xml.flat",
-        "source": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\src\\main\\res\\layout\\activity_app_chooser.xml"
-    },
-    {
         "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_ic_menu_paste_mtrl_am_alpha.png.flat",
         "source": "C:\\Users\\Brian\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-23.2.1.aar\\0af4c7a798d8aa741aaabd86185beb87\\res\\drawable-xhdpi-v4\\abc_ic_menu_paste_mtrl_am_alpha.png"
     },
@@ -1418,6 +1414,10 @@
     {
         "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_textfield_activated_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\Brian\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-23.2.1.aar\\0af4c7a798d8aa741aaabd86185beb87\\res\\drawable-mdpi-v4\\abc_textfield_activated_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\layout_listview_text.xml.flat",
+        "source": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\src\\main\\res\\layout\\listview_text.xml"
     },
     {
         "merged": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_switch_to_on_mtrl_00001.9.png.flat",

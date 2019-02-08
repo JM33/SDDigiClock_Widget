@@ -25,6 +25,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.text.Layout;
 import android.text.StaticLayout;
@@ -48,7 +49,7 @@ import java.util.Locale;
  */
 public class UpdateWidgetService extends Service {
 	private static final String LOG = "DC SRVC";
-	private static Context mContext;
+	public static Context mContext;
 	private String ampm;
 	private String shours;
 	private String sminutes;
@@ -74,21 +75,23 @@ public class UpdateWidgetService extends Service {
 	
 	int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 	private boolean fillbg;
-	private PackageManager packageManager;
+	private static PackageManager packageManager;
 	private boolean show24;
 	private int mFont;
 	private String Fontfile;
 	private int bgColor;
-	private RemoteViews view;
+	private static RemoteViews view;
 	private WindowManager mWindowManager;
 	private Display mDisplay;
 	private int dateheight;
 	private int clockheight;
 	private int dateFormatIndex;
 
-	private String clockButtonApp;
+	private static String clockButtonApp;
 
-	List<ApplicationInfo> packages;
+	static List<ApplicationInfo> packages;
+
+	private static Handler mHandler;
 
 	//private String dateFormat;
 
@@ -100,6 +103,8 @@ public class UpdateWidgetService extends Service {
 	        super.onCreate(); 
 	        
 	        mContext = this.getApplicationContext();
+
+	        mHandler = new Handler();
 	        
 	        mWindowManager =  (WindowManager) getSystemService(WINDOW_SERVICE);
 	        mDisplay = mWindowManager.getDefaultDisplay();
@@ -152,8 +157,8 @@ public class UpdateWidgetService extends Service {
 		Fontfile = prefs.getString("Font"+appWidgetId, "Roboto-Regular.ttf");
 		mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
 
-		clockButtonApp = prefs.getString("ClockButtonApp" + appWidgetId, "NONE");
-
+		clockButtonApp = prefs.getString("ClockButtonApp", "NONE");
+        Log.d("SDDC", "ClockApp saved = " + clockButtonApp);
 		setText();
 		
 		
@@ -220,11 +225,14 @@ public class UpdateWidgetService extends Service {
 	//get a list of installed apps.
 		packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
+		/*
 		for (ApplicationInfo packageInfo : packages) {
 			Log.d("UWS", "Installed package :" + packageInfo.packageName);
 			Log.d("UWS", "Source dir : " + packageInfo.sourceDir);
 			Log.d("UWS", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
 		}
+		*/
+
 // the getLaunchIntentForPackage returns an intent that you can use with startActivity()
 
 	    
@@ -248,14 +256,14 @@ public class UpdateWidgetService extends Service {
 		        ComponentName cn = new ComponentName(packageName, className);
 		        packageManager.getActivityInfo(cn, PackageManager.GET_META_DATA);
 		        alarmClockIntent.setComponent(cn);
-		        Log.d("SDDC", "Found" +  vendor + " --> " + packageName + "/" + className);
+		        //Log.d("SDDC", "Found" +  vendor + " --> " + packageName + "/" + className);
 		        foundClockImpl = true;
 		    } catch (NameNotFoundException e) {
 		        Log.d("SDDC", vendor + " does not exists");
 		    }
 		}
 
-		if(clockButtonApp == "NONE"){
+		if(clockButtonApp.equals("NONE")){
 			PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, appchooserintent, 0);
 			view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);
 		}else{
@@ -302,6 +310,9 @@ public class UpdateWidgetService extends Service {
 			AppWidgetProviderInfo providerInfo = AppWidgetManager.getInstance(
 					getApplicationContext()).getAppWidgetInfo(appWidgetId);
 
+			if(providerInfo == null){
+			    return null;
+            }
 			// Since min and max is usually the same, just take min
 			int mWidgetLandWidth = providerInfo.minWidth;
 			int mWidgetPortHeight = providerInfo.minHeight;
@@ -1616,6 +1627,49 @@ public class UpdateWidgetService extends Service {
         mWindowManager.getDefaultDisplay().getMetrics(metrics);
         return metrics.heightPixels;
     }
+
+    public static void setClockButtonApp(final String packagename){
+	    		packageManager = mContext.getPackageManager();
+				packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+
+                Log.d("SDDC", "LOOKING FOR PACKAGE :" + packagename);
+				for (ApplicationInfo packageInfo : packages) {
+					//Log.d("UWS", "Installed package :" + packageInfo.packageName + " -- looking for: " + packagename);
+					//Log.d("UWS", "Source dir : " + packageInfo.sourceDir);
+					//Log.d("UWS", "Launch Activity :" + packageManager.getLaunchIntentForPackage(packageInfo.packageName));
+
+					if(packageInfo.packageName.equals(packagename)){
+                        Log.d("SDDC", "Found " +  " --> " + packagename );
+						Intent launchActivity = packageManager.getLaunchIntentForPackage(packageInfo.packageName);
+                        //Log.d("SDDC", "LaunchActivity = " + launchActivity );
+						//try {
+							//ComponentName cn = new ComponentName(packageInfo.packageName, launchActivity);
+							//packageManager.getActivityInfo(cn, PackageManager.GET_META_DATA);
+							alarmClockIntent = launchActivity;
+							PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, alarmClockIntent, 0);
+							view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);
+							SharedPreferences prefs = mContext.getSharedPreferences(
+									"prefs", 0);
+							SharedPreferences.Editor edit = prefs.edit();
+							edit.putString("ClockButtonApp", packagename);
+							edit.commit();
+							clockButtonApp = packagename;
+							Log.d("SDDC", "Found " +  " --> " + packagename + "/" + launchActivity);
+                            Log.d("SDDC", "Prefs clock app = " +  prefs.getString("ClockButtonApp", "NONE"));
+							return;
+						//} catch (NameNotFoundException e) {
+						//	Log.d("SDDC", packageInfo.packageName + " does not exists -- " + e.getMessage());
+						//}
+
+					}
+				}
+
+
+
+
+
+	}
+
 
 	@Override
 	    public IBinder onBind(Intent intent)  

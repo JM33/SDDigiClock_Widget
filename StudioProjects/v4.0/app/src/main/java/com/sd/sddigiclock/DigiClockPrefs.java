@@ -69,6 +69,7 @@ public class DigiClockPrefs extends Activity{
 	private SeekBar btctsize;
 	private SeekBar btdtsize;
 	private Button btccolor;
+	private Button btclockclickapp;
 	private Button btdcolor;
 	private Button btdatematchcolor;
 	private boolean dateMatchClockColor;
@@ -112,6 +113,7 @@ public class DigiClockPrefs extends Activity{
 	private int mFont;
 	private String Fontfile;
 	private int bgColor;
+	private String clockapp;
 	private LinearLayout bg0;
 	private LinearLayout bg1;
 	private LinearLayout bg2;
@@ -201,6 +203,8 @@ public class DigiClockPrefs extends Activity{
 		Bg = prefs.getInt("Bg"+appWidgetId, 3);
 		Fontfile = prefs.getString("Font"+appWidgetId, "Roboto-Regular.ttf");
 		mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
+		clockapp = prefs.getString("ClockButtonApp", "NONE");
+		Log.d("SDDC", "clock app = "+ clockapp);
 	}
 
 
@@ -222,8 +226,8 @@ public class DigiClockPrefs extends Activity{
 		btsave = (ImageButton)DCP.findViewById(R.id.btSave);
 		btcancel = (ImageButton)DCP.findViewById(R.id.btCancel);
 		btdtformat = (Button)DCP.findViewById(R.id.DateFormat);
-
-        //mDateFormatFrameLayout = (FrameLayout)DCP.findViewById(R.id.DateFormatFrameLayout);
+		btclockclickapp = (Button)DCP.findViewById(R.id.ClockClickApp);
+		//mDateFormatFrameLayout = (FrameLayout)DCP.findViewById(R.id.DateFormatFrameLayout);
 
 		btctsize.setProgress(clocktextsize);
 		btdtsize.setProgress(datetextsize);
@@ -385,6 +389,14 @@ public class DigiClockPrefs extends Activity{
 	    	dialog.show();
 	    	}
 	    });
+
+		btclockclickapp.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Intent appchooserintent=new Intent(DigiClockPrefs.this, AppSelector.class);
+				startActivity(appchooserintent);
+
+			}
+		});
 
 		btdcolor.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
