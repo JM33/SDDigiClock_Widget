@@ -247,7 +247,8 @@ public class UpdateWidgetService extends Service {
 		boolean foundClockImpl = false;
 
 		Intent appchooserintent=new Intent(UpdateWidgetService.this,AppSelector.class);
-	
+
+		/*
 		for(int i=0; i<clockImpls.length; i++) {
 		    String vendor = clockImpls[i][0];
 		    String packageName = clockImpls[i][1];
@@ -262,13 +263,14 @@ public class UpdateWidgetService extends Service {
 		        Log.d("SDDC", vendor + " does not exists");
 		    }
 		}
+		*/
+
 
 		if(clockButtonApp.equals("NONE")){
 			PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, appchooserintent, 0);
 			view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);
 		}else{
-			PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, alarmClockIntent, 0);
-			view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);
+			setClockButtonApp(clockButtonApp);
 
 		}
 		/*
@@ -1629,6 +1631,7 @@ public class UpdateWidgetService extends Service {
     }
 
     public static void setClockButtonApp(final String packagename){
+		Log.d("SDDC", "Set Clock Button Application " +  " --> " + packagename );
 	    		packageManager = mContext.getPackageManager();
 				packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 

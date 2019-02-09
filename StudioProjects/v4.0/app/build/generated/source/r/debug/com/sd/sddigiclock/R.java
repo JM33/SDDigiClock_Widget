@@ -2389,7 +2389,7 @@ public final class R {
     public static final int Font1=0x7f08000c;
     public static final int Font10=0x7f08000d;
     public static final int Font11=0x7f08000e;
-    public static final int Font13=0x7f08000f;
+    public static final int Font12=0x7f08000f;
     public static final int Font2=0x7f080010;
     public static final int Font3=0x7f080011;
     public static final int Font4=0x7f080012;
@@ -2401,7 +2401,7 @@ public final class R {
     public static final int FontSelect1=0x7f080018;
     public static final int FontSelect10=0x7f080019;
     public static final int FontSelect11=0x7f08001a;
-    public static final int FontSelect13=0x7f08001b;
+    public static final int FontSelect12=0x7f08001b;
     public static final int FontSelect2=0x7f08001c;
     public static final int FontSelect3=0x7f08001d;
     public static final int FontSelect4=0x7f08001e;
@@ -2502,7 +2502,7 @@ public final class R {
     public static final int ivFCB1=0x7f08007d;
     public static final int ivFCB10=0x7f08007e;
     public static final int ivFCB11=0x7f08007f;
-    public static final int ivFCB13=0x7f080080;
+    public static final int ivFCB12=0x7f080080;
     public static final int ivFCB2=0x7f080081;
     public static final int ivFCB3=0x7f080082;
     public static final int ivFCB4=0x7f080083;

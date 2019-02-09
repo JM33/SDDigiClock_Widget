@@ -705,14 +705,14 @@ public class DigiClockPrefs extends Activity{
         ImageView fcb9 = (ImageView)DCP.findViewById(R.id.ivFCB9);
         ImageView fcb10 = (ImageView)DCP.findViewById(R.id.ivFCB10);
         ImageView fcb11 = (ImageView)DCP.findViewById(R.id.ivFCB11);
-        //ImageView fcb12 = (ImageView)DCP.findViewById(R.id.ivFCB12);
-        ImageView fcb13 = (ImageView)DCP.findViewById(R.id.ivFCB13);
+        ImageView fcb12 = (ImageView)DCP.findViewById(R.id.ivFCB12);
+        //ImageView fcb13 = (ImageView)DCP.findViewById(R.id.ivFCB13);
         //ImageView fcb14 = (ImageView)DCP.findViewById(R.id.ivFCB14);
 
 
         checkboxesfonts = new ImageView []{fcb1, fcb2, fcb3, fcb4, fcb5,
         		fcb6, fcb7, fcb8, fcb9, fcb10,
-        		fcb11, fcb13};
+        		fcb11, fcb12};
         mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
         for(int i =0; i<checkboxesfonts.length; i++){
         	//Log.i("SDC", "i = " + Integer.toString(i) + ", Bg = " + Integer.toString(Bg));
@@ -961,32 +961,11 @@ public class DigiClockPrefs extends Activity{
                 edit.commit();
 	    	}
         });
-        /*
+
         FrameLayout fontview12 = (FrameLayout)DCP.findViewById(R.id.FontSelect12);
         fontview12.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 	    		mFont = 11;
-	    		for(int i =0; i<checkboxesfonts.length; i++){
-	    			if (i == mFont){
-	    				checkboxesfonts[i].setImageResource(R.drawable.checkedbox);
-	    			}
-	    			else{
-	    				checkboxesfonts[i].setImageResource(R.drawable.checkbox);
-	    			}
-	    		}
-	    		Fontfile = "KOMIKAX_.ttf";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
-                SharedPreferences.Editor edit = prefs.edit();
-                edit.putString("Font"+appWidgetId, Fontfile);
-                edit.putInt("Fontnum"+appWidgetId, mFont);
-                edit.commit();
-	    	}
-        });
-        */
-        FrameLayout fontview13 = (FrameLayout)DCP.findViewById(R.id.FontSelect13);
-        fontview13.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-	    		mFont = 12;
 	    		for(int i =0; i<checkboxesfonts.length; i++){
 	    			if (i == mFont){
 	    				checkboxesfonts[i].setImageResource(R.drawable.checkedbox);
@@ -1002,9 +981,30 @@ public class DigiClockPrefs extends Activity{
                 edit.putInt("Fontnum"+appWidgetId, mFont);
                 edit.commit();
 	    	}
+        });
+        /*
+        FrameLayout fontview13 = (FrameLayout)DCP.findViewById(R.id.FontSelect13);
+        fontview13.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+	    		mFont = 12;
+	    		for(int i =0; i<checkboxesfonts.length; i++){
+	    			if (i == mFont){
+	    				checkboxesfonts[i].setImageResource(R.drawable.checkedbox);
+	    			}
+	    			else{
+	    				checkboxesfonts[i].setImageResource(R.drawable.checkbox);
+	    			}
+	    		}
+	    		Fontfile = "KOMIKAX.TTF";
+	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.putString("Font"+appWidgetId, Fontfile);
+                edit.putInt("Fontnum"+appWidgetId, mFont);
+                edit.commit();
+	    	}
 
         });
-		/*
+
         FrameLayout fontview14 = (FrameLayout)DCP.findViewById(R.id.FontSelect14);
         fontview14.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -1067,12 +1067,13 @@ public class DigiClockPrefs extends Activity{
         txt = (TextView) findViewById(R.id.Font11);
         font = Typeface.createFromAsset(getAssets(), "Jester.ttf");
         txt.setTypeface(font);
-        //txt = (TextView) findViewById(R.id.Font12);
-        //font = Typeface.createFromAsset(getAssets(), "KOMIKAX_.ttf");
-        //txt.setTypeface(font);
-        txt = (TextView) findViewById(R.id.Font13);
+
+        txt = (TextView) findViewById(R.id.Font12);
         font = Typeface.createFromAsset(getAssets(), "DS-DIGIB.TTF");
         txt.setTypeface(font);
+		//txt = (TextView) findViewById(R.id.Font13);
+		//font = Typeface.createFromAsset(getAssets(), "KOMIKAX_.ttf");
+		//txt.setTypeface(font);
         //txt = (TextView) findViewById(R.id.Font14);
         //font = Typeface.createFromAsset(getAssets(), "weezerfont.ttf");
         //txt.setTypeface(font);
