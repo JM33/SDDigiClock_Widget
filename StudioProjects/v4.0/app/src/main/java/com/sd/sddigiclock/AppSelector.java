@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class AppSelector extends AppCompatActivity {
 
     List<ApplicationInfo> packages;
     String[] allPackageNames;
+    AppListAdapter app_list_adapter;
 
     private PackageManager pm;
 
@@ -68,7 +70,7 @@ public class AppSelector extends AppCompatActivity {
                 allIcons[index] = ri(packageInfo);
                 Log.d("SDDC", "ICON FOUND = " + allIcons[index].toString());
         }
-    */
+
 
         //ArrayAdapter adapter = new ArrayAdapter<String>(this,
         //        R.layout.listview_text, allLabels);
@@ -93,15 +95,18 @@ public class AppSelector extends AppCompatActivity {
             }
         };
 
+*/
+        app_list_adapter = new AppListAdapter(this.getApplicationContext());
 
-        mListView.setAdapter(adapter);
+        mListView.setAdapter(app_list_adapter);
 
 
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String pname = allPackageNames[position];
+                TextView tv = (TextView)view.findViewById(R.id.textView_package_name);
+                String pname = tv.getText().toString();
                 UpdateWidgetService.setClockButtonApp(pname);
                 Log.d("SDDC", "Selected: " + pname);
                 finish();
@@ -116,18 +121,5 @@ public class AppSelector extends AppCompatActivity {
         return pm.queryIntentActivities(main_intent, 0);
     }
 
-    @NonNull
-    private Bitmap getBitmapFromDrawable(@NonNull Drawable drawable) {
-        final Bitmap bmp = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        final Canvas canvas = new Canvas(bmp);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bmp;
-    }
 
-    private Drawable resize(Drawable image) {
-        Bitmap b = getBitmapFromDrawable(image);
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 64, 64, false);
-        return new BitmapDrawable(getResources(), b);
-    }
 }
