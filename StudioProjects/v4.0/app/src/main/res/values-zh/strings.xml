@@ -4,7 +4,6 @@
     <string name="p_Title">数字时钟设置</string>
     <string name="p_clock_title">时钟设置</string>
     <string name="p_clock_color">时钟文字颜色</string>
-    <string name="p_clock_title">时钟设置</string>
     <string name="p_clock_size">时钟文字大小</string>
     <string name="p_date_title">日期设置</string>
     <string name="p_date_match_clock_color">匹配时钟颜色</string>
@@ -13,6 +12,23 @@
     <string name="p_date_format">日期格式</string>
     <string name="p_military">24小时时间</string>
     <string name="p_show_date">显示日期</string>
-    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">选择背景</string>
+    <string name="p_bg_fill_title">填充背景</string>
+    <string name="bgs_ok">好的</string>
+    <string name="bgs_title">选择背景</string>
+    <string name="p_save">保存</string>
+    <string name="p_cancel">取消</string>
+    <string name="fontcustom">习惯</string>
+    <string name="fontdefault">默认</string>
+    <string name="bytes">256字节</string>
+    <string name="carbon">碳</string>
+    <string name="dist_galaxy">遥远的星系</string>
+    <string name="good_times">美好时光</string>
+    <string name="jester">滑稽演员</string>
+    <string name="custom_color">自定义颜色</string>
+    <string name="digital">数字</string>
+    <string name="p_date_format_close">关</string>
+    <string name="choose_app_title">选择应用程序</string>
+    <string name="clock_click_app">时钟点击应用</string>
 </resources>

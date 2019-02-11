@@ -12,6 +12,23 @@
     <string name="p_date_format">Datumnotatie</string>
     <string name="p_military">24 uur tijd</string>
     <string name="p_show_date">Datum weergeven</string>
-    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">Kies achtergrond</string>
+    <string name="p_bg_fill_title">Achtergrond vullen</string>
+    <string name="bgs_ok">Oke</string>
+    <string name="bgs_title">Kies achtergrond</string>
+    <string name="p_save">Opslaan</string>
+    <string name="p_cancel">Annuleren</string>
+    <string name="fontcustom">Gewoonte</string>
+    <string name="fontdefault">Standaard</string>
+    <string name="bytes">256 bytes</string>
+    <string name="carbon">Koolstof</string>
+    <string name="dist_galaxy">Verre melkweg</string>
+    <string name="good_times">Goede Tijden</string>
+    <string name="jester">Nar</string>
+    <string name="custom_color">Aangepaste kleur</string>
+    <string name="digital">Digitaal</string>
+    <string name="p_date_format_close">Dichtbij</string>
+    <string name="choose_app_title">Selecteer een applicatie</string>
+    <string name="clock_click_app">Klok Klik op App</string>
 </resources>

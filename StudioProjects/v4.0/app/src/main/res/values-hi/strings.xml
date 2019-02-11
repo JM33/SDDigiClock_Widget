@@ -12,6 +12,23 @@
     <string name="p_date_size">दिनांक पाठ का आकार</string>
     <string name="p_date_format">डेटा प्रारूप</string>
     <string name="p_show_date">दिनांक दिखाएँ</string>
-    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">पृष्ठभूमि चुनें</string>
+    <string name="p_bg_fill_title">पृष्ठभूमि भरें</string>
+    <string name="bgs_ok">はい</string>
+    <string name="bgs_title">पृष्ठभूमि चुनें</string>
+    <string name="p_save">बचाना</string>
+    <string name="p_cancel">रद्द करना</string>
+    <string name="fontcustom">रिवाज</string>
+    <string name="fontdefault">चूक</string>
+    <string name="bytes">256 बाइट्स</string>
+    <string name="carbon">कार्बन</string>
+    <string name="dist_galaxy">दूर की आकाशगंगा</string>
+    <string name="good_times">अच्छा समय</string>
+    <string name="jester">विदूषक</string>
+    <string name="custom_color">कस्टम रंग</string>
+    <string name="digital">डिजिटल</string>
+    <string name="p_date_format_close">बंद करे</string>
+    <string name="choose_app_title">एक एप्लिकेशन का चयन करें</string>
+    <string name="clock_click_app">क्लॉक क्लिक एप</string>
 </resources>

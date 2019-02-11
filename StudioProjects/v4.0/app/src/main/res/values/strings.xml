@@ -17,32 +17,32 @@
     <string name="p_show_ampm">Show AM/PM</string>
     <string name="p_choose_bg">Choose Background</string>
     <string name="p_bg_fill_title">Fill background</string>
-    <string name="p_bg_fill_sum_on">The background will fill widget\'s cells</string>
-    <string name="p_bg_fill_sum_off">The background will wrap the text</string>
+    <string name="p_bg_fill_sum_on" translatable="false">The background will fill widget\'s cells</string>
+    <string name="p_bg_fill_sum_off" translatable="false">The background will wrap the text</string>
 
     <string name="bgs_ok">OK</string>
     <string name="bgs_title">Choose Background</string>
 
     <string name="p_save">Save</string>
     <string name="p_cancel">Cancel</string>
-    <string name="hello">hello</string>
+    <string name="hello" translatable="false">hello</string>
 
     <string name="fontcustom">Custom</string>
     <string name="fontdefault">Default</string>
-    <string name="chantilli_aqua">Chantilli</string>
-    <string name="roboto">Roboto</string>
-    <string name="robotofont">Roboto</string>
-    <string name="droidsans">Droid Sans</string>
-    <string name="droidserif">Droid Serif</string>
+    <string name="chantilli_aqua" translatable="false">Chantilli</string>
+    <string name="roboto" translatable="false">Roboto</string>
+    <string name="robotofont" translatable="false">Roboto</string>
+    <string name="droidsans" translatable="false">Droid Sans</string>
+    <string name="droidserif" translatable="false">Droid Serif</string>
 
     <string name="bytes">256 Bytes</string>
-    <string name="brushstroke">Brush Stroke</string>
+    <string name="brushstroke" translatable="false">Brush Stroke</string>
     <string name="carbon">Carbon</string>
     <string name="dist_galaxy">Distant Galaxy</string>
     <string name="good_times">Good Times</string>
     <string name="jester">Jester</string>
-    <string name="olde_english">Olde English</string>
-    <string name="weezer">Weezer</string>
+    <string name="olde_english" translatable="false">Olde English</string>
+    <string name="weezer" translatable="false">Weezer</string>
     <string name="custom_color">Custom Color</string>
     <string name="digital">Digital</string>
 
@@ -98,7 +98,7 @@
         <item>Tuesday 23/1/18</item>
 
     </string-array>
-    <string name="title_activity_app_chooser">AppChooserActivity</string>
+    <string name="title_activity_app_chooser" translatable="false">AppChooserActivity</string>
     <string name="choose_app_title">Select An Application</string>
     <string name="clock_click_app">Clock Click App</string>
 </resources>

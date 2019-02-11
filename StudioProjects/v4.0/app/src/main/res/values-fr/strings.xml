@@ -12,6 +12,23 @@
     <string name="p_date_format">Format de date</string>
     <string name="p_military">" Heure 24 heures"</string>
     <string name="p_show_date">Afficher la date</string>
-    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">Choisissez le fond</string>
+    <string name="p_bg_fill_title">Remplir le fond</string>
+    <string name="bgs_ok">D\'accord</string>
+    <string name="bgs_title">Choisissez le fond</string>
+    <string name="p_save">Sauvegarder</string>
+    <string name="p_cancel">Annuler</string>
+    <string name="fontcustom">Douane</string>
+    <string name="fontdefault">Défaut</string>
+    <string name="bytes">256 octets</string>
+    <string name="carbon">Carbone</string>
+    <string name="dist_galaxy">Galaxie lointaine</string>
+    <string name="good_times">Bon temps</string>
+    <string name="jester">Fou du roi</string>
+    <string name="custom_color">Couleur personnalisée</string>
+    <string name="digital">Numérique</string>
+    <string name="p_date_format_close">Fermer</string>
+    <string name="choose_app_title">Sélectionnez une application</string>
+    <string name="clock_click_app">Horloge Cliquez App</string>
 </resources>

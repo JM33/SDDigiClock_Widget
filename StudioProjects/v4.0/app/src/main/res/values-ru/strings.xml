@@ -12,6 +12,23 @@
     <string name="p_date_format">Формат даты</string>
     <string name="p_military">24 часа</string>
     <string name="p_show_date">Дата показа</string>
-    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">Выберите фон</string>
+    <string name="p_bg_fill_title">Заполнить фон</string>
+    <string name="bgs_ok">Хорошо</string>
+    <string name="bgs_title">Выберите фон</string>
+    <string name="p_save">Сохранить</string>
+    <string name="p_cancel">Cancelar</string>
+    <string name="fontcustom">изготовленный на заказ</string>
+    <string name="fontdefault">По умолчанию</string>
+    <string name="bytes">256 байт</string>
+    <string name="carbon">углерод</string>
+    <string name="dist_galaxy">Далекая галактика</string>
+    <string name="good_times">Хорошие времена</string>
+    <string name="jester">шут</string>
+    <string name="custom_color">Пользовательский цвет</string>
+    <string name="digital">цифровой</string>
+    <string name="p_date_format_close">близко</string>
+    <string name="choose_app_title">Выберите приложение</string>
+    <string name="clock_click_app">Часы Нажмите приложение</string>
 </resources>

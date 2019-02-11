@@ -85,7 +85,7 @@
                             android:drawablePadding="10dp"
                             android:drawableRight="@drawable/checkedbox"
                             android:paddingLeft="30dp"
-                            android:text="24 Hour Clock"
+                            android:text="@string/p_military"
                             android:textSize="25dp" />
 
                         <Button

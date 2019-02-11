@@ -12,6 +12,23 @@
     <string name="p_date_format">Formato data</string>
     <string name="p_military">24 Ore</string>
     <string name="p_show_date">Mostra data</string>
-    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">Scegli lo sfondo</string>
+    <string name="p_bg_fill_title">Riempi lo sfondo</string>
+    <string name="bgs_ok">Bene</string>
+    <string name="bgs_title">Scegli lo sfondo</string>
+    <string name="p_save">Salvare</string>
+    <string name="p_cancel">Annulla</string>
+    <string name="fontcustom">Costume</string>
+    <string name="fontdefault">Predefinito</string>
+    <string name="bytes">256 Bytes</string>
+    <string name="carbon">Carbonio</string>
+    <string name="dist_galaxy">दूर की आकाशगंगा</string>
+    <string name="good_times">Bei tempi</string>
+    <string name="jester">Giullare</string>
+    <string name="custom_color">Colore personalizzato</string>
+    <string name="digital">Digitale</string>
+    <string name="p_date_format_close">Vicino</string>
+    <string name="choose_app_title">Seleziona un\'applicazione</string>
+    <string name="clock_click_app">Orologio Fare clic su App</string>
 </resources>

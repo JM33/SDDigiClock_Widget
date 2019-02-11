@@ -12,6 +12,23 @@
     <string name="p_date_format">Μορφή ημερομηνίας</string>
     <string name="p_military">Ώρα 24 ωρών</string>
     <string name="p_show_date">Mostra data</string>
-    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">Διάλεξε φόντο</string>
+    <string name="p_bg_fill_title">Γεμίστε το φόντο</string>
+    <string name="bgs_ok">εντάξει</string>
+    <string name="bgs_title">Διάλεξε φόντο</string>
+    <string name="p_save">Αποθηκεύσετε</string>
+    <string name="p_cancel">Ματαίωση</string>
+    <string name="fontcustom">Εθιμο</string>
+    <string name="fontdefault">Προκαθορισμένο</string>
+    <string name="bytes">256 Bytes</string>
+    <string name="carbon">Ανθρακας</string>
+    <string name="dist_galaxy">Απομακρυσμένος γαλαξίας</string>
+    <string name="good_times">Καλές στιγμές</string>
+    <string name="jester">Γελωτοποιός</string>
+    <string name="custom_color">Προσαρμοσμένο χρώμα</string>
+    <string name="digital">Ψηφιακό</string>
+    <string name="p_date_format_close">Κοντά</string>
+    <string name="choose_app_title">Επιλέξτε μια εφαρμογή</string>
+    <string name="clock_click_app">Ρολόι κλικ App</string>
 </resources>

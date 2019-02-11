@@ -12,6 +12,23 @@
     <string name="p_date_format">صيغة التاريخ</string>
     <string name="p_military">24 ساعة</string>
     <string name="p_show_date">عرض التاريخ</string>
-    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">اختر خلفية</string>
+    <string name="p_bg_fill_title">ملء الخلفية</string>
+    <string name="bgs_ok">حسنا</string>
+    <string name="bgs_title">اختر خلفية</string>
+    <string name="p_save">حفظ</string>
+    <string name="p_cancel">إلغاء</string>
+    <string name="fontcustom">العادة</string>
+    <string name="fontdefault">افتراضي</string>
+    <string name="bytes">256 بايت</string>
+    <string name="carbon">كربون</string>
+    <string name="dist_galaxy">المجرة البعيدة</string>
+    <string name="good_times">اوقات سعيدة</string>
+    <string name="jester">مهرج</string>
+    <string name="custom_color">لون مخصص</string>
+    <string name="digital">رقمي</string>
+    <string name="p_date_format_close">قريب</string>
+    <string name="choose_app_title">حدد أحد التطبيقات</string>
+    <string name="clock_click_app">الساعة انقر فوق التطبيق</string>
 </resources>

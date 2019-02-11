@@ -12,6 +12,23 @@
     <string name="p_date_format">Tarih formatı</string>
     <string name="p_military">24 saat zaman</string>
     <string name="p_show_date">Tarihi Göster</string>
-    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">Arkaplan seç</string>
+    <string name="p_bg_fill_title">Arka Plan Doldur</string>
+    <string name="bgs_ok">Tamam</string>
+    <string name="bgs_title">Arkaplan seç</string>
+    <string name="p_save">Kayıt etmek</string>
+    <string name="p_cancel">İptal etmek</string>
+    <string name="fontcustom">Görenek</string>
+    <string name="fontdefault">Varsayılan</string>
+    <string name="bytes">256 Bayt</string>
+    <string name="carbon">Karbon</string>
+    <string name="dist_galaxy">Uzak galaksi</string>
+    <string name="good_times">İyi zamanlar</string>
+    <string name="jester">Soytarı</string>
+    <string name="custom_color">Özel renk</string>
+    <string name="digital">Dijital</string>
+    <string name="p_date_format_close">Kapat</string>
+    <string name="choose_app_title">Bir Uygulama Seçin</string>
+    <string name="clock_click_app">Saat Tıklama Uygulaması</string>
 </resources>

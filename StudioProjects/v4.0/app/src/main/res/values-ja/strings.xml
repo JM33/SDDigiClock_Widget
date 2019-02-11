@@ -12,6 +12,23 @@
     <string name="p_date_format">日付フォーマット</string>
     <string name="p_military">24時間</string>
     <string name="p_show_date">日付を表示</string>
-    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">背景を選択</string>
+    <string name="p_bg_fill_title">背景を塗りつぶす</string>
+    <string name="bgs_ok">はい</string>
+    <string name="bgs_title">背景を選択</string>
+    <string name="p_save">保存する</string>
+    <string name="p_cancel">キャンセル</string>
+    <string name="fontcustom">カスタム</string>
+    <string name="fontdefault">デフォルト</string>
+    <string name="bytes">256バイト</string>
+    <string name="carbon">炭素</string>
+    <string name="dist_galaxy">遠い銀河</string>
+    <string name="good_times">グッドタイムズ</string>
+    <string name="jester">ジェスター</string>
+    <string name="custom_color">カスタムカラー</string>
+    <string name="digital">デジタル</string>
+    <string name="p_date_format_close">閉じる</string>
+    <string name="choose_app_title">アプリケーションを選択</string>
+    <string name="clock_click_app">時計クリックアプリ</string>
 </resources>
