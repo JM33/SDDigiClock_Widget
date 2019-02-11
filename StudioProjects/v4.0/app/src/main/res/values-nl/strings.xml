@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SD Digiklok</string>
+    <string name="p_Title">Digiklokinstellingen</string>
+    <string name="p_clock_title">Klokinstellingen</string>
+    <string name="p_clock_color">Klok Tekst  Kleur</string>
+    <string name="p_clock_size">Klok Tekst Grootte</string>
+    <string name="p_date_title">Datuminstellingen</string>
+    <string name="p_date_match_clock_color">Match klokkleur</string>
+    <string name="p_date_color">Datum Tekstkleur</string>
+    <string name="p_date_size">Tekstgrootte datum</string>
+    <string name="p_date_format">Datumnotatie</string>
+    <string name="p_military">24 uur tijd</string>
+    <string name="p_show_date">Datum weergeven</string>
+    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_choose_bg">Kies achtergrond</string>
+</resources>

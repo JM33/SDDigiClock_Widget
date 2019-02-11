@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SD डिजिटल घड़ी</string>
+    <string name="p_military">24 घंटे का समय</string>
+    <string name="p_Title">डिजिटल घड़ी सेटिंग्स</string>
+    <string name="p_clock_title">घड़ी सेटिंग्स</string>
+    <string name="p_clock_color">क्लॉक टेक्स्ट कलर</string>
+    <string name="p_clock_size">घड़ी का आकार</string>
+    <string name="p_date_title">दिनांक सेटिंग्स</string>
+    <string name="p_date_match_clock_color">घड़ी का रंग</string>
+    <string name="p_date_color">दिनांक पाठ का रंग</string>
+    <string name="p_date_size">दिनांक पाठ का आकार</string>
+    <string name="p_date_format">डेटा प्रारूप</string>
+    <string name="p_show_date">दिनांक दिखाएँ</string>
+    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_choose_bg">पृष्ठभूमि चुनें</string>
+</resources>

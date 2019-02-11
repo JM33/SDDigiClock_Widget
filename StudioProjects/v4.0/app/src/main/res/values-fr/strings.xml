@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SD DigiHorloge</string>
+    <string name="p_Title">DigiHorloge Réglages</string>
+    <string name="p_clock_title">Paramètres d\'horloge</string>
+    <string name="p_clock_color">Couleur du texte de l\'horloge</string>
+    <string name="p_clock_size">Taille du texte de l\'horloge</string>
+    <string name="p_date_title">Paramètres de date</string>
+    <string name="p_date_match_clock_color">Match couleur d\'horloge</string>
+    <string name="p_date_color">Couleur du texte de la date</string>
+    <string name="p_date_size">Date Texte Taille</string>
+    <string name="p_date_format">Format de date</string>
+    <string name="p_military">" Heure 24 heures"</string>
+    <string name="p_show_date">Afficher la date</string>
+    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_choose_bg">Choisissez le fond</string>
+</resources>

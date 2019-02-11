@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SD ساعة رقمية</string>
+    <string name="p_Title">إعدادات الساعة الرقمية</string>
+    <string name="p_clock_title">إعدادات الساعة</string>
+    <string name="p_clock_color">لون نص الساعة</string>
+    <string name="p_clock_size">حجم النص على مدار الساعة</string>
+    <string name="p_date_title">إعدادات التاريخ</string>
+    <string name="p_date_match_clock_color">تطابق لون الساعة</string>
+    <string name="p_date_color">تاريخ لون النص</string>
+    <string name="p_date_size">التاريخ حجم النص</string>
+    <string name="p_date_format">صيغة التاريخ</string>
+    <string name="p_military">24 ساعة</string>
+    <string name="p_show_date">عرض التاريخ</string>
+    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_choose_bg">اختر خلفية</string>
+</resources>

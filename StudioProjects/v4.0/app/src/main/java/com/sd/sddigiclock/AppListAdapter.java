@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,10 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -31,21 +36,41 @@ import java.util.List;
  * source: https://www.reddit.com/r/androiddev/comments/413hkm/list_view_with_all_the_installed_apps_and_their/
  */
 public class AppListAdapter implements ListAdapter {
+
+    private final Context mContext;
+    private final PackageManager mPackageManager;
+    private final LayoutInflater mLayoutInflater;
+    private final List<PackageInfo> mPackageInfos;
+    private final HashMap<String, ExtraPackageInfo> mExtraData = new HashMap<>();
+    private final HashSet<View> mViewsPendingImages = new HashSet<>();
+    private final Object mLock = new Object();
+    private final HandlerThread mHandlerThread;
+    private final Handler mHandler;
+    private final HashMap<String, View> mPendingViews = new HashMap<>();
+    private final HashMap<View, String> mPendingViewPackageNames = new HashMap<>();
+
     public AppListAdapter(Context context) {
         final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         mContext = context;
-        mLayoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mPackageManager = context.getPackageManager();
         mPackageInfos = mPackageManager.getInstalledPackages(0);
         mHandlerThread = new HandlerThread("AppListAdapterHandler");
         mHandlerThread.start();
         mHandler = new Handler(mHandlerThread.getLooper());
 
+        Sortbylabel sbl = new Sortbylabel();
+        Collections.sort(mPackageInfos, sbl);
+
         for (int i = 0; i < mPackageInfos.size(); i++) {
             mHandler.post(loadPackageInfo(mPackageInfos.get(i)));
+            Log.d("SDDC", "App_name = " + mPackageInfos.get(i).applicationInfo.loadLabel(mPackageManager).toString());
         }
+
+
     }
+
 
     private Runnable loadPackageInfo(final PackageInfo packageInfo) {
         return new Runnable() {
@@ -97,17 +122,7 @@ public class AppListAdapter implements ListAdapter {
         };
     }
 
-    private final Context mContext;
-    private final PackageManager mPackageManager;
-    private final LayoutInflater mLayoutInflater;
-    private final List<PackageInfo> mPackageInfos;
-    private final HashMap<String, ExtraPackageInfo> mExtraData = new HashMap<>();
-    private final HashSet<View> mViewsPendingImages = new HashSet<>();
-    private final Object mLock = new Object();
-    private final HandlerThread mHandlerThread;
-    private final Handler mHandler;
-    private final HashMap<String, View> mPendingViews = new HashMap<>();
-    private final HashMap<View, String> mPendingViewPackageNames = new HashMap<>();
+
 
 
     private static class ExtraPackageInfo {
@@ -233,5 +248,15 @@ public class AppListAdapter implements ListAdapter {
         Bitmap b = getBitmapFromDrawable(image);
         Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 96, 96, false);
         return new BitmapDrawable(mContext.getResources(), bitmapResized);
+    }
+
+    class Sortbylabel implements Comparator<PackageInfo>
+    {
+        // Used for sorting in ascending order of
+        // app name
+        public int compare(PackageInfo a, PackageInfo b)
+        {
+            return a.applicationInfo.loadLabel(mPackageManager).toString().compareToIgnoreCase(b.applicationInfo.loadLabel(mPackageManager).toString());
+        }
     }
 }

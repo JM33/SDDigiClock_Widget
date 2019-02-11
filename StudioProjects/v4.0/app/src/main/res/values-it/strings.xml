@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SD DigiOrologio</string>
+    <string name="p_Title">Impostazioni dell\'DigiOrologio</string>
+    <string name="p_clock_title">Impostazioni dell\'orologio</string>
+    <string name="p_clock_color">Colore del testo dell\'orologio</string>
+    <string name="p_clock_size">Dimensione del testo dell\'orologio</string>
+    <string name="p_date_title">Impostazioni della data</string>
+    <string name="p_date_match_clock_color">Abbina il colore dell\'orologio</string>
+    <string name="p_date_color">Data Testo Colore</string>
+    <string name="p_date_size">Data Dimensione del testo</string>
+    <string name="p_date_format">Formato data</string>
+    <string name="p_military">24 Ore</string>
+    <string name="p_show_date">Mostra data</string>
+    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_choose_bg">Scegli lo sfondo</string>
+</resources>

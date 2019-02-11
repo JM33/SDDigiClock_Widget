@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SD RelojDigital</string>
+    <string name="p_Title">Ajustes del RelojDigital</string>
+    <string name="p_clock_title">Ajustes del Reloj</string>
+    <string name="p_clock_color">Color del texto del reloj</string>
+    <string name="p_clock_size">Tamaño del texto del reloj</string>
+    <string name="p_date_title">Ajustes de fecha</string>
+    <string name="p_date_match_clock_color">Color del reloj del partido</string>
+    <string name="p_date_color">Fecha texto color</string>
+    <string name="p_date_size">Tamaño del texto de la fecha</string>
+    <string name="p_date_format">Formato de fecha</string>
+    <string name="p_military">Tiempo de 24 horas</string>
+    <string name="p_show_date">Mostrar fecha</string>
+    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_choose_bg">Escoge el fondo</string>
+</resources>

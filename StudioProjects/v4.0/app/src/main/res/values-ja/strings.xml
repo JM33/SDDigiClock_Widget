@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SD  デジタル時計</string>
+    <string name="p_Title">デジタル時計設定</string>
+    <string name="p_clock_title">クロック設定</string>
+    <string name="p_clock_color">時計のテキストの色</string>
+    <string name="p_clock_size">時計の文字サイズ</string>
+    <string name="p_date_title">日付設定</string>
+    <string name="p_date_match_clock_color">時計の色を合わせる</string>
+    <string name="p_date_color">日付テキストの色</string>
+    <string name="p_date_size">日付文字サイズ</string>
+    <string name="p_date_format">日付フォーマット</string>
+    <string name="p_military">24時間</string>
+    <string name="p_show_date">日付を表示</string>
+    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_choose_bg">背景を選択</string>
+</resources>

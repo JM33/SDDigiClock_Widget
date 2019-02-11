@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SD Ψηφιακό ρολόϊ</string>
+    <string name="p_Title">Ψηφιακό ρολόϊ Ρυθμίσεις</string>
+    <string name="p_clock_title">Ρυθμίσεις ρολογιού</string>
+    <string name="p_clock_color">Χρώμα κειμένου ρολογιού</string>
+    <string name="p_clock_size">Μέγεθος κειμένου ρολογιού</string>
+    <string name="p_date_title">Ρυθμίσεις ημερομηνίας</string>
+    <string name="p_date_match_clock_color">Χρώμα ρολογιού αγώνα</string>
+    <string name="p_date_color">Χρώμα κειμένου ημερομηνίας</string>
+    <string name="p_date_size">Μέγεθος κειμένου ημερομηνίας</string>
+    <string name="p_date_format">Μορφή ημερομηνίας</string>
+    <string name="p_military">Ώρα 24 ωρών</string>
+    <string name="p_show_date">Mostra data</string>
+    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_choose_bg">Διάλεξε φόντο</string>
+</resources>

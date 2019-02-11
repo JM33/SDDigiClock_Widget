@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SD  Цифровыечасы</string>
+    <string name="p_Title">Настройки цифровых часов</string>
+    <string name="p_clock_title">クロック設定</string>
+    <string name="p_clock_color">Цвет текста часов</string>
+    <string name="p_clock_size">Размер текста часов</string>
+    <string name="p_date_title">Настройки даты</string>
+    <string name="p_date_match_clock_color">Матч Цвет часов</string>
+    <string name="p_date_color">Цвет текста даты</string>
+    <string name="p_date_size">Размер текста даты</string>
+    <string name="p_date_format">Формат даты</string>
+    <string name="p_military">24 часа</string>
+    <string name="p_show_date">Дата показа</string>
+    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_choose_bg">Выберите фон</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SD Digiluhr</string>
+    <string name="p_Title">Digiluhr die Einstellungen</string>
+    <string name="p_clock_title">Uhreinstellungen</string>
+    <string name="p_clock_color">Textfarbe der Uhr</string>
+    <string name="p_clock_size">Textgröße der Uhr</string>
+    <string name="p_date_title">Datumseinstellungen</string>
+    <string name="p_date_match_clock_color">Farbe der Uhr</string>
+    <string name="p_date_color">Datum Textfarbe</string>
+    <string name="p_date_size">Datumstextgröße</string>
+    <string name="p_date_format">Datumsformat</string>
+    <string name="p_military">24 Stunden Zeit</string>
+    <string name="p_show_date">Datum anzeigen</string>
+    <string name="p_show_ampm">AM/PM</string>
+    <string name="p_choose_bg">Hintergrund auswählen</string>
+</resources>
