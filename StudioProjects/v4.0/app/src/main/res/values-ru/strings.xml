@@ -31,4 +31,53 @@
     <string name="p_date_format_close">близко</string>
     <string name="choose_app_title">Выберите приложение</string>
     <string name="clock_click_app">Часы Нажмите приложение</string>
+
+    <string-array name="date_formats">
+        <item>Tue January 23, 2018</item>
+        <item>Tue Jan 23, 2018</item>
+        <item>Tue 1-23-2018</item>
+        <item>Tue 1/23/2018</item>
+        <item>Tuesday January 23, 2018</item>
+        <item>Tuesday Jan 23, 2018</item>
+        <item>Tuesday 1-23-2018</item>
+        <item>Tuesday 1/23/2018</item>
+        <item>January 23, 2018</item>
+        <item>Jan 23, 2018</item>
+        <item>1-23-2018</item>
+        <item>1/23/2018</item>
+        <item>1-23-18</item>
+        <item>1/23/18</item>
+        <item>January 23</item>
+        <item>1-23</item>
+        <item>1/23</item>
+        <item>Tue January 23</item>
+        <item>Tue Jan 23</item>
+        <item>Tue 1-23</item>
+        <item>Tue 1/23</item>
+        <item>Tuesday Jan 23</item>
+        <item>Tuesday 1/23</item>
+        <item>Tue 23-1-2018</item>
+        <item>Tue 23/1/2018</item>
+        <item>Tuesday 23-1-2018</item>
+        <item>Tuesday 23/1/2018</item>
+        <item>23-1-2018</item>
+        <item>23/1/2018</item>
+        <item>23-1-18</item>
+        <item>23/1/18</item>
+        <item>23-1</item>
+        <item>23/1</item>
+        <item>Tue 23-1</item>
+        <item>Tue 23/1</item>
+        <item>Tuesday 23-13</item>
+        <item>Tuesday 23/13</item>
+        <item>Tue 1-23-18</item>
+        <item>Tue 1/23/18</item>
+        <item>Tuesday 1-23-18</item>
+        <item>Tuesday 1/23/18</item>
+        <item>Tue 23-1-18</item>
+        <item>Tue 23/1/18</item>
+        <item>Tuesday 23-1-18</item>
+        <item>Tuesday 23/1/18</item>
+
+    </string-array>
 </resources>

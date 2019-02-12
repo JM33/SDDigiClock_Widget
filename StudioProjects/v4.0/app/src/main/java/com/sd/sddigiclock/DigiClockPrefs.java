@@ -1,8 +1,10 @@
 package com.sd.sddigiclock;
 
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.io.File;
+import java.util.Locale;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
@@ -32,6 +34,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -127,6 +130,9 @@ public class DigiClockPrefs extends Activity{
 	private AlertDialog.Builder builder;
 	private LayoutInflater inflater;
 	private AlertDialog myDialog;
+	private String day;
+	private int year;
+	private String month_name;
 
 
 	public void onCreate(Bundle icicle) {
@@ -428,18 +434,24 @@ public class DigiClockPrefs extends Activity{
 				AlertDialog.Builder alt_bld = new AlertDialog.Builder(DCP);
 				//alt_bld.setIcon(R.drawable.icon);
 				final String[] formats = DCP.getResources().getStringArray(R.array.date_formats);
+				final String[] localFormats = new String[formats.length];
+
+				for(int i = 0; i < formats.length; i++){
+					localFormats[i] = getFormattedDate(i);
+				}
+
 				//final CharSequence[] grpname= DCP.getResources().obtainTypedArray(formats);
 
 				final int selected = dateFormatIndex;
 				alt_bld.setTitle("Select a Date Format");
-				alt_bld.setSingleChoiceItems(formats, selected, new DialogInterface
+				alt_bld.setSingleChoiceItems(localFormats, selected, new DialogInterface
 						.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
 
 						dateFormatIndex = item;
 
 						Toast.makeText(getApplicationContext(),
-								"Date Format = "+formats[item], Toast.LENGTH_SHORT).show();
+								"Date Format = "+localFormats[item], Toast.LENGTH_SHORT).show();
 						dialog.dismiss();// dismiss the alertbox after chose option
 
 					}
@@ -1300,6 +1312,747 @@ public class DigiClockPrefs extends Activity{
 	    	}
 		}
 
+		
+	}
 
+	public static String getFormattedDate(int index){
+		String sdate = "";
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
+		String weekDay = dayFormat.format(cal.getTime());
+
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int year = cal.get(Calendar.YEAR);
+
+
+		//SimpleDateFormat month_date = new SimpleDateFormat("MMMMM");
+		//month_name = month_date.format(cal.getTime());
+		DateFormat dateformat = new DateFormat();
+		String month_name = (String) DateFormat.format("M",  cal); // Jun
+		//Log.d("SDDC", "CurrentMonth: "+ month_name);
+
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yy", Locale.US);
+		String year_name = yearFormat.format(cal.getTime());
+
+		switch(index) {
+			case 0: //0 Tue January 23, 2018
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("MMMM", cal);
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+
+				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
+				break;
+			case 1:  //1        Tue Jan 23, 2018
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("MMM", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
+				break;
+			case 2:  //2       Tue 1-23-2018
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
+				break;
+			case 3:  //3       Tue 1/23/2018
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
+				break;
+			case 4:  //4       Tuesday January 23, 2018
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("MMMM", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
+				break;
+			case 5:  //5		Tuesday Jan 23, 2018
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("MMM", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
+				break;
+			case 6:  //6		Tuesday 1-23-2018
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
+				break;
+			case 7:  //7		Tuesday 1/23/2018
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
+				break;
+			case 8:  //8		January 23, 2018
+
+				//dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("MMMM", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
+				break;
+			case 9:  //9		Jan 23, 2018
+
+				//dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("MMM", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
+				break;
+			case 10:  //10		1-23-2018
+
+				//dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
+				break;
+			case 11:  //11		1/23/2018
+
+				//dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
+				break;
+			case 12:  //12		1-23-18
+
+				//dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
+				break;
+			case 13:  //13		1/23/18
+//dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
+				break;
+			case 14:  //14		January 23
+
+				//dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("MMMM", cal);
+
+
+				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + "" + year_name);
+				break;
+			case 15:  //15		1-23
+
+				//dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "" + year_name);
+				break;
+			case 16:  //16		1/23
+
+				//dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "" + year_name);
+				break;
+			case 17:  //17		Tue January 23
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("MMMM", cal);
+
+
+				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + "" + year_name);
+				break;
+			case 18:  //18		Tue Jan 23
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("MMM", cal);
+
+
+				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + "" + year_name);
+				break;
+			case 19:  //19		Tue 1-23
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "" + year_name);
+				break;
+			case 20:  //20		Tue 1/23
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "" + year_name);
+				break;
+			case 21:  //21		Tuesday Jan 23
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("MMM", cal);
+
+
+				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + "" + year_name);
+				break;
+			case 22:  //22		Tuesday 1/23
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "" + year_name);
+				break;
+			case 23:  //23		Tue 23-1-2018
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
+				break;
+			case 24:  //24		Tue 23/1/2018
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
+				break;
+			case 25:  //25		Tuesday 23-1-2018
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
+				break;
+			case 26:  //26		Tuesday 23/1/2018
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
+				break;
+			case 27:  //27		23-1-2018
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
+				break;
+			case 28:  //28		23/1/2018
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
+				break;
+			case 29:  //29		23-1-18
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
+				break;
+			case 30:  //30		23/1/18
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
+				break;
+			case 31:  //31		23-1
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "" + year_name);
+				break;
+			case 32:  //32		23/1
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = "";
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "" + year_name);
+				break;
+			case 33:  //33		Tue 23-1
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "" + year_name);
+				break;
+			case 34:  //34		Tue 23/1
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "" + year_name);
+				break;
+			case 35:  //35		Tuesday 23-1
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "" + year_name);
+				break;
+			case 36:  //36		Tuesday 23/1
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = "";
+				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "" + year_name);
+				break;
+			case 37:  //37		Tue 1-23-18
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
+				break;
+			case 38:  //38		Tue 1/23/18
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
+				break;
+			case 39:  //39		Tuesday 1-23-18
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
+				break;
+			case 40:  //40		Tuesday 1/23/18
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
+				break;
+			case 41:  //41		Tue 23-1-18
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
+				break;
+			case 42:  //42		Tue 23/1/18
+
+				dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
+				break;
+			case 43:  //43		Tuesday 23-1-18
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
+				break;
+			case 44:  //44		Tuesday 23/1/18
+
+				dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+				weekDay = dayFormat.format(cal.getTime());
+
+				day = cal.get(Calendar.DAY_OF_MONTH);
+				year = cal.get(Calendar.YEAR);
+
+				dateformat = new DateFormat();
+				month_name = (String) DateFormat.format("M", cal);
+
+
+				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
+				year_name = yearFormat.format(cal.getTime());
+				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
+				break;
+		}
+		return sdate;
 	}
 }
