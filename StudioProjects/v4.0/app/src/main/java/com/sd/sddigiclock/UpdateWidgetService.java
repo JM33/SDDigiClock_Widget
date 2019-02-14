@@ -120,7 +120,7 @@ public class UpdateWidgetService extends Service {
 	        FrameLayout Flayout = new FrameLayout(mContext);
 	        Flayout.setId(R.id.FrameLayout);
 	        */
-	        Log.i(LOG, "Service onCreate");
+	        //Log.i(LOG, "Service onCreate");
 	    }  
   
 		@Override  
@@ -128,7 +128,7 @@ public class UpdateWidgetService extends Service {
 	{  
 		
 		if(intent == null){
-			Log.d(LOG, "No Intent onStartCommand");
+			//Log.d(LOG, "No Intent onStartCommand");
 			return START_REDELIVER_INTENT;
 		}
 		if (intent.getExtras() != null) {
@@ -159,7 +159,7 @@ public class UpdateWidgetService extends Service {
 		mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
 
 		clockButtonApp = prefs.getString("ClockButtonApp", "NONE");
-        Log.d("SDDC", "ClockApp saved = " + clockButtonApp);
+        //Log.d("SDDC", "ClockApp saved = " + clockButtonApp);
 		setText();
 		
 		
@@ -333,8 +333,7 @@ public class UpdateWidgetService extends Service {
 					&& mAppWidgetOptions
 					.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH) > 0) {
 
-					Log.d("UWS",
-							"appWidgetOptions not null, getting widget sizes...");
+					//Log.d("UWS", "appWidgetOptions not null, getting widget sizes...");
 				// Reduce width by a margin of 8dp (automatically added by
 				// Android, can vary with third party launchers)
 
@@ -360,8 +359,7 @@ public class UpdateWidgetService extends Service {
 
 			} else {
 				//if (D.DEBUG_SERVICE)
-					Log.d("UWS",
-							"No AppWidgetOptions for this widget, using minimal dimensions from provider info!");
+					//Log.d("UWS", "No AppWidgetOptions for this widget, using minimal dimensions from provider info!");
 				// For some reason I had to set this again here, may be obsolete
 				mWidgetLandWidth = providerInfo.minWidth;
 				mWidgetPortHeight = providerInfo.minHeight;
@@ -369,10 +367,13 @@ public class UpdateWidgetService extends Service {
 				mWidgetLandHeight = providerInfo.minHeight;
 			}
 
+			/*
 			Log.d("UWS", "Dimensions of the Widget in DIP: portWidth =  "
 						+ mWidgetPortWidth + ", landWidth = " + mWidgetLandWidth
 						+ "; landHeight = " + mWidgetLandHeight
 						+ ", portHeight = " + mWidgetPortHeight);
+
+			*/
 
 			// If device is in port oriantation, use port sizes
 			int mWidgetWidthPerOrientation = mWidgetPortWidth;
@@ -420,6 +421,8 @@ public class UpdateWidgetService extends Service {
 		    // canvas
 		    //Canvas canvas = new Canvas(bm);
 		    //canvas.drawARGB(255, 0, 255, 0);// for visualization
+
+			/*
 		    Log.d("UWS", "CLOCK UPDATE");
 			Log.d("UWS", "FontSize = " + fontSize);
 			Log.d("UWS", "Height = " + height);
@@ -427,6 +430,7 @@ public class UpdateWidgetService extends Service {
 			Log.d("UWS", "TextBounds Top= " + textBoundsClock.top);
 			Log.d("UWS", "TextBounds Bottom = " + textBoundsClock.bottom);
 			Log.d("UWS", "TextBounds Height= " + textBoundsClock.height());
+			*/
 
 		    //canvas.drawText(time, 10, textBoundsClock.height()-textBoundsClock.bottom, Clockpaint);
 		    clockheight = (int)height+2;
@@ -702,10 +706,10 @@ public class UpdateWidgetService extends Service {
 			Paint.FontMetrics fm = paint.getFontMetrics();
 			int height = (int)(fm.descent - fm.ascent);
 
-		    Log.i("UWS", Float.toString(textBounds.width()));
+		    //Log.i("UWS", Float.toString(textBounds.width()));
 		    int maxwidth = displayBounds.width()-100;
 		    
-		    Log.i("UWS", "Maxwidth =" + Integer.toString(maxwidth) + " Orientation = " + Integer.toString(mDisplay.getRotation()));
+		    //Log.i("UWS", "Maxwidth =" + Integer.toString(maxwidth) + " Orientation = " + Integer.toString(mDisplay.getRotation()));
 			if(paint.measureText(time)+20 >= maxwidth){
 		    	time = (month_name + " " + String.valueOf(day) + ",");
 		    	paint.getTextBounds(time, 0, time.length(), textBounds);
@@ -794,9 +798,9 @@ public class UpdateWidgetService extends Service {
             } else{
                 w = getScreenHeight();
             }
-            Log.d("UWS", "W = "+ w);
-            Log.d("UWS", "getW = "+ getScreenWidth());
-            Log.d("UWS", "getH = "+ getScreenHeight());
+            //Log.d("UWS", "W = "+ w);
+            //Log.d("UWS", "getW = "+ getScreenWidth());
+            //Log.d("UWS", "getH = "+ getScreenHeight());
 
 		    Bitmap bm = Bitmap.createBitmap((int)(w*1.5f), height, Bitmap.Config.ARGB_8888);
 		    
@@ -895,18 +899,18 @@ public class UpdateWidgetService extends Service {
     }
 
     public static void setClockButtonApp(final String packagename){
-		Log.d("SDDC", "Set Clock Button Application " +  " --> " + packagename );
+		//Log.d("SDDC", "Set Clock Button Application " +  " --> " + packagename );
 	    		packageManager = mContext.getPackageManager();
 				packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
-                Log.d("SDDC", "LOOKING FOR PACKAGE :" + packagename);
+                //Log.d("SDDC", "LOOKING FOR PACKAGE :" + packagename);
 				for (ApplicationInfo packageInfo : packages) {
 					//Log.d("UWS", "Installed package :" + packageInfo.packageName + " -- looking for: " + packagename);
 					//Log.d("UWS", "Source dir : " + packageInfo.sourceDir);
 					//Log.d("UWS", "Launch Activity :" + packageManager.getLaunchIntentForPackage(packageInfo.packageName));
 
 					if(packageInfo.packageName.equals(packagename)){
-                        Log.d("SDDC", "Found " +  " --> " + packagename );
+                        //Log.d("SDDC", "Found " +  " --> " + packagename );
 						Intent launchActivity = packageManager.getLaunchIntentForPackage(packageInfo.packageName);
                         //Log.d("SDDC", "LaunchActivity = " + launchActivity );
 						//try {
@@ -923,8 +927,8 @@ public class UpdateWidgetService extends Service {
 							edit.putString("ClockButtonApp", packagename);
 							edit.commit();
 							clockButtonApp = packagename;
-							Log.d("SDDC", "Found " +  " --> " + packagename + "/" + launchActivity);
-                            Log.d("SDDC", "Prefs clock app = " +  prefs.getString("ClockButtonApp", "NONE"));
+							//Log.d("SDDC", "Found " +  " --> " + packagename + "/" + launchActivity);
+                            //Log.d("SDDC", "Prefs clock app = " +  prefs.getString("ClockButtonApp", "NONE"));
 
 							updateAllWidgets(mContext, R.layout.widget_layout, DigiClockProvider.class);
 

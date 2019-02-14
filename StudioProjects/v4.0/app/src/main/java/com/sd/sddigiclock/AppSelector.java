@@ -108,7 +108,7 @@ public class AppSelector extends AppCompatActivity {
                 TextView tv = (TextView)view.findViewById(R.id.textView_package_name);
                 String pname = tv.getText().toString();
                 UpdateWidgetService.setClockButtonApp(pname);
-                Log.d("SDDC", "Selected: " + pname);
+                //Log.d("SDDC", "Selected: " + pname);
                 finish();
             }
 

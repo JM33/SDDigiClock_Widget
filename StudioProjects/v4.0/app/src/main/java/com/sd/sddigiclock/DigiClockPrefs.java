@@ -210,7 +210,7 @@ public class DigiClockPrefs extends Activity{
 		Fontfile = prefs.getString("Font"+appWidgetId, "Roboto-Regular.ttf");
 		mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
 		clockapp = prefs.getString("ClockButtonApp", "NONE");
-		Log.d("SDDC", "clock app = "+ clockapp);
+		//Log.d("SDDC", "clock app = "+ clockapp);
 	}
 
 
@@ -244,18 +244,18 @@ public class DigiClockPrefs extends Activity{
 
 		TabSpec spec1=tabHost.newTabSpec("Tab 1");
 		spec1.setContent(R.id.tab1);
-		spec1.setIndicator("Clock");
+		spec1.setIndicator(DCP.getResources().getString(R.string.clock));
 
 		TabSpec spec2=tabHost.newTabSpec("Tab 2");
-		spec2.setIndicator("Date");
+		spec2.setIndicator(DCP.getResources().getString(R.string.date));
 		spec2.setContent(R.id.tab2);
 
 		TabSpec spec3=tabHost.newTabSpec("Tab 3");
-		spec3.setIndicator("Back Ground");
+		spec3.setIndicator(DCP.getResources().getString(R.string.background));
 		spec3.setContent(R.id.tab3);
 
 		TabSpec spec4=tabHost.newTabSpec("Tab 4");
-		spec4.setIndicator("Font");
+		spec4.setIndicator(DCP.getResources().getString(R.string.font));
 		spec4.setContent(R.id.tab4);
 
 		tabHost.addTab(spec1);

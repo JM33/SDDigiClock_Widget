@@ -65,7 +65,7 @@ public class AppListAdapter implements ListAdapter {
 
         for (int i = 0; i < mPackageInfos.size(); i++) {
             mHandler.post(loadPackageInfo(mPackageInfos.get(i)));
-            Log.d("SDDC", "App_name = " + mPackageInfos.get(i).applicationInfo.loadLabel(mPackageManager).toString());
+            //Log.d("SDDC", "App_name = " + mPackageInfos.get(i).applicationInfo.loadLabel(mPackageManager).toString());
         }
 
 

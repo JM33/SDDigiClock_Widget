@@ -52,14 +52,14 @@ public class DigiClockProvider extends AppWidgetProvider{
     	
     	for (int i = 0; i < awids.length; i++){
     		updateWidget(context, mgr, awids[i]);
-    		Log.i(LOG, "Enabled ID = " + Integer.toString(awids[i]));
+    		//Log.i(LOG, "Enabled ID = " + Integer.toString(awids[i]));
     	}
     	
     	PackageManager pm = context.getPackageManager();
     	pm.setComponentEnabledSetting(new ComponentName("com.sd.sddigiclock", ".DigiClockProvider"), 
     									PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 
     									PackageManager.DONT_KILL_APP);
-    	Log.i(LOG, "DigiClockProvider onEnabled");
+    	//Log.i(LOG, "DigiClockProvider onEnabled");
     	 
     }
 	
@@ -82,9 +82,9 @@ public class DigiClockProvider extends AppWidgetProvider{
 	  
 	        m.cancel(service);  
 	        
-	        Log.d("SDCP","Clearing all preferences for:" + "prefs");
+	        //Log.d("SDCP","Clearing all preferences for:" + "prefs");
         	SharedPreferences prefs=context.getSharedPreferences("prefs", 0);
-        	Log.d("SDCP","Number of preferences:" + prefs.getAll().size());
+        	//Log.d("SDCP","Number of preferences:" + prefs.getAll().size());
             SharedPreferences.Editor prefsEdit = prefs.edit();
             prefsEdit.clear();
             //finally commit the values
@@ -110,7 +110,7 @@ public class DigiClockProvider extends AppWidgetProvider{
 	     //other methods here
 	     //or if you don't call super you can overwrite the standard
 	     //flow of intent handling 
-		 Log.i(LOG, "intent = " + intent.toString());
+		 //Log.i(LOG, "intent = " + intent.toString());
 		 
 		 final String action = intent.getAction();
 		 if(AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)){

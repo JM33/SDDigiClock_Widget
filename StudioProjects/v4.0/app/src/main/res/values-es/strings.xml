@@ -18,7 +18,7 @@
     <string name="bgs_ok">OK</string>
     <string name="bgs_title">Escoge el fondo</string>
     <string name="p_save">Salvar</string>
-    <string name="p_cancel">отменить</string>
+    <string name="p_cancel">Cancelar</string>
     <string name="fontcustom">Personalizado</string>
     <string name="fontdefault">Defecto</string>
     <string name="bytes">256 bytes</string>
