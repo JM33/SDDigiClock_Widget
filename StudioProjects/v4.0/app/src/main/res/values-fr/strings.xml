@@ -80,4 +80,8 @@
         <item>Tuesday 23/1/18</item>
 
     </string-array>
+    <string name="date">Date</string>
+    <string name="clock">L\'horloge</string>
+    <string name="background">Fond</string>
+    <string name="font">Police de caractère</string>
 </resources>

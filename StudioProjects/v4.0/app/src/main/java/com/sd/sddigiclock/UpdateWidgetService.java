@@ -3,6 +3,7 @@ package com.sd.sddigiclock;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
@@ -912,7 +913,9 @@ public class UpdateWidgetService extends Service {
 							//ComponentName cn = new ComponentName(packageInfo.packageName, launchActivity);
 							//packageManager.getActivityInfo(cn, PackageManager.GET_META_DATA);
 							alarmClockIntent = launchActivity;
+							alarmClockIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 							PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, alarmClockIntent, 0);
+
 							view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);
 							SharedPreferences prefs = mContext.getSharedPreferences(
 									"prefs", 0);
@@ -922,6 +925,9 @@ public class UpdateWidgetService extends Service {
 							clockButtonApp = packagename;
 							Log.d("SDDC", "Found " +  " --> " + packagename + "/" + launchActivity);
                             Log.d("SDDC", "Prefs clock app = " +  prefs.getString("ClockButtonApp", "NONE"));
+
+							updateAllWidgets(mContext, R.layout.widget_layout, DigiClockProvider.class);
+
 							return;
 						//} catch (NameNotFoundException e) {
 						//	Log.d("SDDC", packageInfo.packageName + " does not exists -- " + e.getMessage());
@@ -936,6 +942,20 @@ public class UpdateWidgetService extends Service {
 
 	}
 
+	public static void updateAllWidgets(final Context context,
+										final int layoutResourceId,
+										final Class< ? extends AppWidgetProvider> appWidgetClass)
+	{
+		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), layoutResourceId);
+
+		AppWidgetManager manager = AppWidgetManager.getInstance(context);
+		final int[] appWidgetIds = manager.getAppWidgetIds(new ComponentName(context, appWidgetClass));
+
+		for (int i = 0; i < appWidgetIds.length; ++i)
+		{
+			manager.updateAppWidget(appWidgetIds[i], remoteViews);
+		}
+	}
 
 
 	@Override

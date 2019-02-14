@@ -15,7 +15,7 @@
     <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">Scegli lo sfondo</string>
     <string name="p_bg_fill_title">Riempi lo sfondo</string>
-    <string name="bgs_ok">Bene</string>
+    <string name="bgs_ok">OK</string>
     <string name="bgs_title">Scegli lo sfondo</string>
     <string name="p_save">Salvare</string>
     <string name="p_cancel">Annulla</string>
@@ -80,4 +80,8 @@
         <item>Tuesday 23/1/18</item>
 
     </string-array>
+    <string name="date">Data</string>
+    <string name="clock">Orologio</string>
+    <string name="background">Sfondo</string>
+    <string name="font">Font</string>
 </resources>

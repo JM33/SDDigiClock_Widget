@@ -1379,7 +1379,7 @@ public final class R {
      * <tr><td>barrier</td><td>2</td><td></td></tr>
      * <tr><td>chains</td><td>4</td><td></td></tr>
      * <tr><td>dimensions</td><td>8</td><td></td></tr>
-     * <tr><td>direct</td><td>1</td><td>direct, barriers, chains</td></tr>
+     * <tr><td>direct</td><td>1</td><td></td></tr>
      * <tr><td>groups</td><td>20</td><td></td></tr>
      * <tr><td>none</td><td>0</td><td></td></tr>
      * <tr><td>standard</td><td>7</td><td></td></tr>
@@ -2678,49 +2678,53 @@ public final class R {
     public static final int abc_shareactionprovider_share_with_application=0x7f0c0011;
     public static final int abc_toolbar_collapse_description=0x7f0c0012;
     public static final int app_name=0x7f0c0013;
-    public static final int bgs_ok=0x7f0c0014;
-    public static final int bgs_title=0x7f0c0015;
-    public static final int brushstroke=0x7f0c0016;
-    public static final int bytes=0x7f0c0017;
-    public static final int carbon=0x7f0c0018;
-    public static final int chantilli_aqua=0x7f0c0019;
-    public static final int choose_app_title=0x7f0c001a;
-    public static final int clock_click_app=0x7f0c001b;
-    public static final int custom_color=0x7f0c001c;
-    public static final int digital=0x7f0c001d;
-    public static final int dist_galaxy=0x7f0c001e;
-    public static final int droidsans=0x7f0c001f;
-    public static final int droidserif=0x7f0c0020;
-    public static final int fontcustom=0x7f0c0021;
-    public static final int fontdefault=0x7f0c0022;
-    public static final int good_times=0x7f0c0023;
-    public static final int hello=0x7f0c0024;
-    public static final int jester=0x7f0c0025;
-    public static final int olde_english=0x7f0c0026;
-    public static final int p_Title=0x7f0c0027;
-    public static final int p_bg_fill_sum_off=0x7f0c0028;
-    public static final int p_bg_fill_sum_on=0x7f0c0029;
-    public static final int p_bg_fill_title=0x7f0c002a;
-    public static final int p_cancel=0x7f0c002b;
-    public static final int p_choose_bg=0x7f0c002c;
-    public static final int p_clock_color=0x7f0c002d;
-    public static final int p_clock_size=0x7f0c002e;
-    public static final int p_clock_title=0x7f0c002f;
-    public static final int p_date_color=0x7f0c0030;
-    public static final int p_date_format=0x7f0c0031;
-    public static final int p_date_format_close=0x7f0c0032;
-    public static final int p_date_match_clock_color=0x7f0c0033;
-    public static final int p_date_size=0x7f0c0034;
-    public static final int p_date_title=0x7f0c0035;
-    public static final int p_military=0x7f0c0036;
-    public static final int p_save=0x7f0c0037;
-    public static final int p_show_ampm=0x7f0c0038;
-    public static final int p_show_date=0x7f0c0039;
-    public static final int roboto=0x7f0c003a;
-    public static final int robotofont=0x7f0c003b;
-    public static final int status_bar_notification_info_overflow=0x7f0c003c;
-    public static final int title_activity_app_chooser=0x7f0c003d;
-    public static final int weezer=0x7f0c003e;
+    public static final int background=0x7f0c0014;
+    public static final int bgs_ok=0x7f0c0015;
+    public static final int bgs_title=0x7f0c0016;
+    public static final int brushstroke=0x7f0c0017;
+    public static final int bytes=0x7f0c0018;
+    public static final int carbon=0x7f0c0019;
+    public static final int chantilli_aqua=0x7f0c001a;
+    public static final int choose_app_title=0x7f0c001b;
+    public static final int clock=0x7f0c001c;
+    public static final int clock_click_app=0x7f0c001d;
+    public static final int custom_color=0x7f0c001e;
+    public static final int date=0x7f0c001f;
+    public static final int digital=0x7f0c0020;
+    public static final int dist_galaxy=0x7f0c0021;
+    public static final int droidsans=0x7f0c0022;
+    public static final int droidserif=0x7f0c0023;
+    public static final int font=0x7f0c0024;
+    public static final int fontcustom=0x7f0c0025;
+    public static final int fontdefault=0x7f0c0026;
+    public static final int good_times=0x7f0c0027;
+    public static final int hello=0x7f0c0028;
+    public static final int jester=0x7f0c0029;
+    public static final int olde_english=0x7f0c002a;
+    public static final int p_Title=0x7f0c002b;
+    public static final int p_bg_fill_sum_off=0x7f0c002c;
+    public static final int p_bg_fill_sum_on=0x7f0c002d;
+    public static final int p_bg_fill_title=0x7f0c002e;
+    public static final int p_cancel=0x7f0c002f;
+    public static final int p_choose_bg=0x7f0c0030;
+    public static final int p_clock_color=0x7f0c0031;
+    public static final int p_clock_size=0x7f0c0032;
+    public static final int p_clock_title=0x7f0c0033;
+    public static final int p_date_color=0x7f0c0034;
+    public static final int p_date_format=0x7f0c0035;
+    public static final int p_date_format_close=0x7f0c0036;
+    public static final int p_date_match_clock_color=0x7f0c0037;
+    public static final int p_date_size=0x7f0c0038;
+    public static final int p_date_title=0x7f0c0039;
+    public static final int p_military=0x7f0c003a;
+    public static final int p_save=0x7f0c003b;
+    public static final int p_show_ampm=0x7f0c003c;
+    public static final int p_show_date=0x7f0c003d;
+    public static final int roboto=0x7f0c003e;
+    public static final int robotofont=0x7f0c003f;
+    public static final int status_bar_notification_info_overflow=0x7f0c0040;
+    public static final int title_activity_app_chooser=0x7f0c0041;
+    public static final int weezer=0x7f0c0042;
   }
   public static final class style {
     public static final int AlertDialog_AppCompat=0x7f0d0000;
@@ -6598,7 +6602,7 @@ public final class R {
      * <tr><td>barrier</td><td>2</td><td></td></tr>
      * <tr><td>chains</td><td>4</td><td></td></tr>
      * <tr><td>dimensions</td><td>8</td><td></td></tr>
-     * <tr><td>direct</td><td>1</td><td>direct, barriers, chains</td></tr>
+     * <tr><td>direct</td><td>1</td><td></td></tr>
      * <tr><td>groups</td><td>20</td><td></td></tr>
      * <tr><td>none</td><td>0</td><td></td></tr>
      * <tr><td>standard</td><td>7</td><td></td></tr>

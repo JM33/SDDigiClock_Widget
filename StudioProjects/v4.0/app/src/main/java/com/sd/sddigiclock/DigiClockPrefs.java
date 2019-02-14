@@ -65,7 +65,7 @@ import android.widget.LinearLayout.LayoutParams;
  */
 public class DigiClockPrefs extends Activity{
 
-	private static DigiClockPrefs DCP;
+	public static DigiClockPrefs DCP;
 	private Button btsdate;
 	private Button btsampm;
 	private Button bts24;
@@ -1348,6 +1348,9 @@ public class DigiClockPrefs extends Activity{
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
 
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
 				break;
 			case 1:  //1        Tue Jan 23, 2018
@@ -1363,6 +1366,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
 				break;
 			case 2:  //2       Tue 1-23-2018
@@ -1379,6 +1386,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
 				break;
 			case 3:  //3       Tue 1/23/2018
@@ -1395,6 +1406,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
 				break;
 			case 4:  //4       Tuesday January 23, 2018
@@ -1411,6 +1426,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
 				break;
 			case 5:  //5		Tuesday Jan 23, 2018
@@ -1427,6 +1446,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
 				break;
 			case 6:  //6		Tuesday 1-23-2018
@@ -1443,6 +1466,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
 				break;
 			case 7:  //7		Tuesday 1/23/2018
@@ -1459,6 +1486,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
 				break;
 			case 8:  //8		January 23, 2018
@@ -1475,6 +1506,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
 				break;
 			case 9:  //9		Jan 23, 2018
@@ -1491,6 +1526,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + ", " + year_name);
 				break;
 			case 10:  //10		1-23-2018
@@ -1507,6 +1546,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
 				break;
 			case 11:  //11		1/23/2018
@@ -1523,6 +1566,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
 				break;
 			case 12:  //12		1-23-18
@@ -1539,6 +1586,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
 				break;
 			case 13:  //13		1/23/18
@@ -1554,6 +1605,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
 				break;
 			case 14:  //14		January 23
@@ -1570,6 +1625,10 @@ public class DigiClockPrefs extends Activity{
 
 				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + "" + year_name);
 				break;
 			case 15:  //15		1-23
@@ -1583,9 +1642,15 @@ public class DigiClockPrefs extends Activity{
 				dateformat = new DateFormat();
 				month_name = (String) DateFormat.format("M", cal);
 
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
 
 				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "" + year_name);
 				break;
 			case 16:  //16		1/23
@@ -1602,6 +1667,10 @@ public class DigiClockPrefs extends Activity{
 
 				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "" + year_name);
 				break;
 			case 17:  //17		Tue January 23
@@ -1618,6 +1687,10 @@ public class DigiClockPrefs extends Activity{
 
 				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + "" + year_name);
 				break;
 			case 18:  //18		Tue Jan 23
@@ -1634,6 +1707,10 @@ public class DigiClockPrefs extends Activity{
 
 				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + "" + year_name);
 				break;
 			case 19:  //19		Tue 1-23
@@ -1650,6 +1727,10 @@ public class DigiClockPrefs extends Activity{
 
 				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "" + year_name);
 				break;
 			case 20:  //20		Tue 1/23
@@ -1666,6 +1747,10 @@ public class DigiClockPrefs extends Activity{
 
 				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "" + year_name);
 				break;
 			case 21:  //21		Tuesday Jan 23
@@ -1682,6 +1767,10 @@ public class DigiClockPrefs extends Activity{
 
 				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + " " + String.valueOf(day) + "" + year_name);
 				break;
 			case 22:  //22		Tuesday 1/23
@@ -1698,6 +1787,10 @@ public class DigiClockPrefs extends Activity{
 
 				//yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "" + year_name);
 				break;
 			case 23:  //23		Tue 23-1-2018
@@ -1714,6 +1807,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
 				break;
 			case 24:  //24		Tue 23/1/2018
@@ -1730,6 +1827,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
 				break;
 			case 25:  //25		Tuesday 23-1-2018
@@ -1746,6 +1847,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
 				break;
 			case 26:  //26		Tuesday 23/1/2018
@@ -1762,6 +1867,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
 				break;
 			case 27:  //27		23-1-2018
@@ -1778,6 +1887,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
 				break;
 			case 28:  //28		23/1/2018
@@ -1794,6 +1907,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
 				break;
 			case 29:  //29		23-1-18
@@ -1805,11 +1922,16 @@ public class DigiClockPrefs extends Activity{
 				year = cal.get(Calendar.YEAR);
 
 				dateformat = new DateFormat();
+
 				month_name = (String) DateFormat.format("M", cal);
 
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
 				break;
 			case 30:  //30		23/1/18
@@ -1821,11 +1943,17 @@ public class DigiClockPrefs extends Activity{
 				year = cal.get(Calendar.YEAR);
 
 				dateformat = new DateFormat();
+
+
 				month_name = (String) DateFormat.format("M", cal);
 
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
 				break;
 			case 31:  //31		23-1
@@ -1842,6 +1970,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "" + year_name);
 				break;
 			case 32:  //32		23/1
@@ -1858,6 +1990,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				//weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "" + year_name);
 				break;
 			case 33:  //33		Tue 23-1
@@ -1874,6 +2010,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "" + year_name);
 				break;
 			case 34:  //34		Tue 23/1
@@ -1890,6 +2030,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "" + year_name);
 				break;
 			case 35:  //35		Tuesday 23-1
@@ -1906,6 +2050,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "" + year_name);
 				break;
 			case 36:  //36		Tuesday 23/1
@@ -1922,6 +2070,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = "";
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "" + year_name);
 				break;
 			case 37:  //37		Tue 1-23-18
@@ -1938,6 +2090,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
 				break;
 			case 38:  //38		Tue 1/23/18
@@ -1954,6 +2110,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
 				break;
 			case 39:  //39		Tuesday 1-23-18
@@ -1970,6 +2130,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "-" + String.valueOf(day) + "-" + year_name);
 				break;
 			case 40:  //40		Tuesday 1/23/18
@@ -1986,6 +2150,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + month_name + "/" + String.valueOf(day) + "/" + year_name);
 				break;
 			case 41:  //41		Tue 23-1-18
@@ -2002,6 +2170,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
 				break;
 			case 42:  //42		Tue 23/1/18
@@ -2018,6 +2190,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
 				break;
 			case 43:  //43		Tuesday 23-1-18
@@ -2034,6 +2210,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "-" + month_name + "-" + year_name);
 				break;
 			case 44:  //44		Tuesday 23/1/18
@@ -2050,6 +2230,10 @@ public class DigiClockPrefs extends Activity{
 
 				yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
 				year_name = yearFormat.format(cal.getTime());
+
+				month_name = month_name.substring(0,1).toUpperCase() + month_name.substring(1).toLowerCase();
+				weekDay = weekDay.substring(0,1).toUpperCase() + weekDay.substring(1).toLowerCase();
+
 				sdate = (weekDay + " " + String.valueOf(day) + "/" + month_name + "/" + year_name);
 				break;
 		}

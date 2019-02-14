@@ -15,7 +15,7 @@
     <string name="p_show_ampm">AM / PM</string>
     <string name="p_choose_bg">Kies achtergrond</string>
     <string name="p_bg_fill_title">Achtergrond vullen</string>
-    <string name="bgs_ok">Oke</string>
+    <string name="bgs_ok">OK</string>
     <string name="bgs_title">Kies achtergrond</string>
     <string name="p_save">Opslaan</string>
     <string name="p_cancel">Annuleren</string>
@@ -80,4 +80,8 @@
         <item>Tuesday 23/1/18</item>
 
     </string-array>
+    <string name="date">Datum</string>
+    <string name="clock">Klok</string>
+    <string name="background">Achtergrond</string>
+    <string name="font">Doopvont</string>
 </resources>

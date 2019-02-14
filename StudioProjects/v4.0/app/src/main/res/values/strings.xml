@@ -4,6 +4,11 @@
 
     <string name="p_Title">DigiClock Settings</string>
 
+    <string name="clock">Clock</string>
+    <string name="date">Date</string>
+    <string name="background">Background</string>
+    <string name="font">Font</string>
+
     <string name="p_clock_title">Clock Settings</string>
     <string name="p_clock_color">Clock Text Color</string>
     <string name="p_clock_size">Clock Text Size</string>
