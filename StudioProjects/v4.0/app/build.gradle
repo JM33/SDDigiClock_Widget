@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 23
+    compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.sd.sddigiclock"
         minSdkVersion 17
-        targetSdkVersion 12
+        targetSdkVersion 26
     }
     buildTypes {
         release {

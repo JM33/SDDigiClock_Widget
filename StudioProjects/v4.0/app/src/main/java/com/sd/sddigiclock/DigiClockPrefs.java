@@ -457,6 +457,18 @@ public class DigiClockPrefs extends Activity{
 					}
 				});
 				AlertDialog alert = alt_bld.create();
+
+				alert.setOnShowListener(new DialogInterface.OnShowListener() {
+					@Override
+					public void onShow(final DialogInterface dialog) {
+
+						// Add or create your own background drawable for AlertDialog window
+						Window view = ((AlertDialog)dialog).getWindow();
+						view.setBackgroundDrawableResource(R.drawable.grey);
+
+					}
+				});
+
 				alert.show();
 
 			}
