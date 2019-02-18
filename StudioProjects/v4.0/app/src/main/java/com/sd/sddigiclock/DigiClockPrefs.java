@@ -34,6 +34,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.Handler;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
@@ -431,7 +432,7 @@ public class DigiClockPrefs extends Activity{
 
 		btdtformat.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				AlertDialog.Builder alt_bld = new AlertDialog.Builder(DCP);
+				AlertDialog.Builder alt_bld = new AlertDialog.Builder(DCP, R.style.AppTheme);
 				//alt_bld.setIcon(R.drawable.icon);
 				final String[] formats = DCP.getResources().getStringArray(R.array.date_formats);
 				final String[] localFormats = new String[formats.length];
@@ -483,7 +484,7 @@ public class DigiClockPrefs extends Activity{
 	            // When the button is clicked, save the string in our prefs and return that they
 	            // clicked OK.
 
-
+				//Log.i("SDDC", "Saving Changes to widget");
 
 	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
 	            SharedPreferences.Editor edit = prefs.edit();
@@ -526,9 +527,18 @@ public class DigiClockPrefs extends Activity{
 
 		        m.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(), 1000 * 60, service);
 
+
+		        UpdateWidgetService.updateAllWidgets(DCP, R.layout.widget_layout, DigiClockProvider.class);
+				Toast.makeText(DCP, "Settings Saved", Toast.LENGTH_SHORT).show();
+
 		        setResult(RESULT_OK, intent);
-		        Toast.makeText(DCP, "Settings Saved", Toast.LENGTH_SHORT);
-	            finish();
+				Log.i("SDDC", "Changes Saved to widget");
+				new Handler().postDelayed(new Runnable(){
+					public void run() {
+						finish();
+					}
+				}, 1000);
+
 
 	    	}
 	    });

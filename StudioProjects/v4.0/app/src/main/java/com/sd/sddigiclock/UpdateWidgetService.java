@@ -128,7 +128,7 @@ public class UpdateWidgetService extends Service {
 	{  
 		
 		if(intent == null){
-			//Log.d(LOG, "No Intent onStartCommand");
+			Log.d(LOG, "No Intent onStartCommand");
 			return START_REDELIVER_INTENT;
 		}
 		if (intent.getExtras() != null) {
@@ -136,7 +136,7 @@ public class UpdateWidgetService extends Service {
 		    appWidgetId = extras.getInt(
 		            AppWidgetManager.EXTRA_APPWIDGET_ID, 
 		            AppWidgetManager.INVALID_APPWIDGET_ID);
-		    //Log.i(LOG, "Service Started awId =" + Integer.toString(appWidgetId));
+		    Log.i(LOG, "Service Started awId =" + Integer.toString(appWidgetId));
 		}
 		
 		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
@@ -286,11 +286,13 @@ public class UpdateWidgetService extends Service {
 
 		AppWidgetManager manager = AppWidgetManager.getInstance(this);  
 		//ComponentName thisWidget = new ComponentName(this, DigiClockProvider.class);
-	    
+
 		manager.updateAppWidget(appWidgetId, view);
+		//manager.updateAppWidget(new ComponentName(mContext, DigiClockProvider.class), view);
 	    //manager.updateAppWidget(thisWidget, view);
-	    
-	    
+
+
+
 	    
 	    return super.onStartCommand(intent, flags, startId);
 	}
@@ -619,7 +621,7 @@ public class UpdateWidgetService extends Service {
 			// for visualization
 			//canvas.drawPaint(paint);
 			//canvas.drawText(time, 5, textBounds.height()-textBounds.bottom, paint);
-
+			Log.d("SDDC", "Bitmap created");
 			new BitmapDrawable(mContext.getResources(), bm);
 		    return bm;
 		}
@@ -930,7 +932,7 @@ public class UpdateWidgetService extends Service {
 							//Log.d("SDDC", "Found " +  " --> " + packagename + "/" + launchActivity);
                             //Log.d("SDDC", "Prefs clock app = " +  prefs.getString("ClockButtonApp", "NONE"));
 
-							updateAllWidgets(mContext, R.layout.widget_layout, DigiClockProvider.class);
+							//updateAllWidgets(mContext, R.layout.widget_layout, DigiClockProvider.class);
 
 							return;
 						//} catch (NameNotFoundException e) {

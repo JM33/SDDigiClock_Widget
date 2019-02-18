@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".DigiClockProvider">
+        <receiver
+            android:name=".DigiClockProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -37,6 +38,7 @@
         <activity
             android:name=".AppSelector"
             android:theme="@style/AppThemeDialog" />
+
     </application>
 
 </manifest>

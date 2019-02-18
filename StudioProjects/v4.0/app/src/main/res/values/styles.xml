@@ -3,6 +3,7 @@
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light">
 
         <item name="android:textColor">#F4F4F4</item>
+        <item name="android:textColorAlertDialogListItem">#F4F4F4</item>
 
     </style>
 
