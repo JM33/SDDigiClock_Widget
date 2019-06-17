@@ -14,7 +14,10 @@ import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +37,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.SystemClock;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
@@ -134,6 +138,9 @@ public class DigiClockPrefs extends Activity{
 	private int year;
 	private String month_name;
 
+	static  AlarmManager alarmManager;
+
+	private static JobScheduler jobScheduler;
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -142,7 +149,11 @@ public class DigiClockPrefs extends Activity{
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 
+		alarmManager = (AlarmManager) this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+
 		DCP = this;
+		jobScheduler = (JobScheduler) DCP.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+
 
 		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();
@@ -512,7 +523,9 @@ public class DigiClockPrefs extends Activity{
 		            service = PendingIntent.getService(self, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 		        //}
 
-		        m.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(), 1000 * 60, service);
+		        m.setExact(AlarmManager.RTC, TIME.getTime().getTime(), service);
+				//registerOneTimeAlarm(service, 1000*60, true);
+
 
 		        setResult(RESULT_OK, intent);
 		        Toast.makeText(DCP, "Settings Saved", Toast.LENGTH_SHORT);
@@ -1242,8 +1255,34 @@ public class DigiClockPrefs extends Activity{
             service = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         }
 
-        m.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(), 1000 * 60, service);
+		//final PendingIntent pending = PendingIntent.getService(context, 0, intent, 0);
+		//m.cancel(pending);
 
+		//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			//m.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, TIME.getTimeInMillis() + 60L * 1000L, service);
+		//}
+		m.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, TIME.getTime().getTime(), 60*5*1000, service);
+		//m.setRepeating(AlarmManager.RTC_WAKEUP, TIME.getTimeInMillis(),60L * 1000L, service);
+		Log.i("DCPrefs", "DigiClockPrefs----------Setting Alarm for 5 minutes");
+
+
+
+		//System request code
+		int DATA_FETCHER_RC = 123;
+		//Create an alarm manager
+		AlarmManager mAlarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
+		//Create the time of day you would like it to go off. Use a calendar
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+
+		//initialize the alarm by using inexactrepeating. This allows the system to scheduler your alarm at the most efficient time around your
+		//set time, it is usually a few seconds off your requested time.
+		// you can also use setExact however this is not recommended. Use this only if it must be done then.
+
+		//Also set the interval using the AlarmManager constants
+		mAlarmManager.setInexactRepeating(AlarmManager.RTC,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, service);
 	}
 
 	public void setBGs(int color){
@@ -2238,5 +2277,18 @@ public class DigiClockPrefs extends Activity{
 				break;
 		}
 		return sdate;
+	}
+
+	static void registerOneTimeAlarm(PendingIntent alarmIntent, long delayMillis, boolean triggerNow) {
+		int SDK_INT = Build.VERSION.SDK_INT;
+		long timeInMillis = (System.currentTimeMillis() + (triggerNow ? 0 : delayMillis));
+
+		if (SDK_INT < Build.VERSION_CODES.KITKAT) {
+			alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMillis, alarmIntent);
+		} else if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M) {
+			alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, alarmIntent);
+		} else if (SDK_INT >= Build.VERSION_CODES.M) {
+			alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeInMillis, alarmIntent);
+		}
 	}
 }

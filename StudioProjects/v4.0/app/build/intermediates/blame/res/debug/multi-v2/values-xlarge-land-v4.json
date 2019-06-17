@@ -4,16 +4,6 @@
             "outputFile": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-xlarge-land-v4\\values-xlarge-land-v4.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Brian\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-23.2.1.aar\\0af4c7a798d8aa741aaabd86185beb87\\res\\values-xlarge-land-v4\\values-xlarge-land-v4.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "63",
-                        "endOffsets": "114"
-                    }
-                },
-                {
                     "source": "C:\\Users\\Brian\\Documents\\StudioProjects\\v4.0\\app\\src\\main\\res\\values-xlarge-land\\dimen.xml",
                     "from": {
                         "startLines": "3,2",
@@ -23,11 +13,11 @@
                         "endOffsets": "152,101"
                     },
                     "to": {
-                        "startLines": "3,4",
+                        "startLines": "2,3",
                         "startColumns": "4,4",
-                        "startOffsets": "119,172",
+                        "startOffsets": "55,108",
                         "endColumns": "52,51",
-                        "endOffsets": "167,219"
+                        "endOffsets": "103,155"
                     }
                 }
             ]

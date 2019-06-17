@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 23
+    compileSdkVersion 28
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.sd.sddigiclock"
-        minSdkVersion 17
-        targetSdkVersion 12
+        minSdkVersion 23
+        targetSdkVersion 28
     }
     buildTypes {
         release {
@@ -18,6 +18,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:23.2.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

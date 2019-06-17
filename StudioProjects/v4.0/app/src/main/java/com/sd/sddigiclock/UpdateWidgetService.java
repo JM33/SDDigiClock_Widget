@@ -1,5 +1,6 @@
 package com.sd.sddigiclock;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -28,6 +29,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -38,6 +40,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.RemoteViews;
 import android.text.format.DateFormat;
+import android.widget.TextClock;
+
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,7 +54,7 @@ import java.util.Locale;
  * Copyright Silent Designs, all rights reserved
  */
 public class UpdateWidgetService extends Service {
-	private static final String LOG = "DC SRVC";
+	private static final String LOG = "DCProvider";
 	public static Context mContext;
 	private String ampm;
 	private String shours;
@@ -93,7 +98,9 @@ public class UpdateWidgetService extends Service {
 	static List<ApplicationInfo> packages;
 
 	private static Handler mHandler;
+	PendingIntent service;
 
+	public static AlarmManager alarmManager;
 	//private String dateFormat;
 
 	boolean mIsPortraitOrientation;
@@ -128,7 +135,7 @@ public class UpdateWidgetService extends Service {
 	{  
 		
 		if(intent == null){
-			//Log.d(LOG, "No Intent onStartCommand");
+			Log.d(LOG, "No Intent onStartCommand");
 			return START_REDELIVER_INTENT;
 		}
 		if (intent.getExtras() != null) {
@@ -136,8 +143,26 @@ public class UpdateWidgetService extends Service {
 		    appWidgetId = extras.getInt(
 		            AppWidgetManager.EXTRA_APPWIDGET_ID, 
 		            AppWidgetManager.INVALID_APPWIDGET_ID);
-		    //Log.i(LOG, "Service Started awId =" + Integer.toString(appWidgetId));
+		    Log.i(LOG, "Service Started awId =" + Integer.toString(appWidgetId));
 		}
+		alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+		/*
+		final AlarmManager m = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+
+		final Intent intent2 = new Intent(mContext, UpdateWidgetService.class);
+		intent2.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+		//intent2.putExtra("Cells", AppWidgetManager.);
+		intent2.setData(Uri.parse(intent2.toUri(Intent.URI_INTENT_SCHEME)));
+
+
+		PendingIntent service = PendingIntent.getService(mContext, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+		m.set(AlarmManager.RTC, (1000 * 60), service);
+		*/
+
+
+		//	m.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, (1000 * 60), service);
+
+
 		
 		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
 	            "prefs", 0);
@@ -151,7 +176,11 @@ public class UpdateWidgetService extends Service {
 		dateFormatIndex = prefs.getInt("DateFormat" +appWidgetId, 2);
 
 		cColor = prefs.getInt("cColor"+appWidgetId, -1);
-		dColor = prefs.getInt("dColor"+appWidgetId, -1);
+		if(dateMatchClockColor){
+			dColor = cColor;
+		}else {
+			dColor = prefs.getInt("dColor" + appWidgetId, -1);
+		}
 		bgColor = prefs.getInt("bgColor"+appWidgetId, Color.BLACK);
 		
 		Bg = prefs.getInt("Bg"+appWidgetId, 3);
@@ -164,41 +193,62 @@ public class UpdateWidgetService extends Service {
 		
 		
 		
-	    view = new RemoteViews(getPackageName(), R.layout.widget_layout);  
-	    
-	    view.setImageViewBitmap(R.id.BackGround, buildClockUpdate(shours + ":" + sminutes, ampm, sdate, bgColor));
+	    view = new RemoteViews(getPackageName(), R.layout.widget_layout);
+
+		//CustomTextClock mTextClock = new CustomTextClock(getApplicationContext());
+		//RemoteViews newView = new RemoteViews(getPackageName(), R.id.customTextClockLayout);
+		//view.addView(R.id.linearLayout3, newView);
+		//view.setImageViewBitmap(R.id.BackGround, buildBGUpdate(bgColor));
+	    //view.setImageViewBitmap(R.id.BackGround, buildClockUpdate(shours + ":" + sminutes, ampm, sdate, bgColor));
 
 	    //view.setImageViewBitmap(R.id.clockView, buildClockUpdate(shours + ":" + sminutes);
 	    //view.setImageViewBitmap(R.id.ampmView, buildAMPMUpdate(ampm));
 		//view.setImageViewBitmap(R.id.dateView, buildDateUpdate(sdate));
 
-
+		//int mfont = prefs.getInt("mFont"+appWidgetId, 0);
+		//view.setInt(R.id.clockText, "setTypeFace", R.font.weezerfont);
 		//view.setTextViewText(R.id.ClockText, (shours + ":" + sminutes));
-		//view.setTextColor(R.id.ClockText, cColor);
+		view.setTextColor(R.id.clockText, cColor);
+		view.setTextColor(R.id.DateText, dColor);
+		view.setTextViewText(R.id.DateText, sdate);
+
 		//view.setTextColor(R.id.AMPMText, cColor);
 		//view.setTextColor(R.id.DateText, dColor);
-		//view.setTextViewText(R.id.DateText, sdate);
+		view.setTextViewText(R.id.DateText, sdate);
 		//view.setTextViewText(R.id.AMPMText, ampm);
 		
 
 		
-		//float ctsize = clocktextsize*1.5f + 6;
-		//float dtsize = datetextsize;
+		float ctsize = (clocktextsize*1.5f + 6);
+		float dtsize = datetextsize;
 		
-		//view.setFloat(R.id.ClockText, "setTextSize", ctsize);
-		//view.setFloat(R.id.DateText, "setTextSize", dtsize);
+		view.setFloat(R.id.clockText, "setTextSize", ctsize);
+		view.setFloat(R.id.DateText, "setTextSize", dtsize);
 		
 		if(dateshown){
-			view.setViewVisibility(R.id.dateView, View.VISIBLE);
+			view.setViewVisibility(R.id.DateText, View.VISIBLE);
 		}else{
-			view.setViewVisibility(R.id.dateView, View.GONE);
+			view.setViewVisibility(R.id.DateText, View.GONE);
 		}
 		if(ampmshown){
-			view.setViewVisibility(R.id.ampmView, View.VISIBLE);
+			//view.setViewVisibility(R.id.ampmView, View.VISIBLE);
+			view.setCharSequence(R.id.clockText, "setFormat12Hour", "h:mm a");
 		}else{
-			view.setViewVisibility(R.id.ampmView, View.GONE);
+			view.setCharSequence(R.id.clockText, "setFormat12Hour", "h:mm");
 		}
-		
+		if(show24){
+			view.setCharSequence(R.id.clockText, "setFormat12Hour", "HH:mm");
+			view.setCharSequence(R.id.clockText, "setFormat24Hour", "HH:mm");
+		}else{
+			if(ampmshown){
+				//view.setViewVisibility(R.id.ampmView, View.VISIBLE);
+				view.setCharSequence(R.id.clockText, "setFormat12Hour", "h:mm a");
+				view.setCharSequence(R.id.clockText, "setFormat24Hour", "h:mm a");
+			}else{
+				view.setCharSequence(R.id.clockText, "setFormat12Hour", "h:mm");
+				view.setCharSequence(R.id.clockText, "setFormat24Hour", "h:mm");
+			}
+		}
 	    
 		
 		if(fillbg){
@@ -219,12 +269,12 @@ public class UpdateWidgetService extends Service {
 		view.setOnClickPendingIntent(R.id.SettingsButton, pendingIntent);
 
 		//DATE INTENT on click date
-		//PendingIntent pendingIntentD = PendingIntent.getActivity(mContext, 0, prefsIntent, 0);
-	    //view.setOnClickPendingIntent(R.id.dateView, pendingIntentD);
+		PendingIntent pendingIntentD = PendingIntent.getActivity(mContext, 0, prefsIntent, 0);
+	    view.setOnClickPendingIntent(R.id.DateText, pendingIntentD);
 
-		final PackageManager pm = getPackageManager();
+		//final PackageManager pm = getPackageManager();
 	//get a list of installed apps.
-		packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+		//packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
 		/*
 		for (ApplicationInfo packageInfo : packages) {
@@ -269,7 +319,7 @@ public class UpdateWidgetService extends Service {
 
 		if(clockButtonApp.equals("NONE")){
 			PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, appchooserintent, 0);
-			view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);
+			view.setOnClickPendingIntent(R.id.clockText, pendingIntentC);
 		}else{
 			setClockButtonApp(clockButtonApp);
 
@@ -289,9 +339,38 @@ public class UpdateWidgetService extends Service {
 	    
 		manager.updateAppWidget(appWidgetId, view);
 	    //manager.updateAppWidget(thisWidget, view);
-	    
-	    
-	    
+
+
+		final AlarmManager m = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+		Log.i("UWS", "UPDATING WIDGET: " + appWidgetId);
+		final Calendar TIME = Calendar.getInstance();
+		TIME.set(Calendar.MINUTE, 0);
+		TIME.set(Calendar.SECOND, 0);
+		TIME.set(Calendar.MILLISECOND, 0);
+		//Log.i(LOG, "OnUpdate awId =" + Integer.toString(appWidgetId));
+		final Intent intent2 = new Intent(mContext, UpdateWidgetService.class);
+		intent2.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+		//intent2.putExtra("Cells", AppWidgetManager.);
+		intent2.setData(Uri.parse(intent2.toUri(Intent.URI_INTENT_SCHEME)));
+
+		if (service == null)
+		{
+			service = PendingIntent.getService(mContext, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+		}
+		if(Build.VERSION.SDK_INT <23){
+			//Doze???
+		}
+
+		//m.set(AlarmManager.RTC_WAKEUP, (1000 * 60), service);
+		//m.setRepeating(AlarmManager.RTC_WAKEUP, TIME.getTimeInMillis(),60L * 1000L, service);
+		//final PendingIntent pending = PendingIntent.getService(mContext, 0, intent, 0);
+		//m.cancel(pending);
+
+		//m.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 1000*60, service);
+		//m.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, TIME.getTimeInMillis() + 60L * 1000L, service);
+
+		//registerOneTimeAlarm(service, 1000*60, false);
+		Log.i(LOG, "UpdateWidgetService Setting Alarm for 1 minute!!!!?X");
 	    return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -920,7 +999,7 @@ public class UpdateWidgetService extends Service {
 							alarmClockIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 							PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, alarmClockIntent, 0);
 
-							view.setOnClickPendingIntent(R.id.BackGround, pendingIntentC);
+							view.setOnClickPendingIntent(R.id.clockText, pendingIntentC);
 							SharedPreferences prefs = mContext.getSharedPreferences(
 									"prefs", 0);
 							SharedPreferences.Editor edit = prefs.edit();
@@ -930,7 +1009,7 @@ public class UpdateWidgetService extends Service {
 							//Log.d("SDDC", "Found " +  " --> " + packagename + "/" + launchActivity);
                             //Log.d("SDDC", "Prefs clock app = " +  prefs.getString("ClockButtonApp", "NONE"));
 
-							updateAllWidgets(mContext, R.layout.widget_layout, DigiClockProvider.class);
+
 
 							return;
 						//} catch (NameNotFoundException e) {
@@ -969,4 +1048,17 @@ public class UpdateWidgetService extends Service {
 	    }
 
 
+
+	static void registerOneTimeAlarm(PendingIntent alarmIntent, long delayMillis, boolean triggerNow) {
+		int SDK_INT = Build.VERSION.SDK_INT;
+		long timeInMillis = (System.currentTimeMillis() + (triggerNow ? 0 : delayMillis));
+
+		if (SDK_INT < Build.VERSION_CODES.KITKAT) {
+			alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMillis, alarmIntent);
+		} else if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M) {
+			alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, alarmIntent);
+		} else if (SDK_INT >= Build.VERSION_CODES.M) {
+			alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeInMillis, alarmIntent);
+		}
+	}
 }

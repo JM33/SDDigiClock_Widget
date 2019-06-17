@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent" android:id="@+id/FrameLayout">
 
@@ -7,59 +8,56 @@
         android:id="@+id/BackGround"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/blank"
-        android:scaleType="center"/>
+        app:srcCompat="@drawable/grey" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/blank"
-        android:orientation="vertical"
-        android:padding="10dp" >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp" >
-
-            <ImageView
-                android:id="@+id/ampmView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/clockView"
-                android:paddingLeft="5dp"
-                android:src="@drawable/blank" />
-
-            <ImageView
-                android:id="@+id/clockView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/blank" 
-                android:scaleType="center"/>
-
-        </RelativeLayout>
+        android:orientation="vertical" >
+        <!--android:background="@drawable/clearbg"
+        -->
 
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical" android:layout_gravity="center">
 
-            <ImageView
-                android:id="@+id/dateView"
+            <LinearLayout
+                android:id="@+id/linearLayout3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:src="@drawable/blank" 
-                android:scaleType="center"/>
+                android:layout_height="wrap_content" android:layout_gravity="center">
+
+
+
+                <TextClock
+                    android:id="@+id/clockText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:font="@font/distantgalaxy"
+                    android:layout_weight="1" />
+
+                <!--
+                <TextView
+                    android:id="@+id/AMPMText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="AM"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15dp" android:visibility="gone"/>
+                    -->
+            </LinearLayout>
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/DateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blank"
+            android:text="January 1, 2012" android:layout_gravity="center_horizontal" android:visibility="gone"/>
 
     </LinearLayout>
 
@@ -67,7 +65,6 @@
         android:id="@+id/SettingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/blank"
-        android:padding="10dp" />
+        android:background="@drawable/blank"/>
 
 </FrameLayout>
