@@ -1,6 +1,9 @@
 package com.sd.sddigiclock;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -29,7 +32,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Parcel;
 import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -55,6 +60,7 @@ import java.util.Locale;
  */
 public class UpdateWidgetService extends Service {
 	private static final String LOG = "DCProvider";
+	private static final int JOB_ID = 101;
 	public static Context mContext;
 	private String ampm;
 	private String shours;
@@ -108,8 +114,8 @@ public class UpdateWidgetService extends Service {
 	 @Override  
 	    public void onCreate()  
 	    {  
-	        super.onCreate(); 
-	        
+
+
 	        mContext = this.getApplicationContext();
 
 	        mHandler = new Handler();
@@ -128,12 +134,15 @@ public class UpdateWidgetService extends Service {
 	        Flayout.setId(R.id.FrameLayout);
 	        */
 	        //Log.i(LOG, "Service onCreate");
-	    }  
-  
+
+	    }
+
 		@Override  
 	public int onStartCommand(Intent intent, int flags, int startId)  
-	{  
-		
+	{
+
+
+
 		if(intent == null){
 			Log.d(LOG, "No Intent onStartCommand");
 			return START_REDELIVER_INTENT;
@@ -145,7 +154,7 @@ public class UpdateWidgetService extends Service {
 		            AppWidgetManager.INVALID_APPWIDGET_ID);
 		    Log.i(LOG, "Service Started awId =" + Integer.toString(appWidgetId));
 		}
-		alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+		//alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		/*
 		final AlarmManager m = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 
@@ -187,7 +196,7 @@ public class UpdateWidgetService extends Service {
 		Fontfile = prefs.getString("Font"+appWidgetId, "Roboto-Regular.ttf");
 		mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
 
-		clockButtonApp = prefs.getString("ClockButtonApp", "NONE");
+		clockButtonApp = prefs.getString("ClockButtonApp"+appWidgetId, "NONE");
         //Log.d("SDDC", "ClockApp saved = " + clockButtonApp);
 		setText();
 		
@@ -199,25 +208,31 @@ public class UpdateWidgetService extends Service {
 		//RemoteViews newView = new RemoteViews(getPackageName(), R.id.customTextClockLayout);
 		//view.addView(R.id.linearLayout3, newView);
 		//view.setImageViewBitmap(R.id.BackGround, buildBGUpdate(bgColor));
-	    //view.setImageViewBitmap(R.id.BackGround, buildClockUpdate(shours + ":" + sminutes, ampm, sdate, bgColor));
-
+	    view.setImageViewBitmap(R.id.BackGround, buildClockUpdate(shours + ":" + sminutes, ampm, sdate, bgColor));
 	    //view.setImageViewBitmap(R.id.clockView, buildClockUpdate(shours + ":" + sminutes);
 	    //view.setImageViewBitmap(R.id.ampmView, buildAMPMUpdate(ampm));
 		//view.setImageViewBitmap(R.id.dateView, buildDateUpdate(sdate));
 
+		//view.setInt(R.id.ClockButton, "setWeight", 4);
+
 		//int mfont = prefs.getInt("mFont"+appWidgetId, 0);
 		//view.setInt(R.id.clockText, "setTypeFace", R.font.weezerfont);
 		//view.setTextViewText(R.id.ClockText, (shours + ":" + sminutes));
-		view.setTextColor(R.id.clockText, cColor);
-		view.setTextColor(R.id.DateText, dColor);
-		view.setTextViewText(R.id.DateText, sdate);
+		//view.setTextColor(R.id.ClockText, Color.TRANSPARENT);
+		//int clocksize = clocktextsize * 10;
+		//view.setFloat(R.id.ClockText, "setTextSize", clocksize);
+		//view.set
+		//view.setTextColor(R.id.DateText, dColor);
+		//view.setTextViewText(R.id.DateText, sdate);
 
 		//view.setTextColor(R.id.AMPMText, cColor);
-		//view.setTextColor(R.id.DateText, dColor);
-		view.setTextViewText(R.id.DateText, sdate);
+		//view.setTextColor(R.id.DateText, Color.TRANSPARENT);
+		//view.setTextViewText(R.id.DateText, sdate);
+		//int datesize = datetextsize * 6;
+		//view.setFloat(R.id.DateText, "setTextSize", datesize);
 		//view.setTextViewText(R.id.AMPMText, ampm);
 		
-
+		/*
 		
 		float ctsize = (clocktextsize*1.5f + 6);
 		float dtsize = datetextsize;
@@ -249,7 +264,7 @@ public class UpdateWidgetService extends Service {
 				view.setCharSequence(R.id.clockText, "setFormat24Hour", "h:mm");
 			}
 		}
-	    
+	    */
 		
 		if(fillbg){
 			//view.setInt(R.id.linearLayout2, "setHeight", -2);
@@ -270,7 +285,7 @@ public class UpdateWidgetService extends Service {
 
 		//DATE INTENT on click date
 		PendingIntent pendingIntentD = PendingIntent.getActivity(mContext, 0, prefsIntent, 0);
-	    view.setOnClickPendingIntent(R.id.DateText, pendingIntentD);
+	    view.setOnClickPendingIntent(R.id.DateButton, pendingIntentD);
 
 		//final PackageManager pm = getPackageManager();
 	//get a list of installed apps.
@@ -299,6 +314,9 @@ public class UpdateWidgetService extends Service {
 
 		Intent appchooserintent=new Intent(UpdateWidgetService.this,AppSelector.class);
 
+		Bundle bundle = new Bundle();
+		bundle.putInt("AppWidgetId", appWidgetId);
+		appchooserintent.putExtras(bundle);
 		/*
 		for(int i=0; i<clockImpls.length; i++) {
 		    String vendor = clockImpls[i][0];
@@ -318,10 +336,10 @@ public class UpdateWidgetService extends Service {
 
 
 		if(clockButtonApp.equals("NONE")){
-			PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, appchooserintent, 0);
-			view.setOnClickPendingIntent(R.id.clockText, pendingIntentC);
+			PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, prefsIntent, 0);
+			view.setOnClickPendingIntent(R.id.ClockButton, pendingIntentC);
 		}else{
-			setClockButtonApp(clockButtonApp);
+			setClockButtonApp(clockButtonApp, appWidgetId);
 
 		}
 		/*
@@ -340,7 +358,7 @@ public class UpdateWidgetService extends Service {
 		manager.updateAppWidget(appWidgetId, view);
 	    //manager.updateAppWidget(thisWidget, view);
 
-
+		/*
 		final AlarmManager m = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		Log.i("UWS", "UPDATING WIDGET: " + appWidgetId);
 		final Calendar TIME = Calendar.getInstance();
@@ -361,16 +379,25 @@ public class UpdateWidgetService extends Service {
 			//Doze???
 		}
 
-		//m.set(AlarmManager.RTC_WAKEUP, (1000 * 60), service);
+
+		//startService(intent);
+		//m.set(AlarmManager.RTC_WAKEUP, TIME.getTimeInMillis(), service);
 		//m.setRepeating(AlarmManager.RTC_WAKEUP, TIME.getTimeInMillis(),60L * 1000L, service);
 		//final PendingIntent pending = PendingIntent.getService(mContext, 0, intent, 0);
 		//m.cancel(pending);
 
 		//m.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 1000*60, service);
 		//m.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, TIME.getTimeInMillis() + 60L * 1000L, service);
-
+		Intent startServiceIntent = new Intent(mContext, ClockJobScheduler.class);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			mContext.startForegroundService(startServiceIntent);
+		} else {
+			mContext.startService(startServiceIntent);
+		}
+		*/
 		//registerOneTimeAlarm(service, 1000*60, false);
 		Log.i(LOG, "UpdateWidgetService Setting Alarm for 1 minute!!!!?X");
+		//return START_STICKY;
 	    return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -560,7 +587,7 @@ public class UpdateWidgetService extends Service {
 		////// DATE UPDATE
 
 			// font size
-			fontSize = datetextsize*6;
+			fontSize = datetextsize*3;
 
 			//Bitmap myBitmap = Bitmap.createBitmap(clocktextsize*2, clocktextsize+20, Bitmap.Config.ARGB_4444);
 			//Canvas myCanvas = new Canvas(myBitmap);
@@ -672,8 +699,15 @@ public class UpdateWidgetService extends Service {
 			// create bitmap for text
 
 
+			int bgwidth;
+			if(getScreenWidth() > getScreenHeight()){
+				bgwidth = (int)(getScreenWidth()*1.5f);
+			}else{
+				bgwidth = (int)(getScreenHeight()*1.5f);
+			}
 
-			Bitmap bm = Bitmap.createBitmap((int)(getScreenWidth()*1.5f), (int)height, Bitmap.Config.ARGB_8888);
+
+			Bitmap bm = Bitmap.createBitmap(bgwidth, (int)height, Bitmap.Config.ARGB_8888);
 
 
 			// canvas
@@ -977,7 +1011,7 @@ public class UpdateWidgetService extends Service {
         return metrics.heightPixels;
     }
 
-    public static void setClockButtonApp(final String packagename){
+    public static void setClockButtonApp(final String packagename, int appWidgetId){
 		//Log.d("SDDC", "Set Clock Button Application " +  " --> " + packagename );
 	    		packageManager = mContext.getPackageManager();
 				packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
@@ -999,11 +1033,11 @@ public class UpdateWidgetService extends Service {
 							alarmClockIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 							PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, alarmClockIntent, 0);
 
-							view.setOnClickPendingIntent(R.id.clockText, pendingIntentC);
+							view.setOnClickPendingIntent(R.id.ClockButton, pendingIntentC);
 							SharedPreferences prefs = mContext.getSharedPreferences(
 									"prefs", 0);
 							SharedPreferences.Editor edit = prefs.edit();
-							edit.putString("ClockButtonApp", packagename);
+							edit.putString("ClockButtonApp"+appWidgetId, packagename);
 							edit.commit();
 							clockButtonApp = packagename;
 							//Log.d("SDDC", "Found " +  " --> " + packagename + "/" + launchActivity);

@@ -84,6 +84,8 @@ public class DigiClockPrefs extends Activity{
 	private Button btchoosebg;
 	private ImageButton btsave;
 	private ImageButton btcancel;
+	private LinearLayout saveLinearLayout;
+	private LinearLayout cancelLinearLayout;
 
 	private Button btdtformat;
 
@@ -140,7 +142,6 @@ public class DigiClockPrefs extends Activity{
 
 	static  AlarmManager alarmManager;
 
-	private static JobScheduler jobScheduler;
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -152,7 +153,6 @@ public class DigiClockPrefs extends Activity{
 		alarmManager = (AlarmManager) this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
 		DCP = this;
-		jobScheduler = (JobScheduler) DCP.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
 
 		Intent intent = getIntent();
@@ -220,7 +220,7 @@ public class DigiClockPrefs extends Activity{
 		Bg = prefs.getInt("Bg"+appWidgetId, 3);
 		Fontfile = prefs.getString("Font"+appWidgetId, "Roboto-Regular.ttf");
 		mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
-		clockapp = prefs.getString("ClockButtonApp", "NONE");
+		clockapp = prefs.getString("ClockButtonApp"+appWidgetId, "NONE");
 		//Log.d("SDDC", "clock app = "+ clockapp);
 	}
 
@@ -242,6 +242,8 @@ public class DigiClockPrefs extends Activity{
 		btdtsize = (SeekBar)DCP.findViewById(R.id.DateSizeSB);
 		btsave = (ImageButton)DCP.findViewById(R.id.btSave);
 		btcancel = (ImageButton)DCP.findViewById(R.id.btCancel);
+		saveLinearLayout = (LinearLayout)DCP.findViewById(R.id.saveLinearLayout);
+		cancelLinearLayout = (LinearLayout)DCP.findViewById(R.id.cancelLinearLayout);
 		btdtformat = (Button)DCP.findViewById(R.id.DateFormat);
 		btclockclickapp = (Button)DCP.findViewById(R.id.ClockClickApp);
 		//mDateFormatFrameLayout = (FrameLayout)DCP.findViewById(R.id.DateFormatFrameLayout);
@@ -250,7 +252,7 @@ public class DigiClockPrefs extends Activity{
 		btdtsize.setProgress(datetextsize);
 
 
-		TabHost tabHost=(TabHost)findViewById(R.id.tabHost);
+		final TabHost tabHost=(TabHost)findViewById(R.id.tabHost);
 		tabHost.setup();
 
 		TabSpec spec1=tabHost.newTabSpec("Tab 1");
@@ -273,6 +275,16 @@ public class DigiClockPrefs extends Activity{
 		tabHost.addTab(spec2);
 		tabHost.addTab(spec3);
 		tabHost.addTab(spec4);
+
+		setTabColor(tabHost);
+		tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+			@Override
+			public void onTabChanged(String arg0) {
+
+				setTabColor(tabHost);
+			}
+		});
 
 		if(dateshown){
 			btsdate.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
@@ -410,6 +422,9 @@ public class DigiClockPrefs extends Activity{
 		btclockclickapp.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent appchooserintent=new Intent(DigiClockPrefs.this, AppSelector.class);
+				Bundle bundle  = new Bundle();
+				bundle.putInt("AppWidgetId", appWidgetId);
+				appchooserintent.putExtras(bundle);
 				startActivity(appchooserintent);
 
 			}
@@ -474,69 +489,28 @@ public class DigiClockPrefs extends Activity{
 		});
 
 
-
 		btsave.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				saveAndExit();
+			}
+		});
+
+		saveLinearLayout.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
-	    		//final Context context = DigiClockPrefs.this;
-
-	            // When the button is clicked, save the string in our prefs and return that they
-	            // clicked OK.
-
-
-
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
-	            SharedPreferences.Editor edit = prefs.edit();
-
-
-	    		clocktextsize = btctsize.getProgress();
-	    		edit.putInt("ClockTextSize"+appWidgetId, clocktextsize);
-
-
-	    		datetextsize = btdtsize.getProgress();
-	    		edit.putInt("DateTextSize"+appWidgetId, datetextsize);
-
-	    		edit.putInt("DateFormat"+appWidgetId, dateFormatIndex);
-
-	    		edit.commit();
-
-	    		final AlarmManager m = (AlarmManager) self.getSystemService(Context.ALARM_SERVICE);
-
-		        final Calendar TIME = Calendar.getInstance();
-		        TIME.set(Calendar.MINUTE, 0);
-		        TIME.set(Calendar.SECOND, 0);
-		        TIME.set(Calendar.MILLISECOND, 0);
-
-		        final Intent intent = new Intent(self, UpdateWidgetService.class);
-
-		        //Bundle extras = intent.getExtras();
-	    		//if (extras != null) {
-	    		//    appWidgetId = extras.getInt(
-	    		//            AppWidgetManager.EXTRA_APPWIDGET_ID,
-	    		//            AppWidgetManager.INVALID_APPWIDGET_ID);
-	    		//}
-
-		        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-		        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-
-		        //if (service == null)
-		        //{
-		            service = PendingIntent.getService(self, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-		        //}
-
-		        m.setExact(AlarmManager.RTC, TIME.getTime().getTime(), service);
-				//registerOneTimeAlarm(service, 1000*60, true);
-
-
-		        setResult(RESULT_OK, intent);
-		        Toast.makeText(DCP, "Settings Saved", Toast.LENGTH_SHORT);
-	            finish();
-
+	    		saveAndExit();
 	    	}
 	    });
 
 		btcancel.setOnClickListener(new OnClickListener() {
-	    	public void onClick(View v) {
+			public void onClick(View v) {
+				setResult(RESULT_CANCELED);
+				finish();
 
+			}
+		});
+
+		cancelLinearLayout.setOnClickListener(new OnClickListener() {
+	    	public void onClick(View v) {
 		        setResult(RESULT_CANCELED);
 	            finish();
 
@@ -1104,6 +1078,34 @@ public class DigiClockPrefs extends Activity{
         //txt.setTypeface(font);
 	}
 
+	private void saveAndExit() {
+		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
+		SharedPreferences.Editor edit = prefs.edit();
+
+
+		clocktextsize = btctsize.getProgress();
+		edit.putInt("ClockTextSize"+appWidgetId, clocktextsize);
+
+
+		datetextsize = btdtsize.getProgress();
+		edit.putInt("DateTextSize"+appWidgetId, datetextsize);
+
+		edit.putInt("DateFormat"+appWidgetId, dateFormatIndex);
+
+		edit.commit();
+
+		final Intent intent = new Intent(self, UpdateWidgetService.class);
+
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+		intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+
+		service = PendingIntent.getService(DCP, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		setResult(RESULT_OK, intent);
+		DCP.startService(intent);
+
+		finish();
+	}
+
 
 	@Override
 	public void onPause(){
@@ -1229,6 +1231,8 @@ public class DigiClockPrefs extends Activity{
     }
 	*/
 
+
+
 	public static void updateWidget(Context context, AppWidgetManager manager,
 			int appWidgetId) {
 		final AlarmManager m = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -1261,28 +1265,29 @@ public class DigiClockPrefs extends Activity{
 		//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			//m.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, TIME.getTimeInMillis() + 60L * 1000L, service);
 		//}
-		m.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, TIME.getTime().getTime(), 60*5*1000, service);
+		//m.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, TIME.getTime().getTime(), 60*5*1000, service);
 		//m.setRepeating(AlarmManager.RTC_WAKEUP, TIME.getTimeInMillis(),60L * 1000L, service);
 		Log.i("DCPrefs", "DigiClockPrefs----------Setting Alarm for 5 minutes");
 
 
+	}
 
-		//System request code
-		int DATA_FETCHER_RC = 123;
-		//Create an alarm manager
-		AlarmManager mAlarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+	public static void setTabColor(TabHost tabhost) {
 
-		//Create the time of day you would like it to go off. Use a calendar
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-
-		//initialize the alarm by using inexactrepeating. This allows the system to scheduler your alarm at the most efficient time around your
-		//set time, it is usually a few seconds off your requested time.
-		// you can also use setExact however this is not recommended. Use this only if it must be done then.
-
-		//Also set the interval using the AlarmManager constants
-		mAlarmManager.setInexactRepeating(AlarmManager.RTC,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, service);
+		for (int i = 0; i < tabhost.getTabWidget().getChildCount(); i++) {
+			tabhost.getTabWidget().getChildAt(i)
+					.setBackgroundResource(R.drawable.grey); // unselected
+			TextView tv = (TextView) tabhost.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
+			tv.setTextColor(Color.DKGRAY);
+		}
+		tabhost.getTabWidget().setCurrentTab(0);
+		tabhost.getTabWidget().getChildAt(tabhost.getCurrentTab())
+				.setBackgroundResource(R.drawable.blank); // selected
+		TextView tv = (TextView) tabhost.getTabWidget().getChildAt(tabhost.getCurrentTab()).findViewById(android.R.id.title); //Unselected Tabs
+		tv.setTextColor(Color.WHITE);
+		// //have
+		// to
+		// change
 	}
 
 	public void setBGs(int color){

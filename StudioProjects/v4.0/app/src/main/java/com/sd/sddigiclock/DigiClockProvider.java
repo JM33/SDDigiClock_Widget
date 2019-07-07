@@ -3,11 +3,11 @@ package com.sd.sddigiclock;
 import java.util.Calendar;
 import java.util.List;
 
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
-import android.app.job.JobWorkItem;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,10 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.RemoteViews;
+import android.widget.Toast;
+
 /*
  * Author Brian Kimmel
  * Copyright Silent Designs, all rights reserved
@@ -32,7 +37,35 @@ public class DigiClockProvider extends AppWidgetProvider{
 
 	private static PendingIntent service = null;
 
-	static AlarmManager alarmManager;
+
+	public static final String ACTION_TICK = "CLOCK_TICK";
+	public static final String SETTINGS_CHANGED = "SETTINGS_CHANGED";
+	public static final String JOB_TICK = "JOB_CLOCK_TICK";
+	private static String clockButtonApp;
+	private static String sminutes;
+	private static String ampm;
+	private static String sdate;
+	private static Intent prefsIntent;
+	private SharedPreferences preferences;
+
+	private static RemoteViews view;
+	static boolean dateshown;
+	static boolean ampmshown;
+	static boolean show24;
+	static boolean fillbg;
+	static int clocktextsize;
+	static int datetextsize;
+	static boolean dateMatchClockColor;
+	static int dateFormatIndex;
+
+	static int cColor;
+	static int dColor;
+	static int bgColor;
+
+	static int Bg;
+	String Fontfile;
+	static int  mFont;
+	
 
 
     @Override
@@ -56,6 +89,9 @@ public class DigiClockProvider extends AppWidgetProvider{
     public void onEnabled(Context context) {
 		//runs when all of the first instance of the widget are placed
 		//on the home screen
+
+
+		/*
 		AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 		ComponentName cn = new ComponentName(context, DigiClockProvider.class);
 		int [] awids = mgr.getAppWidgetIds(cn);
@@ -70,26 +106,28 @@ public class DigiClockProvider extends AppWidgetProvider{
 		//pm.setComponentEnabledSetting(new ComponentName("com.sd.sddigiclock", ".DigiClockProvider"),
 		//		PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
 		//		PackageManager.DONT_KILL_APP);
+
+		*/
 		Log.i(LOG, "DigiClockProvider onEnabled");
 
+		restartAll(context);
     }
 	
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		Log.w(LOG, "onUpdate method called");
-		
-		final int N = appWidgetIds.length;
-		for (int i = 0; i < N; ++i) {
-			updateWidget(context, appWidgetManager, appWidgetIds[i]);
-			
+
+		for (int appWidgetId : appWidgetIds) {
+			updateAppWidget(context, appWidgetManager, appWidgetId);
 		}
 
 	}
-	
-	 @Override  
+
+	 @Override
 	    public void onDisabled(Context context)  
 	    {
+	    	/*
 			//final AlarmManager m = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
 			//m.cancel(service);
@@ -106,7 +144,21 @@ public class DigiClockProvider extends AppWidgetProvider{
 			//pm.setComponentEnabledSetting(new ComponentName("com.sd.sddigiclock", ".DigiClockProvider"),
 			//		PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
 			//		PackageManager.DONT_KILL_APP);
+			*/
 
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+				jobScheduler.cancelAll();
+			} else {
+				// stop alarm
+				AppWidgetAlarm appWidgetAlarm = new AppWidgetAlarm(context.getApplicationContext());
+				appWidgetAlarm.stopAlarm();
+			}
+
+			Intent serviceBG = new Intent(context.getApplicationContext(), WidgetBackgroundService.class);
+			serviceBG.putExtra("SHUTDOWN", true);
+			context.getApplicationContext().startService(serviceBG);
+			context.getApplicationContext().stopService(serviceBG);
 	    }  
 	 @Override
      public void onReceive(Context context, Intent intent) {
@@ -124,8 +176,26 @@ public class DigiClockProvider extends AppWidgetProvider{
 	     //flow of intent handling 
 		 //Log.i(LOG, "intent = " + intent.toString());
 
+		 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+		 ComponentName thisAppWidget = new ComponentName(context.getPackageName(), DigiClockProvider.class.getName());
+		 int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
 
+		 if (intent.getAction().equals(SETTINGS_CHANGED)) {
+			 onUpdate(context, appWidgetManager, appWidgetIds);
+			 if (appWidgetIds.length > 0) {
+				 restartAll(context);
+			 }
+		 }
 
+		 if (intent.getAction().equals(JOB_TICK) || intent.getAction().equals(ACTION_TICK) ||
+				 intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+				 || intent.getAction().equals(Intent.ACTION_DATE_CHANGED)
+				 || intent.getAction().equals(Intent.ACTION_TIME_CHANGED)
+				 || intent.getAction().equals(Intent.ACTION_TIMEZONE_CHANGED)) {
+			 restartAll(context);
+			 onUpdate(context, appWidgetManager, appWidgetIds);
+		 }
+		/*
 		goAsync();
 
 
@@ -139,58 +209,50 @@ public class DigiClockProvider extends AppWidgetProvider{
 		 }else{
 			 super.onReceive(context, intent);
 		 }
-			 
-	 }
-	 
-	 static void updateWidget(Context context, AppWidgetManager appwidgetmanager, int appWidgetId){
-		 final AlarmManager m = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-		 final Calendar TIME = Calendar.getInstance();
-		 TIME.set(Calendar.MINUTE, 0);
-		 TIME.set(Calendar.SECOND, 0);
-		 TIME.set(Calendar.MILLISECOND, 0);
-		 Log.i(LOG, "OnUpdate awId =" + Integer.toString(appWidgetId));
-		 final Intent intent = new Intent(context, UpdateWidgetService.class);
-		 intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-		 intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-
-		 //if (service == null)
-		 //   {
-		 service = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		 //   }
-
-		 m.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, TIME.getTime().getTime(), 60*1000, service);
-
-
-		 //System request code
-		 int DATA_FETCHER_RC = 123;
-		 //Create an alarm manager
-		 AlarmManager mAlarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-
-		 //Create the time of day you would like it to go off. Use a calendar
-		 Calendar calendar = Calendar.getInstance();
-		 calendar.set(Calendar.HOUR_OF_DAY, 0);
-		 calendar.set(Calendar.MINUTE, 0);
-
-		 //initialize the alarm by using inexactrepeating. This allows the system to scheduler your alarm at the most efficient time around your
-		 //set time, it is usually a few seconds off your requested time.
-		 // you can also use setExact however this is not recommended. Use this only if it must be done then.
-
-		 //Also set the interval using the AlarmManager constants
-		 mAlarmManager.setInexactRepeating(AlarmManager.RTC,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, service);
+			*/
 	 }
 
-	static void registerOneTimeAlarm(PendingIntent alarmIntent, long delayMillis, boolean triggerNow) {
-		int SDK_INT = Build.VERSION.SDK_INT;
-		long timeInMillis = (System.currentTimeMillis() + (triggerNow ? 0 : delayMillis));
-
-		if (SDK_INT < Build.VERSION_CODES.KITKAT) {
-			alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMillis, alarmIntent);
-		} else if (Build.VERSION_CODES.KITKAT <= SDK_INT && SDK_INT < Build.VERSION_CODES.M) {
-			alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, alarmIntent);
-		} else if (SDK_INT >= Build.VERSION_CODES.M) {
-			alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeInMillis, alarmIntent);
+	private void restartAll(Context context){
+		Intent serviceBG = new Intent(context.getApplicationContext(), WidgetBackgroundService.class);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			// for Android 8 start the service in foreground
+			context.startForegroundService(serviceBG);
+		} else {
+			context.startService(serviceBG);
+		}
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			scheduleJob(context);
+		} else {
+			AppWidgetAlarm appWidgetAlarm = new AppWidgetAlarm(context.getApplicationContext());
+			appWidgetAlarm.startAlarm();
 		}
 	}
+
+
+
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	private void scheduleJob(Context context) {
+		ComponentName serviceComponent = new ComponentName(context.getPackageName(), RepeatingJob.class.getName());
+		JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
+		builder.setPersisted(true);
+		builder.setPeriodic(600000);
+		JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+		int jobResult = jobScheduler.schedule(builder.build());
+		if (jobResult == JobScheduler.RESULT_SUCCESS){
+		}
+	}
+	 
+	 static void updateAppWidget(Context context, AppWidgetManager appwidgetmanager, int appWidgetId){
+
+		 Intent intent = new Intent(context, UpdateWidgetService.class);
+		 intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+		 intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+		 context.startService(intent);
+		 //Toast.makeText(context, "Updated widget " + appWidgetId, Toast.LENGTH_SHORT).show();
+
+
+	 }
+
+
 }
 

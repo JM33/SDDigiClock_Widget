@@ -8,9 +8,10 @@
         android:minSdkVersion="23"
         android:targetSdkVersion="28" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
@@ -30,13 +31,45 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="CLOCK_TICK" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="JOB_CLOCK_TICK" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="SETTINGS_CHANGED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.DATE_CHANGED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.os.action.DEVICE_IDLE_MODE_CHANGED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_DREAMING_STOPPED" />
+            </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
 
+        <service
+            android:name="com.sd.sddigiclock.RepeatingJob"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service android:name="com.sd.sddigiclock.WidgetBackgroundService" />
         <service android:name="com.sd.sddigiclock.UpdateWidgetService" />
+        <service
+            android:name="com.sd.sddigiclock.ClockJobScheduler"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
             android:name="com.sd.sddigiclock.AppSelector"

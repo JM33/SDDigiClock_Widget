@@ -29,11 +29,19 @@ public class AppSelector extends AppCompatActivity {
     AppListAdapter app_list_adapter;
 
     private PackageManager pm;
+    private int appWidgetId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_selector);
+
+        if(this.getIntent().getExtras() != null){
+            Bundle bundle = this.getIntent().getExtras();
+            appWidgetId = bundle.getInt("AppWidgetId");
+        }else{
+            return;
+        }
 
         ListView mListView = (ListView)findViewById(R.id.ListViewAppSelect);
 
@@ -96,6 +104,7 @@ public class AppSelector extends AppCompatActivity {
         };
 
 */
+
         app_list_adapter = new AppListAdapter(this.getApplicationContext());
 
         mListView.setAdapter(app_list_adapter);
@@ -107,7 +116,7 @@ public class AppSelector extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView tv = (TextView)view.findViewById(R.id.textView_package_name);
                 String pname = tv.getText().toString();
-                UpdateWidgetService.setClockButtonApp(pname);
+                UpdateWidgetService.setClockButtonApp(pname, appWidgetId);
                 //Log.d("SDDC", "Selected: " + pname);
                 finish();
             }
