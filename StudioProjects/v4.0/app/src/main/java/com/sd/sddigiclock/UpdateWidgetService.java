@@ -587,7 +587,7 @@ public class UpdateWidgetService extends Service {
 		////// DATE UPDATE
 
 			// font size
-			fontSize = datetextsize*3;
+			fontSize = datetextsize*6;
 
 			//Bitmap myBitmap = Bitmap.createBitmap(clocktextsize*2, clocktextsize+20, Bitmap.Config.ARGB_4444);
 			//Canvas myCanvas = new Canvas(myBitmap);
