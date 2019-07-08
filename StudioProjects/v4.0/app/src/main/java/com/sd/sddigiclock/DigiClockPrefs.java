@@ -37,6 +37,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -145,6 +146,8 @@ public class DigiClockPrefs extends Activity{
 	public static boolean active = false;
 	public static boolean overSize = false;
 
+	private Handler mHandler;
+
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
@@ -156,6 +159,7 @@ public class DigiClockPrefs extends Activity{
 
 		DCP = this;
 
+		mHandler = new Handler();
 
 		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();
@@ -247,17 +251,25 @@ public class DigiClockPrefs extends Activity{
 		setBGs(bgColor);
 		//tabs = (TabHost)DCP.findViewById(R.id.tabHost);
 		btsdate = (Button)DCP.findViewById(R.id.ShowDate);
+		btsdate.setTransformationMethod(null);
 		btsampm = (Button)DCP.findViewById(R.id.ShowAMPM);
+		btsampm.setTransformationMethod(null);
 		bts24 = (Button)DCP.findViewById(R.id.TwentyFour);
+		bts24.setTransformationMethod(null);
 		btccolor = (Button)DCP.findViewById(R.id.ClockTextColor);
+		btccolor.setTransformationMethod(null);
 		btdcolor = (Button)DCP.findViewById(R.id.DateTextColor);
+		btdcolor.setTransformationMethod(null);
 		btdatematchcolor = (Button)DCP.findViewById(R.id.matchClockColor);
+		btdatematchcolor.setTransformationMethod(null);
 		btctsize = (SeekBar)DCP.findViewById(R.id.ClockSizeSB);
 		btdtsize = (SeekBar)DCP.findViewById(R.id.DateSizeSB);
 		btsave = (ImageButton)DCP.findViewById(R.id.btSave);
 		btcancel = (ImageButton)DCP.findViewById(R.id.btCancel);
 		btdtformat = (Button)DCP.findViewById(R.id.DateFormat);
+		btdtformat.setTransformationMethod(null);
 		btclockclickapp = (Button)DCP.findViewById(R.id.ClockClickApp);
+		btclockclickapp.setTransformationMethod(null);
 		saveLinearLayout = (LinearLayout)DCP.findViewById(R.id.saveLinearLayout);
 		cancelLinearLayout = (LinearLayout)DCP.findViewById(R.id.cancelLinearLayout);
 		//mDateFormatFrameLayout = (FrameLayout)DCP.findViewById(R.id.DateFormatFrameLayout);
@@ -309,9 +321,11 @@ public class DigiClockPrefs extends Activity{
 		if(dateMatchClockColor){
 			btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
 			btdcolor.setEnabled(false);
+			btdcolor.setTextColor(Color.rgb(180,180,180));
 		}else{
 			btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkbox,0);
 			btdcolor.setEnabled(true);
+			btdcolor.setTextColor(Color.WHITE);
 		}
 
 		if(ampmshown){
@@ -351,6 +365,7 @@ public class DigiClockPrefs extends Activity{
 		btdatematchcolor.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if(!dateMatchClockColor){
+					btdcolor.setTextColor(Color.rgb(180,180,180));
 					btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
 					dateMatchClockColor = true;
 					btdcolor.setEnabled(false);
@@ -360,6 +375,7 @@ public class DigiClockPrefs extends Activity{
 					edit.commit();
 
 				}else{
+					btdcolor.setTextColor(Color.WHITE);
 					btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkbox,0);
 					dateMatchClockColor = false;
 					btdcolor.setEnabled(true);
@@ -618,6 +634,7 @@ public class DigiClockPrefs extends Activity{
 	    	                SharedPreferences.Editor edit = prefs.edit();
 	    	                edit.putInt("bgColor"+appWidgetId, bgColor);
 	    	                edit.commit();
+	    	                setBGs(color);
 
 	    	        }
 
@@ -661,7 +678,7 @@ public class DigiClockPrefs extends Activity{
 	    	                SharedPreferences.Editor edit = prefs.edit();
 	    	                edit.putInt("bgColor"+appWidgetId, bgColor);
 	    	                edit.commit();
-
+							setBGs(color);
 	    	        }
 
 	    	        @Override
@@ -673,13 +690,11 @@ public class DigiClockPrefs extends Activity{
 	    		dialog.show();
 
 	    		setBGs(bgColor);
-	    		v.invalidate();
 	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt("bgColor"+appWidgetId, bgColor);
                 edit.putInt("Bg"+appWidgetId, Bg);
                 edit.commit();
-
 	    	}
 
         });
@@ -1355,6 +1370,7 @@ public class DigiClockPrefs extends Activity{
 	    	    canvas.drawPaint(paint);
 	    	    d = new BitmapDrawable(DCP.getResources(), bm);
 	    	    bglayout2.setBackground(d);
+	    	    //bglayout2.postInvalidate();
 	    	    break;
 			case 3:
 				shader = new LinearGradient(0, 0, 0, height,
@@ -1366,12 +1382,11 @@ public class DigiClockPrefs extends Activity{
 	    	    canvas.drawPaint(paint);
 	    	    d = new BitmapDrawable(DCP.getResources(), bm);
 	    	    bglayout3.setBackground(d);
+	    	    //bglayout3.postInvalidate();
 	    	    break;
 
 	    	}
 		}
-
-		
 	}
 
 	public static String getFormattedDate(int index){
