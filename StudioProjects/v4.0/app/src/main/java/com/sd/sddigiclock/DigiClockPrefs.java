@@ -142,6 +142,8 @@ public class DigiClockPrefs extends Activity{
 
 	static  AlarmManager alarmManager;
 
+	public static boolean active = false;
+	public static boolean overSize = false;
 
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -168,12 +170,24 @@ public class DigiClockPrefs extends Activity{
             finish();
         }
 
-
+		overSize = false;
 		LoadPrefs();
 
 		setButtons();
 
     }
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		active = true;
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		active = false;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -242,10 +256,10 @@ public class DigiClockPrefs extends Activity{
 		btdtsize = (SeekBar)DCP.findViewById(R.id.DateSizeSB);
 		btsave = (ImageButton)DCP.findViewById(R.id.btSave);
 		btcancel = (ImageButton)DCP.findViewById(R.id.btCancel);
-		saveLinearLayout = (LinearLayout)DCP.findViewById(R.id.saveLinearLayout);
-		cancelLinearLayout = (LinearLayout)DCP.findViewById(R.id.cancelLinearLayout);
 		btdtformat = (Button)DCP.findViewById(R.id.DateFormat);
 		btclockclickapp = (Button)DCP.findViewById(R.id.ClockClickApp);
+		saveLinearLayout = (LinearLayout)DCP.findViewById(R.id.saveLinearLayout);
+		cancelLinearLayout = (LinearLayout)DCP.findViewById(R.id.cancelLinearLayout);
 		//mDateFormatFrameLayout = (FrameLayout)DCP.findViewById(R.id.DateFormatFrameLayout);
 
 		btctsize.setProgress(clocktextsize);
@@ -1082,13 +1096,14 @@ public class DigiClockPrefs extends Activity{
 		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
 		SharedPreferences.Editor edit = prefs.edit();
 
+		//if(!UpdateWidgetService.isOversize) {
+			clocktextsize = btctsize.getProgress();
+			edit.putInt("ClockTextSize" + appWidgetId, clocktextsize);
 
-		clocktextsize = btctsize.getProgress();
-		edit.putInt("ClockTextSize"+appWidgetId, clocktextsize);
 
-
-		datetextsize = btdtsize.getProgress();
-		edit.putInt("DateTextSize"+appWidgetId, datetextsize);
+			datetextsize = btdtsize.getProgress();
+			edit.putInt("DateTextSize" + appWidgetId, datetextsize);
+		//}
 
 		edit.putInt("DateFormat"+appWidgetId, dateFormatIndex);
 
@@ -1110,7 +1125,7 @@ public class DigiClockPrefs extends Activity{
 	@Override
 	public void onPause(){
 		super.onPause();
-
+		active = false;
 	}
 
 	/*

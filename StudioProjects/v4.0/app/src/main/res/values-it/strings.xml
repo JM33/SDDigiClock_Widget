@@ -84,4 +84,5 @@
     <string name="clock">Orologio</string>
     <string name="background">Sfondo</string>
     <string name="font">Font</string>
+    <string name="oversize">La dimensione del testo è troppo grande. Ridurre le dimensioni del testo di orologio o data.</string>
 </resources>

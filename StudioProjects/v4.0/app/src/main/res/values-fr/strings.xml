@@ -84,4 +84,5 @@
     <string name="clock">L\'horloge</string>
     <string name="background">Fond</string>
     <string name="font">Police de caractère</string>
+    <string name="oversize">La taille du texte est trop grande. Réduit la taille du texte de l\'horloge ou de la date.</string>
 </resources>

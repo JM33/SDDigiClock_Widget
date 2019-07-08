@@ -84,4 +84,5 @@
     <string name="clock">Uhr</string>
     <string name="background">Hintergrund</string>
     <string name="font">Schriftart</string>
+    <string name="oversize">Textgröße ist zu groß. Reduzieren Sie die Textgröße der Uhr oder des Datums.</string>
 </resources>

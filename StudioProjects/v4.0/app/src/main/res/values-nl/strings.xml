@@ -84,4 +84,5 @@
     <string name="clock">Klok</string>
     <string name="background">Achtergrond</string>
     <string name="font">Doopvont</string>
+    <string name="oversize">Tekstgrootte is te groot. Verklein de tekstgrootte van klok of datum.</string>
 </resources>

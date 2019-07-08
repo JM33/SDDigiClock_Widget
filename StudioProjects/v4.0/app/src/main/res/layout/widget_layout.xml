@@ -100,16 +100,16 @@
                 android:id="@+id/ClockButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:background="@drawable/blank" />
-
+            <!--
             <Button
                 android:id="@+id/DateButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:background="@drawable/blank" />
-
+            -->
         </LinearLayout>
 
         <LinearLayout
@@ -119,7 +119,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/topRightButton"
+                android:id="@+id/refreshButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

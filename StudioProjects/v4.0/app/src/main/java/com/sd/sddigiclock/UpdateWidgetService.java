@@ -18,9 +18,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Rect;
@@ -30,6 +32,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -40,13 +43,17 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RemoteViews;
 import android.text.format.DateFormat;
 import android.widget.TextClock;
+import android.widget.Toast;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -110,8 +117,9 @@ public class UpdateWidgetService extends Service {
 	//private String dateFormat;
 
 	boolean mIsPortraitOrientation;
-	
-	 @Override  
+	public static boolean isOversize;
+
+	@Override
 	    public void onCreate()  
 	    {  
 
@@ -154,6 +162,7 @@ public class UpdateWidgetService extends Service {
 		            AppWidgetManager.INVALID_APPWIDGET_ID);
 		    Log.i(LOG, "Service Started awId =" + Integer.toString(appWidgetId));
 		}
+
 		//alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		/*
 		final AlarmManager m = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
@@ -208,7 +217,21 @@ public class UpdateWidgetService extends Service {
 		//RemoteViews newView = new RemoteViews(getPackageName(), R.id.customTextClockLayout);
 		//view.addView(R.id.linearLayout3, newView);
 		//view.setImageViewBitmap(R.id.BackGround, buildBGUpdate(bgColor));
-	    view.setImageViewBitmap(R.id.BackGround, buildClockUpdate(shours + ":" + sminutes, ampm, sdate, bgColor));
+		Bitmap updateBitmap = buildClockUpdate(shours + ":" + sminutes, ampm, sdate, bgColor);
+		int maxsize = (int)(getScreenWidth() * getScreenHeight() * 4 * 1.5f);
+		Log.d("UpdateWidgetService", "SW - " + getScreenWidth() + " x SH - " + getScreenHeight() + " x 4 x 1.5 = " +maxsize);
+		Log.d("UpdateWidgetService", "Bitmap = " + updateBitmap.getByteCount());
+		isOversize = false;
+		if(updateBitmap.getByteCount() > maxsize){
+			Toast.makeText(mContext, R.string.oversize, Toast.LENGTH_LONG).show();
+			isOversize = true;
+		}
+		//ByteArrayOutputStream out = new ByteArrayOutputStream();
+		//updateBitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
+		//Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+
+		view.setImageViewBitmap(R.id.BackGround, updateBitmap);
+	    //updateBitmap.recycle();
 	    //view.setImageViewBitmap(R.id.clockView, buildClockUpdate(shours + ":" + sminutes);
 	    //view.setImageViewBitmap(R.id.ampmView, buildAMPMUpdate(ampm));
 		//view.setImageViewBitmap(R.id.dateView, buildDateUpdate(sdate));
@@ -285,7 +308,7 @@ public class UpdateWidgetService extends Service {
 
 		//DATE INTENT on click date
 		PendingIntent pendingIntentD = PendingIntent.getActivity(mContext, 0, prefsIntent, 0);
-	    view.setOnClickPendingIntent(R.id.DateButton, pendingIntentD);
+	    //view.setOnClickPendingIntent(R.id.DateButton, pendingIntentD);
 
 		//final PackageManager pm = getPackageManager();
 	//get a list of installed apps.
@@ -342,6 +365,12 @@ public class UpdateWidgetService extends Service {
 			setClockButtonApp(clockButtonApp, appWidgetId);
 
 		}
+
+		Intent refreshIntent = new Intent(mContext, UpdateWidgetService.class);
+		refreshIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+		refreshIntent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+		PendingIntent pendingIntentR = PendingIntent.getService(mContext, 0, refreshIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		view.setOnClickPendingIntent(R.id.refreshButton, pendingIntentR);
 		/*
 		if (foundClockImpl) {
 		    PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, alarmClockIntent, 0);
@@ -354,10 +383,10 @@ public class UpdateWidgetService extends Service {
 
 		AppWidgetManager manager = AppWidgetManager.getInstance(this);  
 		//ComponentName thisWidget = new ComponentName(this, DigiClockProvider.class);
-	    
-		manager.updateAppWidget(appWidgetId, view);
+	    if(!isOversize) {
+			manager.updateAppWidget(appWidgetId, view);
+		}
 	    //manager.updateAppWidget(thisWidget, view);
-
 		/*
 		final AlarmManager m = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		Log.i("UWS", "UPDATING WIDGET: " + appWidgetId);
@@ -401,7 +430,7 @@ public class UpdateWidgetService extends Service {
 	    return super.onStartCommand(intent, flags, startId);
 	}
 
-		public Bitmap buildClockUpdate(String time, String ampm, String date, int  color){
+	public Bitmap buildClockUpdate(String time, String ampm, String date, int  color){
 
 	 	/* Get Device and Widget orientation.
            This is done by adding a boolean value to
@@ -496,7 +525,7 @@ public class UpdateWidgetService extends Service {
 
 
 			// font size
-			   float fontSize = clocktextsize*10;
+			float fontSize = clocktextsize*6;
 			  
 		    Paint Clockpaint = new Paint();
 			SharedPreferences prefs = getApplicationContext().getSharedPreferences(
@@ -587,7 +616,7 @@ public class UpdateWidgetService extends Service {
 		////// DATE UPDATE
 
 			// font size
-			fontSize = datetextsize*6;
+			fontSize = datetextsize*4;
 
 			//Bitmap myBitmap = Bitmap.createBitmap(clocktextsize*2, clocktextsize+20, Bitmap.Config.ARGB_4444);
 			//Canvas myCanvas = new Canvas(myBitmap);
@@ -698,23 +727,17 @@ public class UpdateWidgetService extends Service {
 			//paint.getTextBounds(time, 0, time.length(), textBounds);
 			// create bitmap for text
 
-
-			int bgwidth;
-			if(getScreenWidth() > getScreenHeight()){
-				bgwidth = (int)(getScreenWidth()*1.5f);
-			}else{
-				bgwidth = (int)(getScreenHeight()*1.5f);
-			}
-
-
-			Bitmap bm = Bitmap.createBitmap(bgwidth, (int)height, Bitmap.Config.ARGB_8888);
-
+			//(int)(mWidgetLandWidth)*5
+			int widthPX = dpToPx(mWidgetLandWidth*1.5f, mContext);
+			//Bitmap bm = Bitmap.createBitmap((int)(getScreenWidth()*1.5f), (int)height, Bitmap.Config.ARGB_8888);
+			Bitmap bm = Bitmap.createBitmap(widthPX, (int)height, Bitmap.Config.ARGB_8888);
 
 			// canvas
 			Canvas canvas = new Canvas(bm);
 			canvas.drawPaint(BGpaint);
 
 			canvas.drawText(time, canvas.getWidth()*0.5f - (Clockpaint.measureText(time)*0.5f), textBoundsClock.height()-textBoundsClock.bottom+(height*0.1f), Clockpaint);
+
 			if(ampmshown) {
 				canvas.drawText(ampm, canvas.getWidth() * 0.5f + (Clockpaint.measureText(time) * 0.5f) + 20, (textBoundsClock.height() * 0.5f) + textBoundsAMPM.height() - textBoundsAMPM.bottom+(height*0.1f), AMPMpaint);
 			}
@@ -722,6 +745,9 @@ public class UpdateWidgetService extends Service {
 
 			if(dateshown) {
 				// draw text to the Canvas center
+
+				//canvas.drawText(sdate, canvas.getWidth()*0.5f - (Datepaint.measureText(sdate)*0.5f), textBoundsDate.height()-textBoundsDate.bottom+(height*0.1f), Datepaint);
+
 				canvas.save();
 				canvas.translate((canvas.getWidth() * 0.5f), y);
 				textLayout.draw(canvas);
@@ -964,8 +990,7 @@ public class UpdateWidgetService extends Service {
 
 			sdate = DigiClockPrefs.getFormattedDate(dateFormatIndex);
 
-			
-			
+
 			
 			if(show24){
 				ampm = ("");
@@ -1094,5 +1119,17 @@ public class UpdateWidgetService extends Service {
 		} else if (SDK_INT >= Build.VERSION_CODES.M) {
 			alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeInMillis, alarmIntent);
 		}
+	}
+
+	public static int dpToPx(float dp, Context context) {
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+	}
+
+	private Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
+		Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+		Canvas canvas = new Canvas(bmOverlay);
+		canvas.drawBitmap(bmp1, new Matrix(), null);
+		canvas.drawBitmap(bmp2, new Matrix(), null);
+		return bmOverlay;
 	}
 }

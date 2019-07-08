@@ -84,4 +84,5 @@
     <string name="clock">Saat</string>
     <string name="background">Arka Plan</string>
     <string name="font">Yazı tipi</string>
+    <string name="oversize">Metin boyutu çok büyük. Saatin veya tarihin metin boyutunu küçültün.</string>
 </resources>
