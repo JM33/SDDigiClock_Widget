@@ -2999,6 +2999,7 @@ public final class R {
     public static final int tooltip_frame_dark=0x7f070076;
     public static final int tooltip_frame_light=0x7f070077;
     public static final int widget_preview=0x7f070078;
+    public static final int widget_preview2=0x7f070079;
   }
   public static final class font {
     public static final int brushstp=0x7f080000;

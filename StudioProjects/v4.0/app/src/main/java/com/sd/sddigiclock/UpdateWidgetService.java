@@ -223,7 +223,7 @@ public class UpdateWidgetService extends Service {
 		Log.d("UpdateWidgetService", "Bitmap = " + updateBitmap.getByteCount());
 		isOversize = false;
 		if(updateBitmap.getByteCount() > maxsize){
-			Toast.makeText(mContext, R.string.oversize, Toast.LENGTH_LONG).show();
+			Toast.makeText(mContext, mContext.getResources().getString(R.string.oversize), Toast.LENGTH_LONG).show();
 			isOversize = true;
 		}
 		//ByteArrayOutputStream out = new ByteArrayOutputStream();
