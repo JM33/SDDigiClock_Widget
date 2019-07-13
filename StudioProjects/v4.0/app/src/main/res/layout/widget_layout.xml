@@ -4,6 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" android:id="@+id/FrameLayout">
 
+
+
+
     <ImageView
         android:id="@+id/BackGround"
         android:layout_width="wrap_content"
@@ -11,7 +14,7 @@
         app:srcCompat="@drawable/grey" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayoutAdvanced"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -64,6 +67,58 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayoutClassic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/clearbg">
+
+        <LinearLayout
+            android:id="@+id/linearLayout11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_gravity="center">
+
+            <LinearLayout
+                android:id="@+id/linearLayout13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/ClockTextClassic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Widget Loading..."
+                    android:background="@drawable/blank"
+                    android:textSize="20dp"
+                    android:padding="0dp"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:id="@+id/AMPMTextClassic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="AM"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15dp" android:visibility="gone"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/DateTextClassic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blank"
+            android:text="January 1, 2012"
+            android:textAllCaps="false"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutButtons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">

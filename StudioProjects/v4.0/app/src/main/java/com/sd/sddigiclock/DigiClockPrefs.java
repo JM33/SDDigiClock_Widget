@@ -39,6 +39,8 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
@@ -100,6 +102,7 @@ public class DigiClockPrefs extends Activity{
 	static int cColor;
 	static int dColor;
 	static int dateFormatIndex = 0;
+	static boolean classsicMode;
 
 	private TabHost tabhost;
 
@@ -240,10 +243,15 @@ public class DigiClockPrefs extends Activity{
 		mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
 		clockapp = prefs.getString("ClockButtonApp"+appWidgetId, "NONE");
 		//Log.d("SDDC", "clock app = "+ clockapp);
+		classsicMode = prefs.getBoolean("ClassicMode"+appWidgetId, false);
+
 	}
 
 
 	private void setButtons() {
+		//Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		//DCP.setSupportActionBar(toolbar);
+
 		bglayout0 = (LinearLayout)DCP.findViewById(R.id.LinearLayout01);
 		bglayout1 = (LinearLayout)DCP.findViewById(R.id.LinearLayout03);
 		bglayout2 = (LinearLayout)DCP.findViewById(R.id.LinearLayout06);

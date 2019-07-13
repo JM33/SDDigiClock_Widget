@@ -21,14 +21,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -105,6 +109,7 @@ public class UpdateWidgetService extends Service {
 	private int dateheight;
 	private int clockheight;
 	private int dateFormatIndex;
+	private static boolean classicMode;
 
 	private static String clockButtonApp;
 
@@ -145,8 +150,8 @@ public class UpdateWidgetService extends Service {
 
 	    }
 
-		@Override  
-	public int onStartCommand(Intent intent, int flags, int startId)  
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId)
 	{
 
 
@@ -157,10 +162,10 @@ public class UpdateWidgetService extends Service {
 		}
 		if (intent.getExtras() != null) {
 			Bundle extras = intent.getExtras();
-		    appWidgetId = extras.getInt(
-		            AppWidgetManager.EXTRA_APPWIDGET_ID, 
-		            AppWidgetManager.INVALID_APPWIDGET_ID);
-		    Log.i(LOG, "Service Started awId =" + Integer.toString(appWidgetId));
+			appWidgetId = extras.getInt(
+					AppWidgetManager.EXTRA_APPWIDGET_ID,
+					AppWidgetManager.INVALID_APPWIDGET_ID);
+			Log.i(LOG, "Service Started awId =" + Integer.toString(appWidgetId));
 		}
 
 		//alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
@@ -181,11 +186,14 @@ public class UpdateWidgetService extends Service {
 		//	m.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, (1000 * 60), service);
 
 
-		
+
 		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
-	            "prefs", 0);
+				"prefs", 0);
+		classicMode = prefs.getBoolean("ClassicMode"+appWidgetId, false);
+
 		dateshown = prefs.getBoolean("ShowDate"+appWidgetId, true);
 		ampmshown = prefs.getBoolean("ShowAMPM"+appWidgetId, true);
+		classicMode = ampmshown;
 		show24 = prefs.getBoolean("Show24"+appWidgetId, false);
 		fillbg = true;
 		clocktextsize = prefs.getInt("ClockTextSize"+appWidgetId, 15);
@@ -200,118 +208,160 @@ public class UpdateWidgetService extends Service {
 			dColor = prefs.getInt("dColor" + appWidgetId, -1);
 		}
 		bgColor = prefs.getInt("bgColor"+appWidgetId, Color.BLACK);
-		
+
 		Bg = prefs.getInt("Bg"+appWidgetId, 3);
 		Fontfile = prefs.getString("Font"+appWidgetId, "Roboto-Regular.ttf");
 		mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
 
 		clockButtonApp = prefs.getString("ClockButtonApp"+appWidgetId, "NONE");
-        //Log.d("SDDC", "ClockApp saved = " + clockButtonApp);
+		//Log.d("SDDC", "ClockApp saved = " + clockButtonApp);
 		setText();
-		
-		
-		
-	    view = new RemoteViews(getPackageName(), R.layout.widget_layout);
 
-		//CustomTextClock mTextClock = new CustomTextClock(getApplicationContext());
-		//RemoteViews newView = new RemoteViews(getPackageName(), R.id.customTextClockLayout);
-		//view.addView(R.id.linearLayout3, newView);
-		//view.setImageViewBitmap(R.id.BackGround, buildBGUpdate(bgColor));
-		Bitmap updateBitmap = buildClockUpdate(shours + ":" + sminutes, ampm, sdate, bgColor);
-		int maxsize = (int)(getScreenWidth() * getScreenHeight() * 4 * 1.5f);
-		Log.d("UpdateWidgetService", "SW - " + getScreenWidth() + " x SH - " + getScreenHeight() + " x 4 x 1.5 = " +maxsize);
-		Log.d("UpdateWidgetService", "Bitmap = " + updateBitmap.getByteCount());
-		isOversize = false;
-		if(updateBitmap.getByteCount() > maxsize){
-			Toast.makeText(mContext, mContext.getResources().getString(R.string.oversize), Toast.LENGTH_LONG).show();
-			isOversize = true;
-		}
-		//ByteArrayOutputStream out = new ByteArrayOutputStream();
-		//updateBitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
-		//Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
 
-		view.setImageViewBitmap(R.id.BackGround, updateBitmap);
-	    //updateBitmap.recycle();
-	    //view.setImageViewBitmap(R.id.clockView, buildClockUpdate(shours + ":" + sminutes);
-	    //view.setImageViewBitmap(R.id.ampmView, buildAMPMUpdate(ampm));
-		//view.setImageViewBitmap(R.id.dateView, buildDateUpdate(sdate));
 
-		//view.setInt(R.id.ClockButton, "setWeight", 4);
+		view = new RemoteViews(getPackageName(), R.layout.widget_layout);
 
-		//int mfont = prefs.getInt("mFont"+appWidgetId, 0);
-		//view.setInt(R.id.clockText, "setTypeFace", R.font.weezerfont);
-		//view.setTextViewText(R.id.ClockText, (shours + ":" + sminutes));
-		//view.setTextColor(R.id.ClockText, Color.TRANSPARENT);
-		//int clocksize = clocktextsize * 10;
-		//view.setFloat(R.id.ClockText, "setTextSize", clocksize);
-		//view.set
-		//view.setTextColor(R.id.DateText, dColor);
-		//view.setTextViewText(R.id.DateText, sdate);
+		if(classicMode){
+			view.setViewVisibility(R.id.linearLayoutAdvanced, View.GONE);
+			view.setViewVisibility(R.id.BackGround, View.GONE);
+			view.setViewVisibility(R.id.linearLayoutClassic, View.VISIBLE);
 
-		//view.setTextColor(R.id.AMPMText, cColor);
-		//view.setTextColor(R.id.DateText, Color.TRANSPARENT);
-		//view.setTextViewText(R.id.DateText, sdate);
-		//int datesize = datetextsize * 6;
-		//view.setFloat(R.id.DateText, "setTextSize", datesize);
-		//view.setTextViewText(R.id.AMPMText, ampm);
-		
-		/*
-		
-		float ctsize = (clocktextsize*1.5f + 6);
-		float dtsize = datetextsize;
-		
-		view.setFloat(R.id.clockText, "setTextSize", ctsize);
-		view.setFloat(R.id.DateText, "setTextSize", dtsize);
-		
-		if(dateshown){
-			view.setViewVisibility(R.id.DateText, View.VISIBLE);
-		}else{
-			view.setViewVisibility(R.id.DateText, View.GONE);
-		}
-		if(ampmshown){
-			//view.setViewVisibility(R.id.ampmView, View.VISIBLE);
-			view.setCharSequence(R.id.clockText, "setFormat12Hour", "h:mm a");
-		}else{
-			view.setCharSequence(R.id.clockText, "setFormat12Hour", "h:mm");
-		}
-		if(show24){
-			view.setCharSequence(R.id.clockText, "setFormat12Hour", "HH:mm");
-			view.setCharSequence(R.id.clockText, "setFormat24Hour", "HH:mm");
-		}else{
+			//int mfont = prefs.getInt("mFont"+appWidgetId, 0);
+			//view.setInt(R.id.clockText, "setTypeFace", R.font.weezerfont);
+			view.setTextViewText(R.id.ClockTextClassic, (shours + ":" + sminutes));
+			view.setTextColor(R.id.ClockTextClassic, cColor);
+			int clocksize = clocktextsize*2;
+			view.setFloat(R.id.ClockTextClassic, "setTextSize", clocksize);
+			//view.set
+			//view.setTextColor(R.id.DateText, dColor);
+			//view.setTextViewText(R.id.DateText, sdate);
+			view.setFloat(R.id.AMPMTextClassic, "setTextSize", clocksize*0.5f);
+			view.setTextColor(R.id.AMPMTextClassic, cColor);
+			view.setTextViewText(R.id.AMPMTextClassic, ampm);
+
+			view.setTextColor(R.id.DateTextClassic, dColor);
+			view.setTextViewText(R.id.DateTextClassic, sdate);
+			int datesize = datetextsize * 6;
+			view.setFloat(R.id.DateTextClassic, "setTextSize", datesize);
+
+
+			if(dateshown){
+				view.setViewVisibility(R.id.DateTextClassic, View.VISIBLE);
+			}else{
+				view.setViewVisibility(R.id.DateTextClassic, View.GONE);
+			}
+
+			if(ampmshown){
+				view.setViewVisibility(R.id.AMPMTextClassic, View.VISIBLE);
+			}else{
+				view.setViewVisibility(R.id.AMPMTextClassic, View.GONE);
+			}
+
+			float ctsize = (clocktextsize*2f + 6);
+			float dtsize = (datetextsize*1.25f + 6);
+
+			view.setFloat(R.id.ClockTextClassic, "setTextSize", ctsize);
+			view.setFloat(R.id.DateTextClassic, "setTextSize", dtsize);
+
+			/*
+
 			if(ampmshown){
 				//view.setViewVisibility(R.id.ampmView, View.VISIBLE);
 				view.setCharSequence(R.id.clockText, "setFormat12Hour", "h:mm a");
-				view.setCharSequence(R.id.clockText, "setFormat24Hour", "h:mm a");
 			}else{
 				view.setCharSequence(R.id.clockText, "setFormat12Hour", "h:mm");
-				view.setCharSequence(R.id.clockText, "setFormat24Hour", "h:mm");
 			}
-		}
-	    */
-		
-		if(fillbg){
-			//view.setInt(R.id.linearLayout2, "setHeight", -2);
+			if(show24){
+				view.setCharSequence(R.id.clockText, "setFormat12Hour", "HH:mm");
+				view.setCharSequence(R.id.clockText, "setFormat24Hour", "HH:mm");
+			}else{
+				if(ampmshown){
+					//view.setViewVisibility(R.id.ampmView, View.VISIBLE);
+					view.setCharSequence(R.id.clockText, "setFormat12Hour", "h:mm a");
+					view.setCharSequence(R.id.clockText, "setFormat24Hour", "h:mm a");
+				}else{
+					view.setCharSequence(R.id.clockText, "setFormat12Hour", "h:mm");
+					view.setCharSequence(R.id.clockText, "setFormat24Hour", "h:mm");
+				}
+			}
+			*/
+
+			switch (Bg){
+				case 2:
+					Bitmap source = BitmapFactory.decodeResource(getResources(), R.drawable.clearbg);
+					Bitmap result = changeBitmapColor(source, bgColor);
+
+					view.setBitmap(R.id.BackGround, "setImageBitmap", result);
+					//view.setInt(R.id.linearLayoutClassic, "setBackgroundResource", Color.TRANSPARENT);
+					//view.setInt(R.id.BackGround, "setBackgroundColor", bgColor);
+					break;
+				case 3:
+					view.setInt(R.id.linearLayoutClassic, "setBackgroundResource", R.drawable.blank);
+					view.setInt(R.id.linearLayoutClassic, "setBackgroundColor", bgColor);
+					break;
+				case 0:
+					view.setInt(R.id.linearLayoutClassic, "setBackgroundResource", Color.TRANSPARENT);
+					view.setBitmap(R.id.BackGround, "setImageBitmap", null);
+					break;
+				case 1:
+					view.setInt(R.id.linearLayoutClassic, "setBackgroundResource", R.drawable.clearbg);
+					break;
+			}
+
+			if(fillbg){
+				//view.setInt(R.id.linearLayout2, "setHeight", -2);
+			}else{
+				//view.setInt(R.id.linearLayout2, "setHeight", -1);
+			}
 		}else{
-			//view.setInt(R.id.linearLayout2, "setHeight", -1);
+			view.setViewVisibility(R.id.linearLayoutAdvanced, View.VISIBLE);
+			view.setViewVisibility(R.id.BackGround, View.VISIBLE);
+			view.setViewVisibility(R.id.linearLayoutClassic, View.GONE);
+
+			//CustomTextClock mTextClock = new CustomTextClock(getApplicationContext());
+			//RemoteViews newView = new RemoteViews(getPackageName(), R.id.customTextClockLayout);
+			//view.addView(R.id.linearLayout3, newView);
+			//view.setImageViewBitmap(R.id.BackGround, buildBGUpdate(bgColor));
+			Bitmap updateBitmap = buildClockUpdate(shours + ":" + sminutes, ampm, sdate, bgColor);
+			int maxsize = (int)(getScreenWidth() * getScreenHeight() * 4 * 1.5f);
+			Log.d("UpdateWidgetService", "SW - " + getScreenWidth() + " x SH - " + getScreenHeight() + " x 4 x 1.5 = " +maxsize);
+			Log.d("UpdateWidgetService", "Bitmap = " + updateBitmap.getByteCount());
+			isOversize = false;
+			if(updateBitmap.getByteCount() > maxsize){
+				Toast.makeText(mContext, mContext.getResources().getString(R.string.oversize), Toast.LENGTH_LONG).show();
+				isOversize = true;
+			}
+			//ByteArrayOutputStream out = new ByteArrayOutputStream();
+			//updateBitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
+			//Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+
+			view.setImageViewBitmap(R.id.BackGround, updateBitmap);
+			//updateBitmap.recycle();
+			//view.setImageViewBitmap(R.id.clockView, buildClockUpdate(shours + ":" + sminutes);
+			//view.setImageViewBitmap(R.id.ampmView, buildAMPMUpdate(ampm));
+			//view.setImageViewBitmap(R.id.dateView, buildDateUpdate(sdate));
+
+
 		}
-	    // Push update for this widget to the home screen
-				
+
+
 		ComponentName cnpref = new ComponentName("com.sd.sddigiclock", "com.sd.sddigiclock.DigiClockPrefs");
 		prefsIntent.setComponent(cnpref);
 		prefsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		prefsIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-	    prefsIntent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-		
+		prefsIntent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+
 		PendingIntent pendingIntent = PendingIntent.getActivity(mContext,
 				0, prefsIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		view.setOnClickPendingIntent(R.id.SettingsButton, pendingIntent);
 
 		//DATE INTENT on click date
 		PendingIntent pendingIntentD = PendingIntent.getActivity(mContext, 0, prefsIntent, 0);
-	    //view.setOnClickPendingIntent(R.id.DateButton, pendingIntentD);
-
+		if(classicMode) {
+			view.setOnClickPendingIntent(R.id.DateTextClassic, pendingIntentD);
+		}
 		//final PackageManager pm = getPackageManager();
-	//get a list of installed apps.
+		//get a list of installed apps.
 		//packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
 		/*
@@ -324,14 +374,14 @@ public class UpdateWidgetService extends Service {
 
 // the getLaunchIntentForPackage returns an intent that you can use with startActivity()
 
-	    
+
 		String clockImpls[][] = {
-		        {"HTC Alarm Clock", "com.htc.android.worldclock", "com.htc.android.worldclock.WorldClockTabControl" },
-		        {"Standard Alarm Clock", "com.android.deskclock", "com.android.deskclock.DeskClock"},
-		        {"Froyo Nexus Alarm Clock", "com.google.android.deskclock", "com.android.deskclock.DeskClock"},
-		        {"Moto Blur Alarm Clock", "com.motorola.blur.alarmclock",  "com.motorola.blur.alarmclock.AlarmClock"},
-		        //{"Samsung Galaxy Clock","com.sec.android.app.clockpackage","com.sec.android.app.clockpackage.ClockPackage",} //
-		        //{"ICS Nexus Alarm Clock", "com.google.android.deskclock", "com.android.deskclockgoogle.DeskClockGoogle"}
+				{"HTC Alarm Clock", "com.htc.android.worldclock", "com.htc.android.worldclock.WorldClockTabControl" },
+				{"Standard Alarm Clock", "com.android.deskclock", "com.android.deskclock.DeskClock"},
+				{"Froyo Nexus Alarm Clock", "com.google.android.deskclock", "com.android.deskclock.DeskClock"},
+				{"Moto Blur Alarm Clock", "com.motorola.blur.alarmclock",  "com.motorola.blur.alarmclock.AlarmClock"},
+				//{"Samsung Galaxy Clock","com.sec.android.app.clockpackage","com.sec.android.app.clockpackage.ClockPackage",} //
+				//{"ICS Nexus Alarm Clock", "com.google.android.deskclock", "com.android.deskclockgoogle.DeskClockGoogle"}
 		};
 		boolean foundClockImpl = false;
 
@@ -381,12 +431,12 @@ public class UpdateWidgetService extends Service {
 		}
 		*/
 
-		AppWidgetManager manager = AppWidgetManager.getInstance(this);  
+		AppWidgetManager manager = AppWidgetManager.getInstance(this);
 		//ComponentName thisWidget = new ComponentName(this, DigiClockProvider.class);
-	    if(!isOversize) {
+		if(!isOversize) {
 			manager.updateAppWidget(appWidgetId, view);
 		}
-	    //manager.updateAppWidget(thisWidget, view);
+		//manager.updateAppWidget(thisWidget, view);
 		/*
 		final AlarmManager m = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		Log.i("UWS", "UPDATING WIDGET: " + appWidgetId);
@@ -427,7 +477,7 @@ public class UpdateWidgetService extends Service {
 		//registerOneTimeAlarm(service, 1000*60, false);
 		Log.i(LOG, "UpdateWidgetService Setting Alarm for 1 minute!!!!?X");
 		//return START_STICKY;
-	    return super.onStartCommand(intent, flags, startId);
+		return super.onStartCommand(intent, flags, startId);
 	}
 
 	public Bitmap buildClockUpdate(String time, String ampm, String date, int  color){
@@ -1058,7 +1108,11 @@ public class UpdateWidgetService extends Service {
 							alarmClockIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 							PendingIntent pendingIntentC = PendingIntent.getActivity(mContext, 0, alarmClockIntent, 0);
 
-							view.setOnClickPendingIntent(R.id.ClockButton, pendingIntentC);
+							//if(classicMode) {
+							//	view.setOnClickPendingIntent(R.id.ClockTextClassic, pendingIntentC);
+							//}else{
+								view.setOnClickPendingIntent(R.id.ClockButton, pendingIntentC);
+							//}
 							SharedPreferences prefs = mContext.getSharedPreferences(
 									"prefs", 0);
 							SharedPreferences.Editor edit = prefs.edit();
@@ -1131,5 +1185,18 @@ public class UpdateWidgetService extends Service {
 		canvas.drawBitmap(bmp1, new Matrix(), null);
 		canvas.drawBitmap(bmp2, new Matrix(), null);
 		return bmOverlay;
+	}
+
+	private Bitmap changeBitmapColor(Bitmap sourceBitmap, int color) {
+		Bitmap resultBitmap = Bitmap.createBitmap(sourceBitmap, 0, 0,
+				sourceBitmap.getWidth() - 1, sourceBitmap.getHeight() - 1);
+		Paint p = new Paint();
+		ColorFilter filter = new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN);
+		p.setColorFilter(filter);
+
+		Canvas canvas = new Canvas(resultBitmap);
+		canvas.drawBitmap(resultBitmap, 0, 0, p);
+
+		return resultBitmap;
 	}
 }
