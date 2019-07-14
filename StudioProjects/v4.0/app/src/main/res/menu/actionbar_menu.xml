@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menuitem1"
-        android:showAsAction="ifRoom"
-        android:title="Prefs">
+        android:id="@+id/action_save"
+        android:icon="@drawable/check"
+        android:title="@string/p_save"
+        app:showAsAction="ifRoom">
     </item>
     <item
-        android:id="@+id/menuitem2"
-        android:showAsAction="ifRoom"
-        android:title="Test">
+        android:id="@+id/action_cancel"
+        android:icon="@drawable/cancel"
+        android:title="@string/p_cancel"
+        app:showAsAction="ifRoom">
     </item>
+
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_mode"
+        android:title="@string/p_mode"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_about"
+        android:title="@string/p_about"
+        app:showAsAction="never"/>
 
 </menu> 

@@ -70,7 +70,7 @@ import android.widget.LinearLayout.LayoutParams;
  * Author Brian Kimmel
  * Copyright Silent Designs, all rights reserved
  */
-public class DigiClockPrefs extends Activity{
+public class DigiClockPrefs extends AppCompatActivity{
 
 	public static DigiClockPrefs DCP;
 	private Button btsdate;
@@ -102,11 +102,9 @@ public class DigiClockPrefs extends Activity{
 	static int cColor;
 	static int dColor;
 	static int dateFormatIndex = 0;
-	static boolean classsicMode;
 
 	private TabHost tabhost;
 
-	private Context self = this;
 	private View dlgLayout;
 	@SuppressWarnings("unused")
 		private ScrollView bgcview;
@@ -151,12 +149,20 @@ public class DigiClockPrefs extends Activity{
 
 	private Handler mHandler;
 
+	Toolbar toolBar;
+	private static boolean classicMode;
+	private TabHost tabHost;
+
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
 		//addPreferencesFromResource(R.xml.dc_prefs);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
+
+
+		getSupportActionBar().setHomeAsUpIndicator(R.drawable.logo);// set drawable icon
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		alarmManager = (AlarmManager) this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
@@ -176,6 +182,8 @@ public class DigiClockPrefs extends Activity{
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
         }
+
+
 
 		overSize = false;
 		LoadPrefs();
@@ -205,26 +213,67 @@ public class DigiClockPrefs extends Activity{
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
+		SharedPreferences.Editor edit = prefs.edit();
+
 		switch (item.getItemId()) {
-		case R.id.menuitem1:
-			Toast.makeText(this, "Menu Item 1 selected", Toast.LENGTH_SHORT)
-					.show();
-			break;
-		case R.id.menuitem2:
-			Toast.makeText(this, "Menu item 2 selected", Toast.LENGTH_SHORT)
-					.show();
-			break;
+			case R.id.action_save:
+				saveAndExit();
+				break;
+			case R.id.action_cancel:
+				DCP.setResult(RESULT_CANCELED);
+					finish();
+				break;
+			case R.id.action_mode:
+				if(classicMode){
+					classicMode = false;
+					edit.putBoolean("ClassicMode" + appWidgetId, classicMode);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							tabHost.getTabWidget().getChildTabViewAt(3).setVisibility(View.VISIBLE);
+							LinearLayout bgselect2 = (LinearLayout)DCP.findViewById(R.id.BGselect2);
+							bgselect2.setVisibility(View.VISIBLE);
+						}
+					});
+
+				}else {
+					classicMode = true;
+					edit.putBoolean("ClassicMode" + appWidgetId, classicMode);
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							tabHost.getTabWidget().getChildTabViewAt(3).setVisibility(View.GONE);
+							LinearLayout bgselect2 = (LinearLayout)DCP.findViewById(R.id.BGselect2);
+							bgselect2.setVisibility(View.GONE);
+						}
+					});
+				}
+				break;
+			case R.id.action_about:
+				new AlertDialog.Builder(DCP)
+						.setTitle(getResources().getString(R.string.p_Title))
+						.setMessage(getResources().getString(R.string.p_about_info))
+
+						// A null listener allows the button to dismiss the dialog and take no further action.
+						.setNegativeButton(android.R.string.ok, null)
+						.setIcon(getResources().getDrawable(R.drawable.logo, DCP.getTheme()))
+						.show();
+				break;
+
 
 		default:
 			break;
 		}
+		edit.commit();
 
 		return true;
 	}
 
 	private void LoadPrefs() {
-		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
 
+		classicMode = prefs.getBoolean("ClassicMode"+appWidgetId, true);
 		dateshown = prefs.getBoolean("ShowDate"+appWidgetId, true);
 		ampmshown = prefs.getBoolean("ShowAMPM"+appWidgetId, true);
 		show24 = prefs.getBoolean("Show24"+appWidgetId, false);
@@ -243,7 +292,6 @@ public class DigiClockPrefs extends Activity{
 		mFont = prefs.getInt("Fontnum"+appWidgetId, 0);
 		clockapp = prefs.getString("ClockButtonApp"+appWidgetId, "NONE");
 		//Log.d("SDDC", "clock app = "+ clockapp);
-		classsicMode = prefs.getBoolean("ClassicMode"+appWidgetId, false);
 
 	}
 
@@ -251,6 +299,46 @@ public class DigiClockPrefs extends Activity{
 	private void setButtons() {
 		//Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		//DCP.setSupportActionBar(toolbar);
+		//toolBar = (Toolbar) findViewById(R.id.prefs_toolbar);
+		//setSupportActionBar(toolBar);
+
+
+		tabHost=(TabHost)findViewById(R.id.tabHost);
+		tabHost.setup();
+
+		TabSpec spec1=tabHost.newTabSpec("Tab 1");
+		spec1.setContent(R.id.tab1);
+		spec1.setIndicator(DCP.getResources().getString(R.string.clock));
+
+		TabSpec spec2=tabHost.newTabSpec("Tab 2");
+		spec2.setIndicator(DCP.getResources().getString(R.string.date));
+		spec2.setContent(R.id.tab2);
+
+		TabSpec spec3=tabHost.newTabSpec("Tab 3");
+		spec3.setIndicator(DCP.getResources().getString(R.string.background));
+		spec3.setContent(R.id.tab3);
+
+		TabSpec spec4=tabHost.newTabSpec("Tab 4");
+		spec4.setIndicator(DCP.getResources().getString(R.string.font));
+		spec4.setContent(R.id.tab4);
+
+		tabHost.addTab(spec1);
+		tabHost.addTab(spec2);
+		tabHost.addTab(spec3);
+		tabHost.addTab(spec4);
+
+
+
+		setTabColor(tabHost);
+		tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+			@Override
+			public void onTabChanged(String arg0) {
+
+				setTabColor(tabHost);
+			}
+		});
+
 
 		bglayout0 = (LinearLayout)DCP.findViewById(R.id.LinearLayout01);
 		bglayout1 = (LinearLayout)DCP.findViewById(R.id.LinearLayout03);
@@ -286,39 +374,7 @@ public class DigiClockPrefs extends Activity{
 		btdtsize.setProgress(datetextsize);
 
 
-		final TabHost tabHost=(TabHost)findViewById(R.id.tabHost);
-		tabHost.setup();
 
-		TabSpec spec1=tabHost.newTabSpec("Tab 1");
-		spec1.setContent(R.id.tab1);
-		spec1.setIndicator(DCP.getResources().getString(R.string.clock));
-
-		TabSpec spec2=tabHost.newTabSpec("Tab 2");
-		spec2.setIndicator(DCP.getResources().getString(R.string.date));
-		spec2.setContent(R.id.tab2);
-
-		TabSpec spec3=tabHost.newTabSpec("Tab 3");
-		spec3.setIndicator(DCP.getResources().getString(R.string.background));
-		spec3.setContent(R.id.tab3);
-
-		TabSpec spec4=tabHost.newTabSpec("Tab 4");
-		spec4.setIndicator(DCP.getResources().getString(R.string.font));
-		spec4.setContent(R.id.tab4);
-
-		tabHost.addTab(spec1);
-		tabHost.addTab(spec2);
-		tabHost.addTab(spec3);
-		tabHost.addTab(spec4);
-
-		setTabColor(tabHost);
-		tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-
-			@Override
-			public void onTabChanged(String arg0) {
-
-				setTabColor(tabHost);
-			}
-		});
 
 		if(dateshown){
 			btsdate.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
@@ -354,7 +410,7 @@ public class DigiClockPrefs extends Activity{
 			    	btsdate.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
 			    	dateshown = true;
 
-			    	SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+			    	SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putBoolean("ShowDate"+appWidgetId, dateshown);
                     edit.commit();
@@ -362,7 +418,7 @@ public class DigiClockPrefs extends Activity{
 			    }else{
 			    	btsdate.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkbox,0);
 			    	dateshown = false;
-			    	SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+			    	SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putBoolean("ShowDate"+appWidgetId, dateshown);
                     edit.commit();
@@ -377,7 +433,7 @@ public class DigiClockPrefs extends Activity{
 					btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
 					dateMatchClockColor = true;
 					btdcolor.setEnabled(false);
-					SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+					SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
 					SharedPreferences.Editor edit = prefs.edit();
 					edit.putBoolean("DateMatchClockColor"+appWidgetId, dateMatchClockColor);
 					edit.commit();
@@ -387,7 +443,7 @@ public class DigiClockPrefs extends Activity{
 					btdatematchcolor.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkbox,0);
 					dateMatchClockColor = false;
 					btdcolor.setEnabled(true);
-					SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+					SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
 					SharedPreferences.Editor edit = prefs.edit();
 					edit.putBoolean("DateMatchClockColor"+appWidgetId, dateMatchClockColor);
 					edit.commit();
@@ -400,14 +456,14 @@ public class DigiClockPrefs extends Activity{
 	    		if(!ampmshown){
 			    	btsampm.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
 			    	ampmshown = true;
-			    	SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+			    	SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putBoolean("ShowAMPM"+appWidgetId, ampmshown);
                     edit.commit();
 			    }else{
 			    	btsampm.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkbox,0);
 			    	ampmshown = false;
-			    	SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+			    	SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putBoolean("ShowAMPM"+appWidgetId, ampmshown);
                     edit.commit();
@@ -420,14 +476,14 @@ public class DigiClockPrefs extends Activity{
 	    		if(!show24){
 			    	bts24.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkedbox,0);
 			    	show24 = true;
-			    	SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+			    	SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putBoolean("Show24"+appWidgetId, show24);
                     edit.commit();
 			    }else{
 			    	bts24.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.checkbox,0);
 			    	show24 = false;
-			    	SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+			    	SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putBoolean("Show24"+appWidgetId, show24);
                     edit.commit();
@@ -441,7 +497,7 @@ public class DigiClockPrefs extends Activity{
 	    	        @Override
 	    	        public void onOk(AmbilWarnaDialog dialog, int color) {
 	    	                cColor = color;
-	    	                SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    	                SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
 	    	                SharedPreferences.Editor edit = prefs.edit();
 	    	                edit.putInt("cColor"+appWidgetId, cColor);
 	    	                edit.commit();
@@ -474,7 +530,7 @@ public class DigiClockPrefs extends Activity{
 	    	        @Override
 	    	        public void onOk(AmbilWarnaDialog dialog, int color) {
 	    	                dColor = color;
-	    	                SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    	                SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
 	    	                SharedPreferences.Editor edit = prefs.edit();
 	    	                edit.putInt("dColor"+appWidgetId, dColor);
 	    	                edit.commit();
@@ -564,7 +620,7 @@ public class DigiClockPrefs extends Activity{
 
         checkboxes = new ImageView []{cb0, cb1, cb2, cb3};
 
-        SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+        SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
         Bg = prefs.getInt("Bg"+appWidgetId, 3);
 
         //Log.i("SDC", "Bg = " + Integer.toString(Bg));
@@ -594,7 +650,7 @@ public class DigiClockPrefs extends Activity{
 	    				checkboxes[i].setImageResource(R.drawable.checkbox);
 	    			}
 	    		}
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt("Bg"+appWidgetId, Bg);
                 edit.commit();
@@ -613,7 +669,7 @@ public class DigiClockPrefs extends Activity{
 	    				checkboxes[i].setImageResource(R.drawable.checkbox);
 	    			}
 	    		}
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt("Bg"+appWidgetId, Bg);
                 edit.commit();
@@ -638,7 +694,7 @@ public class DigiClockPrefs extends Activity{
 	    	        @Override
 	    	        public void onOk(AmbilWarnaDialog dialog, int color) {
 	    	                bgColor = color;
-	    	                SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    	                SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
 	    	                SharedPreferences.Editor edit = prefs.edit();
 	    	                edit.putInt("bgColor"+appWidgetId, bgColor);
 	    	                edit.commit();
@@ -654,7 +710,7 @@ public class DigiClockPrefs extends Activity{
 
 	    		dialog.show();
 	    		setBGs(bgColor);
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt("bgColor"+appWidgetId, bgColor);
                 edit.putInt("Bg"+appWidgetId, Bg);
@@ -682,7 +738,7 @@ public class DigiClockPrefs extends Activity{
 	    	        @Override
 	    	        public void onOk(AmbilWarnaDialog dialog, int color) {
 	    	                bgColor = color;
-	    	                SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    	                SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
 	    	                SharedPreferences.Editor edit = prefs.edit();
 	    	                edit.putInt("bgColor"+appWidgetId, bgColor);
 	    	                edit.commit();
@@ -698,7 +754,7 @@ public class DigiClockPrefs extends Activity{
 	    		dialog.show();
 
 	    		setBGs(bgColor);
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt("bgColor"+appWidgetId, bgColor);
                 edit.putInt("Bg"+appWidgetId, Bg);
@@ -707,7 +763,15 @@ public class DigiClockPrefs extends Activity{
 
         });
 
-        
+        if(!classicMode) {
+			tabHost.getTabWidget().getChildTabViewAt(3).setVisibility(View.VISIBLE);
+			LinearLayout bgselect2 = (LinearLayout) DCP.findViewById(R.id.BGselect2);
+			bgselect2.setVisibility(View.VISIBLE);
+		}else{
+			tabHost.getTabWidget().getChildTabViewAt(3).setVisibility(View.GONE);
+			LinearLayout bgselect2 = (LinearLayout)DCP.findViewById(R.id.BGselect2);
+			bgselect2.setVisibility(View.GONE);
+		}
         /*
         LinearLayout bg3 = (LinearLayout)DCP.findViewById(R.id.BGSelect3);
         bg3.setOnClickListener(new OnClickListener() {
@@ -721,7 +785,7 @@ public class DigiClockPrefs extends Activity{
 	    				checkboxes[i].setImageResource(R.drawable.checkbox);
 	    			}
 	    		}
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt("Bg"+appWidgetId, Bg);
                 edit.commit();
@@ -777,7 +841,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		//Fontfile = "Roboto-Regular.ttf";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -798,7 +862,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
                 Fontfile = "Chantelli_Antiqua.ttf";
-                SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+                SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -819,7 +883,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "Roboto-Regular.ttf";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -840,7 +904,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "DroidSans.ttf";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -861,7 +925,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "DroidSerif-Regular.ttf";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -882,7 +946,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "256BYTES.TTF";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -903,7 +967,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "weezerfont.ttf";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -924,7 +988,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "CARBONBL.ttf";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -945,7 +1009,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "DistantGalaxy.ttf";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -969,7 +1033,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "GOODTIME.ttf";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -990,7 +1054,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "Jester.ttf";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -1011,7 +1075,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "DS-DIGIB.TTF";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -1032,7 +1096,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "KOMIKAX.TTF";
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -1054,7 +1118,7 @@ public class DigiClockPrefs extends Activity{
 	    			}
 	    		}
 	    		Fontfile = "weezerfont.ttf"; //<--moved to 7
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("Font"+appWidgetId, Fontfile);
                 edit.putInt("Fontnum"+appWidgetId, mFont);
@@ -1132,7 +1196,7 @@ public class DigiClockPrefs extends Activity{
 
 		edit.commit();
 
-		final Intent intent = new Intent(self, UpdateWidgetService.class);
+		final Intent intent = new Intent(DCP, UpdateWidgetService.class);
 
 		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 		intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
@@ -1165,7 +1229,7 @@ public class DigiClockPrefs extends Activity{
         
         checkboxes = new ImageView []{cb0, cb1, cb2, cb3};
         
-        SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+        SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
         Bg = prefs.getInt("Bg"+appWidgetId, 3);
         
         //Log.i("SDC", "Bg = " + Integer.toString(Bg));
@@ -1195,7 +1259,7 @@ public class DigiClockPrefs extends Activity{
 	    				checkboxes[i].setImageResource(R.drawable.checkbox);
 	    			}
 	    		}
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt("Bg"+appWidgetId, Bg);
                 edit.commit();
@@ -1214,7 +1278,7 @@ public class DigiClockPrefs extends Activity{
 	    				checkboxes[i].setImageResource(R.drawable.checkbox);
 	    			}
 	    		}
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt("Bg"+appWidgetId, Bg);
                 edit.commit();
@@ -1233,7 +1297,7 @@ public class DigiClockPrefs extends Activity{
 	    				checkboxes[i].setImageResource(R.drawable.checkbox);
 	    			}
 	    		}
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt("Bg"+appWidgetId, Bg);
                 edit.commit();
@@ -1251,7 +1315,7 @@ public class DigiClockPrefs extends Activity{
 	    				checkboxes[i].setImageResource(R.drawable.checkbox);
 	    			}
 	    		}
-	    		SharedPreferences prefs = self.getSharedPreferences("prefs", 0);
+	    		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt("Bg"+appWidgetId, Bg);
                 edit.commit();

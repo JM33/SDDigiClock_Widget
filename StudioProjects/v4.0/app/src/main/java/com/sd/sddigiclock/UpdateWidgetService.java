@@ -189,11 +189,11 @@ public class UpdateWidgetService extends Service {
 
 		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
 				"prefs", 0);
-		classicMode = prefs.getBoolean("ClassicMode"+appWidgetId, false);
-
+		classicMode = prefs.getBoolean("ClassicMode"+appWidgetId, true);
+Log.d("UWS", "CLASSIC MODE = " + classicMode + "!!!!!!!!!!!!!!!!!!!!XXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXXXXXXXX!!!!!!!!!!!!!");
 		dateshown = prefs.getBoolean("ShowDate"+appWidgetId, true);
 		ampmshown = prefs.getBoolean("ShowAMPM"+appWidgetId, true);
-		classicMode = ampmshown;
+		//classicMode = ampmshown;
 		show24 = prefs.getBoolean("Show24"+appWidgetId, false);
 		fillbg = true;
 		clocktextsize = prefs.getInt("ClockTextSize"+appWidgetId, 15);

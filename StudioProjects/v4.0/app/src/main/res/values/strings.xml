@@ -107,4 +107,7 @@
     <string name="choose_app_title">Select An Application</string>
     <string name="clock_click_app">Clock Click App</string>
     <string name="oversize">Text size is too large.  Reduce text size of clock or date.</string>
+    <string name="p_mode">Mode</string>
+    <string name="p_about">About</string>
+    <string name="p_about_info">Created by Brian Kimmel\nSilentDesigns\nCopyright 2013\nAll rights reserved</string>
 </resources>
