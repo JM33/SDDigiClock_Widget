@@ -85,4 +85,16 @@
     <string name="background">Arka Plan</string>
     <string name="font">Yazı tipi</string>
     <string name="oversize">Metin boyutu çok büyük. Saatin veya tarihin metin boyutunu küçültün.</string>
+    <string name="p_classic_mode">" Klasik"</string>
+    <string name="p_classic_mode_subtext">" Klasik mod daha büyük saat ve tarih metinleri için izin verir. Yalnızca sistem fontunu ve daha az arka plan seçeneklerini kullanır."</string>
+    <string name="p_advanced_mode">Ileri</string>
+    <string name="p_advanced_mode_subtext">Gelişmiş mod, farklı yazı tiplerine ve arka plan seçeneklerine izin verir. Saat ve tarih metin boyutu sınırlı olacaktır.</string>
+    <string name="p_mode">Kip</string>
+    <string name="p_about">Hakkinda</string>
+    <string name="p_about_info">Brian Kimmel tarafından düzenlendi SilentDesigns Copyright 2013 Tüm hakları saklıdır</string>
+    <string name="p_select_mode">Mod seç</string>
+    <string name="p_help">Yardım et</string>
+    <string name="p_help_button_1">(1) Ayarlar Düğmesi. Bu widget\'in ayarlarını başlatmak için basın.</string>
+    <string name="p_help_button_2">(2) Saat Uygulama Düğmesine tıklayın. Saat düğmesine atanmış uygulamayı başlatmak için basın</string>
+    <string name="p_help_button_3">(3) Yenile düğmesi. Widget\'ı yenilemek için basın. Dikey ve yatay yönlendirme arasında geçiş yaptıktan sonra kullanışlıdır</string>
 </resources>

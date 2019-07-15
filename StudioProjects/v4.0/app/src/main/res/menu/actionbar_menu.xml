@@ -19,6 +19,9 @@
     <item android:id="@+id/action_mode"
         android:title="@string/p_mode"
         app:showAsAction="never"/>
+    <item android:id="@+id/action_help"
+        android:title="@string/p_help"
+        app:showAsAction="never"/>
     <item android:id="@+id/action_about"
         android:title="@string/p_about"
         app:showAsAction="never"/>

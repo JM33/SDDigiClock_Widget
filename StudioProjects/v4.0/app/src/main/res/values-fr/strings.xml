@@ -85,4 +85,16 @@
     <string name="background">Fond</string>
     <string name="font">Police de caractère</string>
     <string name="oversize">La taille du texte est trop grande. Réduit la taille du texte de l\'horloge ou de la date.</string>
+    <string name="p_classic_mode">" Classique"</string>
+    <string name="p_classic_mode_subtext">Le mode classique permet une plus grande horloge et la date du texte. Utilise la police système uniquement et moins de choix d’arrière-plan.</string>
+    <string name="p_advanced_mode">Avancé</string>
+    <string name="p_advanced_mode_subtext">Le mode avancé autorise différentes polices et options d’arrière-plan. La taille du texte de l\'horloge et de la date sera limitée.</string>
+    <string name="p_mode">Mode</string>
+    <string name="p_about">Sur</string>
+    <string name="p_about_info">Créé par Brian Kimmel SilentDesigns Copyright 2013 tous droits réservés</string>
+    <string name="p_select_mode">Sélectionnez le mode</string>
+    <string name="p_help">Aidez-moi</string>
+    <string name="p_help_button_1">(1) Bouton Paramètres. Appuyez sur pour lancer les paramètres de ce widget.</string>
+    <string name="p_help_button_2">(2) Horloge Cliquez sur le bouton App. Appuyez sur pour lancer l\'application assignée au bouton de l\'horloge</string>
+    <string name="p_help_button_3">(3) bouton Actualiser. Appuyez sur pour actualiser le widget. Utile après avoir basculé entre l\'orientation portrait et orientation paysage</string>
 </resources>

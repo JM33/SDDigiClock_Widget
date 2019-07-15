@@ -54,6 +54,12 @@
 
     <string name="p_date_format_close">Close</string>
 
+    <string name="p_classic_mode">Classic</string>
+    <string name="p_classic_mode_subtext">Classic mode allows for larger clock and date text.  Uses system font only and fewer background choices.</string>
+
+    <string name="p_advanced_mode">Advanced</string>
+    <string name="p_advanced_mode_subtext">Advanced mode allows different fonts and background options.  The clock and date text size will be limited.</string>
+
 
     <string-array name="date_formats">
         <item>Tue January 23, 2018</item>
@@ -109,5 +115,10 @@
     <string name="oversize">Text size is too large.  Reduce text size of clock or date.</string>
     <string name="p_mode">Mode</string>
     <string name="p_about">About</string>
-    <string name="p_about_info">Created by Brian Kimmel\nSilentDesigns\nCopyright 2013\nAll rights reserved</string>
+    <string name="p_about_info">Created by Brian Kimmel SilentDesigns Copyright 2013 All rights reserved</string>
+    <string name="p_select_mode">Select Mode</string>
+    <string name="p_help">Help</string>
+    <string name="p_help_button_1">(1) Settings Button.  Press to launch the settings for this widget</string>
+    <string name="p_help_button_2">(2) Clock Click App Button.  Press to launch the app assigned to the clock button</string>
+    <string name="p_help_button_3">(3) Refresh button.  Press to refresh the widget.  Useful after switching between portrait and landscape orientation</string>
 </resources>

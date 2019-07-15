@@ -190,7 +190,7 @@ public class UpdateWidgetService extends Service {
 		SharedPreferences prefs = getApplicationContext().getSharedPreferences(
 				"prefs", 0);
 		classicMode = prefs.getBoolean("ClassicMode"+appWidgetId, true);
-Log.d("UWS", "CLASSIC MODE = " + classicMode + "!!!!!!!!!!!!!!!!!!!!XXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXXXXXXXX!!!!!!!!!!!!!");
+		//Log.d("UWS", "CLASSIC MODE = " + classicMode + "!!!!!!!!!!!!!!!!!!!!XXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXXXXXXXX!!!!!!!!!!!!!");
 		dateshown = prefs.getBoolean("ShowDate"+appWidgetId, true);
 		ampmshown = prefs.getBoolean("ShowAMPM"+appWidgetId, true);
 		//classicMode = ampmshown;
@@ -235,7 +235,7 @@ Log.d("UWS", "CLASSIC MODE = " + classicMode + "!!!!!!!!!!!!!!!!!!!!XXXXXXXxxxxx
 			//view.set
 			//view.setTextColor(R.id.DateText, dColor);
 			//view.setTextViewText(R.id.DateText, sdate);
-			view.setFloat(R.id.AMPMTextClassic, "setTextSize", clocksize*0.5f);
+			//view.setFloat(R.id.AMPMTextClassic, "setTextSize", clocksize*0.5f);
 			view.setTextColor(R.id.AMPMTextClassic, cColor);
 			view.setTextViewText(R.id.AMPMTextClassic, ampm);
 

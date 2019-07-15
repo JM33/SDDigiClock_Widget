@@ -85,4 +85,16 @@
     <string name="background">Achtergrond</string>
     <string name="font">Doopvont</string>
     <string name="oversize">Tekstgrootte is te groot. Verklein de tekstgrootte van klok of datum.</string>
+    <string name="p_classic_mode">" Klassiek"</string>
+    <string name="p_classic_mode_subtext">" Klassieke modus zorgt voor grotere klok- en datumtekst. Gebruikt alleen het systeemlettertype en minder achtergrondkeuzen."</string>
+    <string name="p_advanced_mode">Gevorderd</string>
+    <string name="p_advanced_mode_subtext">" In de geavanceerde modus kunnen verschillende lettertypen en achtergrondopties worden gebruikt. De tekstgrootte van de klok en de datum is beperkt."</string>
+    <string name="p_mode">Mode</string>
+    <string name="p_about">Wat betreft</string>
+    <string name="p_about_info">Gemaakt door Brian Kimmel SilentDesigns Copyright 2013 Alle rechten voorbehouden</string>
+    <string name="p_select_mode">Selecteer modus</string>
+    <string name="p_help">Helpen</string>
+    <string name="p_help_button_1">(1) Knop Instellingen. Druk op om de instellingen voor deze widget te starten</string>
+    <string name="p_help_button_2">(2) Klok Klik op App-knop. Druk op om de app te starten die aan de klokknop is toegewezen</string>
+    <string name="p_help_button_3">(3) Knop Vernieuwen. Druk op om de widget te verversen. Handig na het omschakelen tussen staand en liggend</string>
 </resources>

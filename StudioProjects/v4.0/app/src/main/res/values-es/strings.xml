@@ -85,4 +85,16 @@
     <string name="background">Fondo</string>
     <string name="font">Fuente</string>
     <string name="oversize">El tamaño del texto es demasiado grande. Reducir el tamaño del texto del reloj o la fecha.</string>
+    <string name="p_classic_mode">Clásico</string>
+    <string name="p_classic_mode_subtext">" El modo clásico permite un reloj más grande y texto de fecha. Utiliza solo la fuente del sistema y menos opciones de fondo."</string>
+    <string name="p_advanced_mode">Avanzado</string>
+    <string name="p_advanced_mode_subtext">" El modo avanzado permite diferentes fuentes y opciones de fondo. El tamaño del texto del reloj y la fecha será limitado."</string>
+    <string name="p_mode">" Modo"</string>
+    <string name="p_about">" Acerca de"</string>
+    <string name="p_about_info">Creado por Brian Kimmel SilentDesigns Copyright 2013 Todos los derechos reservados</string>
+    <string name="p_select_mode">Seleccionar modo</string>
+    <string name="p_help">Ayuda</string>
+    <string name="p_help_button_1">(1) Botón de configuración. Presiona para iniciar la configuración de este widget</string>
+    <string name="p_help_button_2">(2) Reloj Haga clic en el botón de la aplicación. Presiona para iniciar la aplicación asignada al botón del reloj</string>
+    <string name="p_help_button_3">(3) Botón de actualización. Pulse para actualizar el widget. Útil después de cambiar entre orientación vertical y horizontal.</string>
 </resources>

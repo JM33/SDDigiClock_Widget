@@ -57,6 +57,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TabHost;
@@ -160,7 +161,7 @@ public class DigiClockPrefs extends AppCompatActivity{
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 
-
+		getSupportActionBar().setTitle(R.string.p_Title);
 		getSupportActionBar().setHomeAsUpIndicator(R.drawable.logo);// set drawable icon
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -213,9 +214,6 @@ public class DigiClockPrefs extends AppCompatActivity{
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
-		SharedPreferences.Editor edit = prefs.edit();
-
 		switch (item.getItemId()) {
 			case R.id.action_save:
 				saveAndExit();
@@ -225,34 +223,71 @@ public class DigiClockPrefs extends AppCompatActivity{
 					finish();
 				break;
 			case R.id.action_mode:
-				if(classicMode){
-					classicMode = false;
-					edit.putBoolean("ClassicMode" + appWidgetId, classicMode);
-					mHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							tabHost.getTabWidget().getChildTabViewAt(3).setVisibility(View.VISIBLE);
-							LinearLayout bgselect2 = (LinearLayout)DCP.findViewById(R.id.BGselect2);
-							bgselect2.setVisibility(View.VISIBLE);
-						}
-					});
+				// custom dialog
+				final Dialog dialog = new Dialog(DCP);
+				dialog.setContentView(R.layout.mode_select);
+				//dialog.setTitle(DCP.getResources().getString(R.string.p_Title));
 
-				}else {
-					classicMode = true;
-					edit.putBoolean("ClassicMode" + appWidgetId, classicMode);
-					mHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							tabHost.getTabWidget().getChildTabViewAt(3).setVisibility(View.GONE);
-							LinearLayout bgselect2 = (LinearLayout)DCP.findViewById(R.id.BGselect2);
-							bgselect2.setVisibility(View.GONE);
-						}
-					});
+				// set the custom dialog components - text, image and button
+				final RadioGroup modegroup = (RadioGroup)dialog.findViewById(R.id.radioGroupMode);
+				if(modegroup == null)
+					Log.e("DCP", "RADIO GROUP IS NULL!!!!!!!!!!!!");
+				if(classicMode) {
+					modegroup.check(R.id.radioButtonClassicMode);
+				}else{
+					modegroup.check(R.id.radioButtonAdvancedMode);
 				}
+				modegroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(RadioGroup group, int checkedId) {
+						switch(checkedId){
+							case R.id.radioButtonClassicMode:
+								classicMode = true;
+								setClassicMode( classicMode);
+								break;
+							case R.id.radioButtonAdvancedMode:
+								classicMode = false;
+								setClassicMode( classicMode);
+								break;
+						}
+					}
+				});
+
+				Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+				// if button is clicked, close the custom dialog
+				dialogButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
+
+				dialog.show();
+				break;
+
+			case R.id.action_help:
+				// custom dialog
+				final Dialog helpdialog = new Dialog(DCP);
+				helpdialog.setContentView(R.layout.help_dialog);
+				//dialog.setTitle(DCP.getResources().getString(R.string.p_Title));
+
+				// set the custom dialog components - text, image and button
+
+
+				Button helpDialogButton = (Button) helpdialog.findViewById(R.id.helpDialogButtonOK);
+				// if button is clicked, close the custom dialog
+				helpDialogButton.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						helpdialog.dismiss();
+					}
+				});
+
+				helpdialog.show();
 				break;
 			case R.id.action_about:
 				new AlertDialog.Builder(DCP)
-						.setTitle(getResources().getString(R.string.p_Title))
+						.setTitle(getResources().getString(R.string.app_name))
 						.setMessage(getResources().getString(R.string.p_about_info))
 
 						// A null listener allows the button to dismiss the dialog and take no further action.
@@ -265,7 +300,6 @@ public class DigiClockPrefs extends AppCompatActivity{
 		default:
 			break;
 		}
-		edit.commit();
 
 		return true;
 	}
@@ -295,6 +329,52 @@ public class DigiClockPrefs extends AppCompatActivity{
 
 	}
 
+
+	private void setClassicMode(boolean isClassicMode){
+		SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
+		SharedPreferences.Editor edit = prefs.edit();
+
+		classicMode = isClassicMode;
+		edit.putBoolean("ClassicMode" + appWidgetId, classicMode);
+
+		if(classicMode && Bg == 2){
+			Bg = 3;
+			edit.putInt("Bg"+appWidgetId, Bg);
+			for(int i =0; i<checkboxes.length; i++){
+				//Log.i("SDC", "i = " + Integer.toString(i) + ", Bg = " + Integer.toString(Bg));
+				if (i == Bg){
+					checkboxes[i].setImageResource(R.drawable.checkedbox);
+				}
+				else{
+					checkboxes[i].setImageResource(R.drawable.checkbox);
+
+				}
+				//Log.i("SDC", "i = " + Integer.toString(i) + "Bg = " + Integer.toString(Bg));
+			}
+		}
+
+		edit.commit();
+
+		if(!classicMode){
+			mHandler.post(new Runnable() {
+				@Override
+				public void run() {
+					tabHost.getTabWidget().getChildTabViewAt(3).setVisibility(View.VISIBLE);
+					LinearLayout bgselect2 = (LinearLayout)DCP.findViewById(R.id.BGselect2);
+					bgselect2.setVisibility(View.VISIBLE);
+				}
+			});
+		}else{
+			mHandler.post(new Runnable() {
+				@Override
+				public void run() {
+					tabHost.getTabWidget().getChildTabViewAt(3).setVisibility(View.GONE);
+					LinearLayout bgselect2 = (LinearLayout)DCP.findViewById(R.id.BGselect2);
+					bgselect2.setVisibility(View.GONE);
+				}
+			});
+		}
+	}
 
 	private void setButtons() {
 		//Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -623,8 +703,14 @@ public class DigiClockPrefs extends AppCompatActivity{
         SharedPreferences prefs = DCP.getSharedPreferences("prefs", 0);
         Bg = prefs.getInt("Bg"+appWidgetId, 3);
 
-        //Log.i("SDC", "Bg = " + Integer.toString(Bg));
 
+        //Log.i("SDC", "Bg = " + Integer.toString(Bg));
+		if(classicMode && Bg == 2) {
+			Bg = 3;
+			SharedPreferences.Editor edit = prefs.edit();
+			edit.putInt("Bg" + appWidgetId, Bg);
+			edit.commit();
+		}
 
         for(int i =0; i<checkboxes.length; i++){
         	//Log.i("SDC", "i = " + Integer.toString(i) + ", Bg = " + Integer.toString(Bg));
@@ -642,6 +728,7 @@ public class DigiClockPrefs extends AppCompatActivity{
         bg0.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
 	    		Bg = 0;
+	    		Log.d("DCP", "BG = " + Bg);
 	    		for(int i =0; i<checkboxes.length; i++){
 	    			if (i == Bg){
 	    				checkboxes[i].setImageResource(R.drawable.checkedbox);
@@ -661,6 +748,7 @@ public class DigiClockPrefs extends AppCompatActivity{
         bg1.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
 	    		Bg = 1;
+				Log.d("DCP", "BG = " + Bg);
 	    		for(int i =0; i<checkboxes.length; i++){
 	    			if (i == Bg){
 	    				checkboxes[i].setImageResource(R.drawable.checkedbox);
@@ -681,6 +769,7 @@ public class DigiClockPrefs extends AppCompatActivity{
         bg2.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
 	    		Bg = 2;
+				Log.d("DCP", "BG = " + Bg);
 	    		for(int i =0; i<checkboxes.length; i++){
 	    			if (i == Bg){
 	    				checkboxes[i].setImageResource(R.drawable.checkedbox);
@@ -724,8 +813,10 @@ public class DigiClockPrefs extends AppCompatActivity{
         //bg3.setBackgroundColor(bgColor);
         bg3.setOnClickListener(new OnClickListener() {
 	    	public void onClick(View v) {
-	    		Bg = 3;
-	    		for(int i =0; i<checkboxes.length; i++){
+				Bg = 3;
+				Log.d("DCP", "BG = " + Bg);
+
+				for(int i =0; i<checkboxes.length; i++){
 	    			if (i == Bg){
 	    				checkboxes[i].setImageResource(R.drawable.checkedbox);
 	    			}
@@ -763,15 +854,7 @@ public class DigiClockPrefs extends AppCompatActivity{
 
         });
 
-        if(!classicMode) {
-			tabHost.getTabWidget().getChildTabViewAt(3).setVisibility(View.VISIBLE);
-			LinearLayout bgselect2 = (LinearLayout) DCP.findViewById(R.id.BGselect2);
-			bgselect2.setVisibility(View.VISIBLE);
-		}else{
-			tabHost.getTabWidget().getChildTabViewAt(3).setVisibility(View.GONE);
-			LinearLayout bgselect2 = (LinearLayout)DCP.findViewById(R.id.BGselect2);
-			bgselect2.setVisibility(View.GONE);
-		}
+        setClassicMode(classicMode);
         /*
         LinearLayout bg3 = (LinearLayout)DCP.findViewById(R.id.BGSelect3);
         bg3.setOnClickListener(new OnClickListener() {

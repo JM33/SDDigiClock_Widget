@@ -85,4 +85,16 @@
     <string name="background">Hintergrund</string>
     <string name="font">Schriftart</string>
     <string name="oversize">Textgröße ist zu groß. Reduzieren Sie die Textgröße der Uhr oder des Datums.</string>
+    <string name="p_classic_mode">" Klassisch"</string>
+    <string name="p_classic_mode_subtext">" Der klassische Modus ermöglicht einen größeren Text für Uhrzeit und Datum. Verwendet nur Systemschriftarten und weniger Hintergrundoptionen."</string>
+    <string name="p_advanced_mode">Fortgeschritten</string>
+    <string name="p_advanced_mode_subtext">Der erweiterte Modus ermöglicht verschiedene Schriftarten und Hintergrundoptionen. Die Textgröße für Uhrzeit und Datum ist begrenzt.</string>
+    <string name="p_mode">Modus</string>
+    <string name="p_about">Über</string>
+    <string name="p_about_info">Erstellt von Brian Kimmel SilentDesigns Copyright 2013 Alle Rechte vorbehalten</string>
+    <string name="p_select_mode">Auswahlmodus</string>
+    <string name="p_help">Hilfe</string>
+    <string name="p_help_button_1">(1) Einstellungsschaltfläche. Drücken Sie, um die Einstellungen für dieses Widget zu starten</string>
+    <string name="p_help_button_2">(2) Uhr Klicken Sie auf die App-Schaltfläche. Drücken Sie, um die App zu starten, die der Uhrtaste zugewiesen ist</string>
+    <string name="p_help_button_3">(3) Schaltfläche Aktualisieren. Drücken Sie, um das Widget zu aktualisieren. Nützlich nach dem Umschalten zwischen Hoch- und Querformat</string>
 </resources>

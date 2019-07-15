@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/p_select_mode"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/grey"
+            android:orientation="vertical"></LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/radioGroupMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radioButtonClassicMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/p_classic_mode"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:buttonTint="#333333"/>
+
+            <TextView
+                android:id="@+id/textViewClassicSubtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="40dp"
+                android:text="@string/p_classic_mode_subtext" />
+
+            <RadioButton
+                android:id="@+id/radioButtonAdvancedMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/p_advanced_mode"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:buttonTint="#333333"/>
+
+            <TextView
+                android:id="@+id/textViewAdvancedSubtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="40dp"
+                android:text="@string/p_advanced_mode_subtext" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/dialogButtonOK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@android:string/ok" />
+    </LinearLayout>
+</FrameLayout>

@@ -85,4 +85,16 @@
     <string name="background">Sfondo</string>
     <string name="font">Font</string>
     <string name="oversize">La dimensione del testo è troppo grande. Ridurre le dimensioni del testo di orologio o data.</string>
+    <string name="p_classic_mode">Classico</string>
+    <string name="p_classic_mode_subtext">La modalità classica consente un testo più grande di orologio e data. Utilizza solo il carattere di sistema e meno scelte di sfondo.</string>
+    <string name="p_advanced_mode">Avanzati</string>
+    <string name="p_advanced_mode_subtext">" La modalità avanzata consente diversi tipi di carattere e opzioni di sfondo. Le dimensioni del testo dell'orologio e della data saranno limitate."</string>
+    <string name="p_mode">" Modalità"</string>
+    <string name="p_about">Di</string>
+    <string name="p_about_info">Creato da Brian Kimmel SilentDesigns Copyright 2013 Tutti i diritti riservati</string>
+    <string name="p_select_mode">Seleziona la modalità</string>
+    <string name="p_help">Aiuto</string>
+    <string name="p_help_button_1">(1) Pulsante Impostazioni. Premere per avviare le impostazioni per questo widget</string>
+    <string name="p_help_button_2">(2) Pulsante App clic su orologio. Premere per avviare l\'app assegnata al pulsante dell\'orologio</string>
+    <string name="p_help_button_3">(3) Pulsante Aggiorna. Premere per aggiornare il widget. Utile dopo il passaggio tra orientamento verticale e orizzontale</string>
 </resources>
