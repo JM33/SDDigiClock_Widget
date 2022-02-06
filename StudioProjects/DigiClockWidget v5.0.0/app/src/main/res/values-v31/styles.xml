@@ -4,10 +4,32 @@
         <item name="backgroundRadius">@android:dimen/system_app_widget_background_radius</item>
     </style>
 
+    <style name="Theme.MaterialYouColors" parent="Theme.MaterialComponents.DayNight">
+
+        <!-- Primary brand color. -->
+        <item name="colorAccent">@color/primaryColor</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryVariantColor</item>
+        <item name="colorOnPrimary">@color/secondaryVariantColor</item>
+
+        <item name="colorSurface">@color/accent_1_800</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryColor</item>
+        <item name="colorOnSecondary">@color/secondaryVariantColor</item>
+
+        <!-- Status bar color. -->
+
+
+    </style>
+
+
+
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light">
 
         <item name="android:textColor">#F4F4F4</item>
-        <item name="android:textColorAlertDialogListItem">#F4F4F4</item>
+        <item name="textColorAlertDialogListItem">#F4F4F4</item>
         <item name="backgroundRadius">@android:dimen/system_app_widget_background_radius</item>
 
     </style>
@@ -15,8 +37,8 @@
     <style name="AppThemeDialog" parent="Theme.AppCompat.DayNight.Dialog" />
 
     <style name="AppThemeTwo" parent="Theme.AppCompat.Light">
-        <item name="android:colorControlActivated">#ffffff</item>
-        <item name="android:colorControlNormal">#111111</item>
+        <item name="colorControlActivated">#ffffff</item>
+        <item name="colorControlNormal">#111111</item>
         <item name="backgroundRadius">@android:dimen/system_app_widget_background_radius</item>
     </style>
 
