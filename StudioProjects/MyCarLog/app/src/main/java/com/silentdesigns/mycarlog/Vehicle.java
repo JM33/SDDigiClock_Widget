@@ -1,9 +1,17 @@
-package com.sd.mycarlog;
+package com.silentdesigns.mycarlog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import android.util.Log;
+
+import static java.util.Calendar.DATE;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
 
 public class Vehicle {
 	private static final String TAG = "Vehicle";
@@ -140,7 +148,7 @@ public class Vehicle {
 	    //if date2 is more in the future than date1 then the result will be negative
 	    //if date1 is more in the future than date2 then the result will be positive.
 
-	    return (int)((date2.getTime() - date1.getTime()) / (1000*60*60*24l));
+	    return (int)((date2.getTime() - date1.getTime()) / (1000*60*60*24));
 	}
 	
 	public void calcStats(){
@@ -166,7 +174,6 @@ public class Vehicle {
 				gals.add(tmp[9]);
 				ppgs.add(tmp[11]);
 				fulls.add(tmp[13]);
-				
 			}
 		}
 		if(dates.size() == 0){
@@ -175,20 +182,39 @@ public class Vehicle {
 		//Totals
 		String totalfillups = String.valueOf(dates.size());
 		setTotalFillups(totalfillups);
-		
+
+		//change dates from strings to Dates
+		ArrayList<Date> fdates = new ArrayList<Date>();
+		for(String date : dates){
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				Date fdate = format.parse(date);
+				fdates.add(fdate);
+				//System.out.println(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			//change date string to format MM-dd-yyyy
+			String[] datesplit = date.split("-");
+			String newdate = datesplit[1] + "-" + datesplit[2] + "-" + datesplit[0];
+			dates.set(dates.indexOf(date), newdate);
+		}
+
 		//Total time
 		if(dates.size() > 1){
-			String lastdate = dates.get(dates.size()-1);
-			String[] ldate = lastdate.split("-");
-			String firstdate = dates.get(0);
-			String[] fdate = firstdate.split("-");
+			Date lastdate = fdates.get(dates.size()-1);
+			String[] ldate = dates.get(dates.size()-1).split("-");
+			Date firstdate = fdates.get(0);
+			String[] fdate = dates.get(0).split("-");
 			
-			int totalyrs = Integer.parseInt(ldate[2]) - Integer.parseInt(fdate[2]);
-			int totalmos = Integer.parseInt(ldate[0]) - Integer.parseInt(fdate[0]);
-			int totaldays = Integer.parseInt(ldate[1]) - Integer.parseInt(fdate[1]);
-			setTotalTime(String.valueOf(totalyrs)+ " years, "
-							+ String.valueOf(totalmos)+ " months, "
-							 + String.valueOf(totaldays)+ " days");
+			//int totalyrs = Integer.parseInt(ldate[2]) - Integer.parseInt(fdate[2]);
+			//int totalmos = Integer.parseInt(ldate[0]) - Integer.parseInt(fdate[0]);
+			//int totaldays = Integer.parseInt(ldate[1]) - Integer.parseInt(fdate[1]);
+			int[] alltime = getTotalTime(firstdate, lastdate);
+
+			setTotalTime(String.valueOf(alltime[0])+ " years, "
+							+ String.valueOf(alltime[1])+ " months, "
+							 + String.valueOf(alltime[2])+ " days");
 			
 			//Total Distance
 			min = 100000;
@@ -365,22 +391,23 @@ public class Vehicle {
 			
 			max=0;
 			min=100000;
+
 			int alldays = 0;
 			for(int i = 1; i < dates.size(); i++){
-				lastdate = dates.get(i-1);
-				ldate = lastdate.split("-");
-				firstdate = dates.get(i);
-				fdate = firstdate.split("-");
+				//lastdate = dates.get(i-1);
+				ldate = dates.get(i-1).split("-");
+				//firstdate = dates.get(i);
+				fdate = dates.get(i).split("-");
 				
-				Date date1 = new Date();
-				date1.setMonth(Integer.parseInt(ldate[0]));
-				date1.setDate(Integer.parseInt(ldate[1]));
-				date1.setYear(Integer.parseInt(ldate[2]));
+				Date date1 = fdates.get(i-1);
+				//date1.setMonth(Integer.parseInt(ldate[0]));
+				//date1.setDate(Integer.parseInt(ldate[1]));
+				//date1.setYear(Integer.parseInt(ldate[2]));
 				
-				Date date2 = new Date();
-				date2.setMonth(Integer.parseInt(fdate[0]));
-				date2.setDate(Integer.parseInt(fdate[1]));
-				date2.setYear(Integer.parseInt(fdate[2]));
+				Date date2 = fdates.get(i);
+				//date2.setMonth(Integer.parseInt(fdate[0]));
+				//date2.setDate(Integer.parseInt(fdate[1]));
+				//date2.setYear(Integer.parseInt(fdate[2]));
 				
 				int daysbetween = get_days_between_dates(date1, date2);
 				if(max < daysbetween){
@@ -738,5 +765,40 @@ public class Vehicle {
 	public void setGallonsperyear(String gallonsperyear) {
 		this.gallonsperyear = gallonsperyear;
 	}
-	
+	public static int[] getTotalTime(Date first, Date last) {
+		Calendar a = getCalendar(first);
+		Calendar b = getCalendar(last);
+		int ydiff = b.get(YEAR) - a.get(YEAR);
+		if (a.get(MONTH) > b.get(MONTH) ||
+				(a.get(MONTH) == b.get(MONTH) && a.get(DATE) > b.get(DATE))) {
+			ydiff--;
+		}
+
+		int mdiff = b.get(MONTH) - a.get(MONTH);
+		if(a.get(DATE) > b.get(DATE)){
+			mdiff--;
+		}
+		if(mdiff < 0){
+			mdiff += 12;
+		}
+
+		int ddiff = b.get(DATE) - a.get(DATE);
+		if(a.get(DATE) > b.get(DATE)){
+			ddiff = b.get(DATE);
+			// Get the number of days in that month
+			int daysInMonth = a.getActualMaximum(Calendar.DAY_OF_MONTH);
+			ddiff += (daysInMonth - a.get(DATE));
+		}
+
+
+		return new int[]{ydiff, mdiff, ddiff};
+	}
+
+
+
+	public static Calendar getCalendar(Date date) {
+		Calendar cal = Calendar.getInstance(Locale.US);
+		cal.setTime(date);
+		return cal;
+	}
 }

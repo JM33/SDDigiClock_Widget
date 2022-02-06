@@ -1,4 +1,4 @@
-package com.sd.mycarlog;
+package com.silentdesigns.mycarlog;
 
 import android.annotation.TargetApi;
 import android.content.Context;

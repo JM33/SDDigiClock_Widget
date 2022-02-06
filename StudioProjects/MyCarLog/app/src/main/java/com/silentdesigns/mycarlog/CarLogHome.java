@@ -1,4 +1,4 @@
-package com.sd.mycarlog;
+package com.silentdesigns.mycarlog;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -19,14 +19,9 @@ import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -47,18 +42,29 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.drive.Drive;
+import com.google.android.gms.common.api.Scope;
+import com.google.api.services.drive.Drive;
 import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.plus.Plus;
-import com.sd.inappbilling.util.IabHelper;
-import com.sd.inappbilling.util.IabResult;
-import com.sd.inappbilling.util.Inventory;
-import com.sd.inappbilling.util.Purchase;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.drive.DriveScopes;
+import com.google.api.services.drive.model.File;
+
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 
 public class CarLogHome extends FragmentActivity implements ConnectionCallbacks,
@@ -66,7 +72,7 @@ OnConnectionFailedListener {
 	/**
 	* Request code for auto Google Play Services error resolution.
 	*/
-	    private static final int REQUEST_CODE_RESOLUTION = 1;
+	    private static final int REQUEST_CODE_RESOLUTION = 3;
 
 
 		private static final String TAG = "MyCarLog";
@@ -90,7 +96,7 @@ OnConnectionFailedListener {
 	static final int RC_REQUEST = 105;
 
 	// The helper object
-	IabHelper mHelper;
+	//IabHelper mHelper;
 	
 	private static Context mContext;
 	private static CarLogHome CLH;
@@ -101,6 +107,16 @@ OnConnectionFailedListener {
     Calendar mCal;
 	private static GoogleApiClient mGoogleApiClient;
 	private GoogleApiClient mApiClient;
+
+	//NEW GOOGLE DRIVE HELPER 03-09-2020
+	private static final int REQUEST_CODE_SIGN_IN = 1;
+	private static final int REQUEST_CODE_OPEN_DOCUMENT = 2;
+
+	private static DriveServiceHelper mDriveServiceHelper;
+	private static String mOpenFileId;
+
+	private EditText mFileTitleEditText;
+	private EditText mDocContentEditText;
 
 	private static String mAccountName = null;
 
@@ -138,7 +154,8 @@ OnConnectionFailedListener {
 	    
 	    prefs = getCLH().getSharedPreferences(
 	            "Prefs", MODE_PRIVATE);
-	    
+
+
 	    
 	    setmCurrentVehicle(prefs.getInt("CurrentVehicle", 0));
 	
@@ -154,7 +171,7 @@ OnConnectionFailedListener {
 	    setLocalBackup(prefs.getString("LocalBackupLocation", null));
 	    setmAccountName(prefs.getString("AccountName", null));
 	    
-	    
+	    requestSignIn();
 	    //mHelper = new IabHelper(this, base64EncodedPublicKey);
 	    
 	    
@@ -168,7 +185,7 @@ OnConnectionFailedListener {
 	    mViewPager.setAdapter(mDemoCollectionPagerAdapter);
 	    
 	    
-	    mHelper = new IabHelper(this, base64Key);
+	    /*mHelper = new IabHelper(this, base64Key);
 
 	    Log.d(TAG, "Starting setup.");
 	    mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
@@ -183,8 +200,12 @@ OnConnectionFailedListener {
 			    mHelper.queryInventoryAsync(mGotInventoryListener);
 		    }
 	    });
+
+	    */
+
 	}
-    
+
+	/*
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
     	public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
     	Log.d(TAG, "Query inventory finished.");
@@ -218,6 +239,7 @@ OnConnectionFailedListener {
     	}
     	};
 
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	  MenuInflater inflater = getMenuInflater();
@@ -238,16 +260,18 @@ OnConnectionFailedListener {
 	      break;
 	  case R.id.action_restore:
 	      //Toast.makeText(this, "Restore selected", Toast.LENGTH_SHORT).show();
+		  requestSignIn();
 	      restoreCheck();
 	      break;
 	  case R.id.action_backup:
 		  if(mBackupDriveId == null || mBackupDriveId == ""){
-	        	 Intent intent = new Intent(mContext, CreateBackupFileActivity.class);
-	        	 startActivity(intent);
+	        	 //Intent intent = new Intent(mContext, CreateBackupFileActivity.class);
+	        	 //startActivity(intent);
+              openFilePicker();
 	         }else{
 	        	 //create Backup
-	        	 Intent intent = new Intent(mContext, EditBackupFileActivity.class);
-	        	 startActivity(intent);
+	        	 //Intent intent = new Intent(mContext, EditBackupFileActivity.class);
+	        	 //startActivity(intent);
 	         }
 	      break;
 	  case R.id.action_settings:
@@ -271,8 +295,8 @@ OnConnectionFailedListener {
          *        an empty string, but on a production app you should carefully generate this. */
         String payload = "";
 
-        mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
-                mPurchaseFinishedListener, payload);
+        //mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
+        //        mPurchaseFinishedListener, payload);
 	}
 
 	private void restoreCheck() {
@@ -292,8 +316,11 @@ OnConnectionFailedListener {
 				public void onClick(DialogInterface dialog,int id) {
 					//restoreFileChooser();
 					//restoreCurrentBackup();
-					Intent i = new Intent(mContext, PickBackupFileWithOpenerActivity.class);
-					getCLH().startActivity(i);
+
+					//Intent i = new Intent(mContext, PickBackupFileWithOpenerActivity.class);
+					//getCLH().startActivity(i);
+					Log.d(TAG, "Open File Picker");
+					openFilePicker();
 				}
 			  })
 			.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -314,10 +341,37 @@ OnConnectionFailedListener {
 	}
 
 	public void restoreFileChooser() {
-		Intent intent = new Intent(mContext, PickBackupFileWithOpenerActivity.class);
-		startActivity(intent);
+		//Intent intent = new Intent(mContext, PickBackupFileWithOpenerActivity.class);
+		//startActivity(intent);
 	}
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        switch (requestCode) {
+            case REQUEST_CODE_SIGN_IN:
+            	Log.d(TAG, "Request Sign In Activity - result = " + resultCode);
+                if (resultCode == Activity.RESULT_OK && resultData != null) {
+                    handleSignInResult(resultData);
+					Log.d(TAG, "Handled sign in " + resultData.toString());
+                }
+                break;
+
+            case REQUEST_CODE_OPEN_DOCUMENT:
+                if (resultCode == Activity.RESULT_OK && resultData != null) {
+                    Uri uri = resultData.getData();
+                    if (uri != null) {
+                        openFileFromFilePicker(uri);
+                        Log.d("CarLogHome", "Opening Document: " + uri.toString());
+                    }
+                }
+                break;
+        }
+
+        super.onActivityResult(requestCode, resultCode, resultData);
+    }
+
+    /*
 	@Override
 	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		
@@ -340,50 +394,25 @@ OnConnectionFailedListener {
 	
 	    }
 		
-		Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + ","
-				+ data);
 
-				// Pass on the activity result to the helper for handling
-				if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
-					super.onActivityResult(requestCode, resultCode, data);
-					Log.d(TAG, "onActivityResult handled by super.ActivityResult.");
-				} else {
-					Log.d(TAG, "onActivityResult handled by IABUtil.");
-				}
-		
 	}
 
+
+     */
+
+
+
 	/** Verifies the developer payload of a purchase. */
+	/*
     boolean verifyDeveloperPayload(Purchase p) {
         String payload = p.getDeveloperPayload();
 
-        /*
-         * TODO: verify that the developer payload of the purchase is correct. It will be
-         * the same one that you sent when initiating the purchase.
-         *
-         * WARNING: Locally generating a random string when starting a purchase and
-         * verifying it here might seem like a good approach, but this will fail in the
-         * case where the user purchases an item on one device and then uses your app on
-         * a different device, because on the other device you will not have access to the
-         * random string you originally generated.
-         *
-         * So a good developer payload has these characteristics:
-         *
-         * 1. If two different users purchase an item, the payload is different between them,
-         *    so that one user's purchase can't be replayed to another user.
-         *
-         * 2. The payload must be such that you can verify it even when the app wasn't the
-         *    one who initiated the purchase flow (so that items purchased by the user on
-         *    one device work on other devices owned by the user).
-         *
-         * Using your own server to store and verify developer payloads across app
-         * installations is recommended.
-         */
+
 
         return true;
     }
-    
-		
+    */
+
 	
 
 	private String log;
@@ -432,10 +461,10 @@ OnConnectionFailedListener {
 	@Override
     protected void onResume() {
     	super.onResume();
+    	/*
     	if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addApi(Drive.API)
-                    .addApi(Plus.API)
                     .addScope(Drive.SCOPE_FILE)
                     .addScope(Drive.SCOPE_APPFOLDER) // required for App Folder sample
                     .addConnectionCallbacks(this)
@@ -443,7 +472,7 @@ OnConnectionFailedListener {
                     .build();
         }
         mGoogleApiClient.connect();
-        
+        */
         refresh();
     }
     /**
@@ -460,7 +489,7 @@ OnConnectionFailedListener {
         
         @Override
         protected void onStop() {
-            super.onPause();
+            super.onStop();
             if (mGoogleApiClient != null) {
                 mGoogleApiClient.disconnect();
             }
@@ -469,8 +498,8 @@ OnConnectionFailedListener {
         @Override
         public void onDestroy() {
         	super.onDestroy();
-        	if (mHelper != null) mHelper.dispose();
-        		mHelper = null;
+        	//if (mHelper != null) mHelper.dispose();
+        	//	mHelper = null;
         	if (mGoogleApiClient != null) {
                 mGoogleApiClient.disconnect();
             }
@@ -717,18 +746,224 @@ public static double round(double unrounded, int precision, int roundingMode)
 			buildLog();
 			
 	    	 Log.i(TAG, "No Backup file Id - creating new file");
-	    	 Intent intent = new Intent(mContext, CreateBackupFileActivity.class);
-	    	 getCLH().startActivity(intent);
+	    	 //Intent intent = new Intent(mContext, CreateBackupFileActivity.class);
+	    	 //getCLH().startActivity(intent);
+			createFile();
 	    	 //saveCheck();
 	     }else{
 	    	//edit Backup
 	    	 buildLog();
-	    	 
+	    	 saveFile();
 	    	 Log.i(TAG, "Editing saved backup file");
-	    	 Intent intent = new Intent(mContext, EditBackupFileActivity.class);
-	    	 getCLH().startActivity(intent);
+	    	 //Intent intent = new Intent(mContext, EditBackupFileActivity.class);
+	    	 //getCLH().startActivity(intent);
 	     }
+		refresh();
 	}
+
+
+	//NEW GOOGLE DRIVE API 03-09-2020
+	/**
+	 * Starts a sign-in activity using {@link #REQUEST_CODE_SIGN_IN}.
+	 */
+	public void requestSignIn() {
+		Log.d(TAG, "Requesting sign-in");
+
+		GoogleSignInOptions signInOptions =
+				new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+						.requestEmail()
+						.requestScopes(new Scope(DriveScopes.DRIVE_FILE))
+						.build();
+		GoogleSignInClient client = GoogleSignIn.getClient(this, signInOptions);
+
+		// The result of the sign-in Intent is handled in onActivityResult.
+		startActivityForResult(client.getSignInIntent(), REQUEST_CODE_SIGN_IN);
+	}
+
+	/**
+	 * Handles the {@code result} of a completed sign-in activity initiated from {@link
+	 * #requestSignIn()}.
+	 */
+	private void handleSignInResult(Intent result) {
+		GoogleSignIn.getSignedInAccountFromIntent(result)
+				.addOnSuccessListener(googleAccount -> {
+					Log.d(TAG, "Signed in as " + googleAccount.getEmail());
+
+					// Use the authenticated account to sign in to the Drive service.
+					GoogleAccountCredential credential =
+							GoogleAccountCredential.usingOAuth2(
+									this, Collections.singleton(DriveScopes.DRIVE_FILE));
+					credential.setSelectedAccount(googleAccount.getAccount());
+					Drive googleDriveService =
+							new Drive.Builder(
+									AndroidHttp.newCompatibleTransport(),
+									new GsonFactory(),
+									credential)
+									.setApplicationName("My Car Log")
+									.build();
+
+					// The DriveServiceHelper encapsulates all REST API and SAF functionality.
+					// Its instantiation is required before handling any onClick actions.
+					mDriveServiceHelper = new DriveServiceHelper(googleDriveService);
+					if(mDriveServiceHelper == null){
+						Log.d(TAG, "Drive Service is null");
+					}else{
+						Log.d(TAG, "Drive Service exists " + mDriveServiceHelper.toString());
+					}
+
+					makeToast("Signed in as " + googleAccount.getEmail());
+				})
+				.addOnFailureListener(exception -> Log.e(TAG, "Unable to sign in.", exception));
+	}
+
+	/**
+	 * Opens the Storage Access Framework file picker using {@link #REQUEST_CODE_OPEN_DOCUMENT}.
+	 */
+	private void openFilePicker() {
+
+		if (mDriveServiceHelper != null) {
+			Log.d(TAG, "Opening file picker.");
+
+			Intent pickerIntent = mDriveServiceHelper.createFilePickerIntent();
+
+			// The result of the SAF Intent is handled in onActivityResult.
+			startActivityForResult(pickerIntent, REQUEST_CODE_OPEN_DOCUMENT);
+		}
+	}
+
+	/**
+	 * Opens a file from its {@code uri} returned from the Storage Access Framework file picker
+	 * initiated by {@link #openFilePicker()}.
+	 */
+	private void openFileFromFilePicker(Uri uri) {
+		if (mDriveServiceHelper != null) {
+			Log.d(TAG, "Opening " + uri.getPath());
+
+			mDriveServiceHelper.openFileUsingStorageAccessFramework(getContentResolver(), uri)
+					.addOnSuccessListener(nameAndContent -> {
+						String name = nameAndContent.first;
+						String content = nameAndContent.second;
+
+						//setmBackupDriveId(uri.);
+						//mFileTitleEditText.setText(name);
+						//mDocContentEditText.setText(content);
+
+						Log.i(TAG, "Backup File selected = " + name);
+						SaveStringPreferences("Log", content);
+						readLog();
+						refresh();
+						//Log.i(TAG, "Log read from file = " + name + ": " + content);
+						//Toast.makeText(getCLH(), "Backup File Restored", Toast.LENGTH_SHORT).show();
+						// Files opened through SAF cannot be modified.
+						setReadOnlyMode();
+					})
+					.addOnFailureListener(exception ->
+							Log.e(TAG, "Unable to open file from picker.", exception));
+		}
+	}
+
+	/**
+	 * Creates a new file via the Drive REST API.
+	 */
+	public static void createFile() {
+		if (mDriveServiceHelper != null) {
+			Log.d(TAG, "Creating a file.");
+
+			mDriveServiceHelper.createFile()
+					.addOnSuccessListener(fileId -> readFile(fileId))
+					.addOnFailureListener(exception ->
+							Log.e(TAG, "Couldn't create file.", exception));
+			makeToast("Backup File Created Successfully");
+		}
+		refresh();
+	}
+
+	/**
+	 * Retrieves the title and content of a file identified by {@code fileId} and populates the UI.
+	 */
+	public static void readFile(String fileId) {
+		if (mDriveServiceHelper != null) {
+			Log.d(TAG, "Reading file " + fileId);
+
+			mDriveServiceHelper.readFile(fileId)
+					.addOnSuccessListener(nameAndContent -> {
+						String name = nameAndContent.first;
+						String content = nameAndContent.second;
+
+						//mFileTitleEditText.setText(name);
+						//mDocContentEditText.setText(content);
+
+						setReadWriteMode(fileId);
+					})
+					.addOnFailureListener(exception ->
+							Log.e(TAG, "Couldn't read file.", exception));
+		}
+	}
+
+	/**
+	 * Saves the currently opened file created via {@link #createFile()} if one exists.
+	 */
+	public static void saveFile() {
+		if (mDriveServiceHelper != null && mBackupDriveId != null) {
+			Log.d(TAG, "Saving " + mBackupDriveId);
+
+			//String fileName = mFileTitleEditText.getText().toString();
+			//String fileContent = mDocContentEditText.getText().toString();
+
+			mDriveServiceHelper.saveFile(mBackupDriveId, "MyCarLogBackup", prefs.getString("Log", ""))
+					.addOnFailureListener(exception ->
+							Log.e(TAG, "Unable to save file via REST.", exception));
+			makeToast("Backup File Saved Successfully");
+		}
+		refresh();
+	}
+
+	/**
+	 * Queries the Drive REST API for files visible to this app and lists them in the content view.
+	 */
+	private void query() {
+		if (mDriveServiceHelper != null) {
+			Log.d(TAG, "Querying for files.");
+
+			mDriveServiceHelper.queryFiles()
+					.addOnSuccessListener(fileList -> {
+						StringBuilder builder = new StringBuilder();
+						for (File file : fileList.getFiles()) {
+							builder.append(file.getName()).append("\n");
+						}
+						String fileNames = builder.toString();
+
+						mFileTitleEditText.setText("File List");
+						mDocContentEditText.setText(fileNames);
+
+						setReadOnlyMode();
+					})
+					.addOnFailureListener(exception -> Log.e(TAG, "Unable to query files.", exception));
+		}
+	}
+
+	/**
+	 * Updates the UI to read-only mode.
+	 */
+	public static void setReadOnlyMode() {
+		//mFileTitleEditText.setEnabled(false);
+		//mDocContentEditText.setEnabled(false);
+		//mOpenFileId = null;
+	}
+
+	/**
+	 * Updates the UI to read/write mode on the document identified by {@code fileId}.
+	 */
+	public static void setReadWriteMode(String fileId) {
+		//mFileTitleEditText.setEnabled(true);
+		//mDocContentEditText.setEnabled(true);
+		mOpenFileId = fileId;
+	}
+
+	public static void makeToast(String message){
+		Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+	}
+
  	// Instances of this class are fragments representing a single
  	// object in our collection.
  	public static class FillPageFragment extends Fragment implements OnClickListener{
@@ -737,6 +972,7 @@ public static double round(double unrounded, int precision, int roundingMode)
 	     private EditText odo;
 	     private EditText gal;
 	     private EditText price;
+	     private EditText notes;
 	     private static TextView currVehicleText;
 	     private CheckBox tankfullbox;
 	     //private EditText date;
@@ -762,10 +998,11 @@ public static double round(double unrounded, int precision, int roundingMode)
 	         odo = (EditText)rootView.findViewById(R.id.editTextOdometer);
 	         gal = (EditText)rootView.findViewById(R.id.editTextGallons);
 	         price = (EditText)rootView.findViewById(R.id.editTextPrice);
+			 notes = (EditText)rootView.findViewById(R.id.editTextNotes);
 	         //date = (EditText)rootView.findViewById(R.id.editTextDate);
              dateButton = (Button)rootView.findViewById(R.id.ButtonDate);
              dateButton.setOnClickListener(this);
-             SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
              String formattedDate = sdf.format(c.getTime());
              dateButton.setText(formattedDate);
              
@@ -822,34 +1059,61 @@ public static double round(double unrounded, int precision, int roundingMode)
 					
 					String carname = getVehicleList().get(mCurrentVehicle).name();
 					//Toast.makeText(mContext, log, Toast.LENGTH_SHORT).show();
-	            	 String fillupentry = "ENTRY FILLUP" 
+
+					 String noteEntry = "";
+					 if(notes.getText() != null){
+					 	noteEntry = notes.getText().toString();
+					 }
+					 noteEntry = noteEntry.replace(" ", "_");
+					 String formattedDate = dateButton.getText().toString();
+					 String[] dateParts = formattedDate.split("-");
+					 int yearIndex = 0;
+					 for(int i = 0; i < dateParts.length; i++){
+					 	if(dateParts[i].length()>2){
+					 		yearIndex = i;
+						}
+					 }
+					 if(yearIndex == 2){
+					 	formattedDate = new String(dateParts[2]+"-"+dateParts[0]+"-"+dateParts[1]);
+					 }
+	            	 String fillupentry = "ENTRY FILLUP"
 	            			 			 + " NAME " + carname
-	            			 			 + " DATE " + dateButton.getText().toString() 
+	            			 			 + " DATE " + formattedDate
 				            			 + " ODO " + odo.getText().toString() 
 				            			 + " GAL " + gal.getText().toString() 
 				            			 + " PPG " + price.getText().toString() 
 				            			 + " FULL " + String.valueOf(tankfullbox.isChecked())
-				            			 + " ; ";
+							 			 + " NOTE " + noteEntry
+							 			 + " ; ";
 	    	         getVehicleList().get(mCurrentVehicle).getEntries().add(fillupentry);
 
 	    	         buildLog();
 	    	         
 	    	        
 	    	         //backup file
+
+
 	    	         //Toast.makeText(mContext, "Fill Up Saved", Toast.LENGTH_SHORT).show();
 	    	         if(mBackupDriveId == null || mBackupDriveId == ""){
 	    	        	//create Backup
-	    	        	 Log.i(TAG, "No Backup file Id - creating new file");
-	    	        	 Intent intent = new Intent(mContext, CreateBackupFileActivity.class);
-	    	        	 startActivity(intent);
+	    	        	 //Log.i(TAG, "No Backup file Id - creating new file");
+	    	        	 //Intent intent = new Intent(mContext, CreateBackupFileActivity.class);
+	    	        	 //startActivity(intent);
 	    	        	 //saveCheck();
+						 Log.d(TAG, "CREATING NEW BACKUP FILE");
+						 //CarLogHome.getCLH().requestSignIn();
+						CarLogHome.createFile();
 	    	         }else{
 	    	        	//edit Backup
-	    	        	 Log.i(TAG, "Editing saved backup file");
-	    	        	 Intent intent = new Intent(mContext, EditBackupFileActivity.class);
-	    	        	 startActivity(intent);
+	    	        	 //Log.i(TAG, "Editing saved backup file");
+	    	        	 //Intent intent = new Intent(mContext, EditBackupFileActivity.class);
+	    	        	 //startActivity(intent);
+						 Log.d(TAG, "SAVING FILE TO ID = " + getmBackupDriveId());
+						 //CarLogHome.getCLH().requestSignIn();
+						 CarLogHome.saveFile();
 	    	         }
-	    	         HistoryPageFragment.upDate();
+	    	         CarLogHome.refresh();
+	    	         //HistoryPageFragment.upDate();
 	             break;
 	             case R.id.ButtonDate:
 	            	 DatePickerFragment dpicker = new DatePickerFragment();
@@ -934,7 +1198,31 @@ public static double round(double unrounded, int precision, int roundingMode)
 			    			 String gallons = tmp[9];
 			    			 String ppg = tmp[11];
 			    			 String full = tmp[13];
-			    			 
+			    			 String noteEntry = "";
+			    			 for(int i = 0; i < tmp.length; i++){
+			    			 	if(tmp[i].equals("NOTE")) {
+									noteEntry = tmp[i+1];
+									noteEntry = noteEntry.replace("_", " ");
+								}
+							 }
+
+							 if(noteEntry != null && noteEntry != "") {
+								 LinearLayout notelayout = new LinearLayout(mContext);
+								 params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+								 notelayout.setLayoutParams(params);
+
+								 notelayout.setGravity(Gravity.RIGHT | Gravity.BOTTOM);
+
+								 TextView note = new TextView(mContext);
+								 note.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+								 note.setTextColor(Color.BLACK);
+								 note.setText("Note: " + noteEntry);
+								 notelayout.addView(note, 0);
+								 history.addView(notelayout, 0);
+							 }
+
+
+
 			    			 TextView edate = new TextView(mContext);
 			    			 edate.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
 			    			 edate.setText(date);
@@ -982,9 +1270,12 @@ public static double round(double unrounded, int precision, int roundingMode)
 			    			 eprice.setTextColor(Color.BLACK);
 			    			 
 			    			 entry.addView(eprice);
-			    			 
+
+
 			    			 
 			    			 history.addView(entry, 0);
+
+
 			    			 
 			    			 FrameLayout line = new FrameLayout(mContext);
 			    			 params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 10);
@@ -1008,7 +1299,7 @@ public static double round(double unrounded, int precision, int roundingMode)
 
 		@Override
 		public boolean onLongClick(View v) {
-			if(v.getId() < getVehicleList().get(mCurrentVehicle).getEntries().size()){
+			if(v.getId() != getVehicleList().get(mCurrentVehicle).getEntries().size()){
 				Bundle ebundle = new Bundle();
 				int index = v.getId();
 				ebundle.putInt("Index", index);
@@ -1297,7 +1588,7 @@ public static double round(double unrounded, int precision, int roundingMode)
 		
 	 }
  	
- 	public static class DatePickerFragment extends DialogFragment 
+ 	public static class DatePickerFragment extends DialogFragment
 	implements DatePickerDialog.OnDateSetListener {
 
  		String mStartDate = null;
@@ -1319,7 +1610,8 @@ public static double round(double unrounded, int precision, int roundingMode)
 			Calendar c = Calendar.getInstance();
 			c.set(year, month, day);
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+			//SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String formattedDate = sdf.format(c.getTime());
 			dateButton.setText(formattedDate);
 			
@@ -1346,7 +1638,7 @@ public static double round(double unrounded, int precision, int roundingMode)
 			mHandler.post(new Runnable() {
 				@Override
 				public void run() {
-				//rogressBar.setProgress(value);
+				//ProgressBar.setProgress(value);
 					if(HistoryPageFragment.history != null)
 						HistoryPageFragment.upDate();
 					
@@ -1367,8 +1659,8 @@ public static double round(double unrounded, int precision, int roundingMode)
 		public static void restoreFromDriveFile(DriveId driveId) {
 			setmBackupDriveId(driveId.toString());
 			
-			Intent i = new Intent(mContext, RetrieveBackupContentsActivity.class);
-			getCLH().startActivity(i);
+			//Intent i = new Intent(mContext, RetrieveBackupContentsActivity.class);
+			//getCLH().startActivity(i);
 		}
 
 		public static String getmBackupDriveId() {
@@ -1378,6 +1670,7 @@ public static double round(double unrounded, int precision, int roundingMode)
 		public static void setmBackupDriveId(String id) {
 			SaveStringPreferences("BackupFileId", id);
 			mBackupDriveId = id;
+			mOpenFileId = id;
 		}
 
 		public static void setLocalBackup(String filelocation) {
@@ -1395,14 +1688,22 @@ public static double round(double unrounded, int precision, int roundingMode)
 
 		public static void setmAccountName(String accountName) {
 			mAccountName = accountName;
-			SaveStringPreferences("AccounwtName", mAccountName);
+			SaveStringPreferences("AccountName", mAccountName);
 		}
 
-		public static void chooseAccount() {
-			Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-		      mGoogleApiClient.disconnect();
-		      mGoogleApiClient.connect();
-		      setmBackupDriveId("");
+		public void chooseAccount() {
+			Log.d(TAG, "Requesting sign-in");
+
+			GoogleSignInOptions signInOptions =
+					new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+							.requestEmail()
+							.requestScopes(new Scope(DriveScopes.DRIVE_FILE))
+							.build();
+
+			GoogleSignInClient client = GoogleSignIn.getClient(this, signInOptions);
+			client.signOut();
+			// The result of the sign-in Intent is handled in onActivityResult.
+			startActivityForResult(client.getSignInIntent(), REQUEST_CODE_SIGN_IN);
 		}
 
 		public static CarLogHome getCLH() {
@@ -1507,8 +1808,27 @@ public static double round(double unrounded, int precision, int roundingMode)
 				}
 			});
 		}
-		
-		
+
+
+		/*
+		from EditBackupFileActivity-------------------------------------------------------------
+		try {
+		DriveContentsResult contentsResult = file.open(
+				getGoogleApiClient(), DriveFile.MODE_WRITE_ONLY, null).await();
+		if (!contentsResult.getStatus().isSuccess()) {
+			return false;
+		}
+		String log = CarLogHome.prefs.getString("Log", "");
+		OutputStream outputStream = contentsResult.getDriveContents().getOutputStream();
+		outputStream.write(log.getBytes());
+		com.google.android.gms.common.api.Status status = file.commitAndCloseContents(
+				getGoogleApiClient(), contentsResult.getDriveContents()).await();
+		return status.getStatus().isSuccess();
+	} catch (IOException e) {
+		Log.e(TAG, "IOException while appending to the output stream", e);
+	}
+
+		 */
 }
 
 

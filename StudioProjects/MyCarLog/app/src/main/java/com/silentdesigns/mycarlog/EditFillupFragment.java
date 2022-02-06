@@ -1,11 +1,11 @@
-package com.sd.mycarlog;
+package com.silentdesigns.mycarlog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import com.sd.mycarlog.AlertDialogFragment.ConfirmAlertDialog;
-import com.sd.mycarlog.CarLogHome.DatePickerFragment;
-import com.sd.mycarlog.CarLogHome.HistoryPageFragment;
+import com.silentdesigns.mycarlog.AlertDialogFragment.ConfirmAlertDialog;
+import com.silentdesigns.mycarlog.CarLogHome.DatePickerFragment;
+import com.silentdesigns.mycarlog.CarLogHome.HistoryPageFragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -13,9 +13,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,6 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.DialogFragment;
+
 public class EditFillupFragment extends DialogFragment implements OnClickListener{
 
 	private static final String TAG = "EditFillupFragment";
@@ -42,6 +42,7 @@ public class EditFillupFragment extends DialogFragment implements OnClickListene
 	private TextView currVehicleText;
 	private EditText odo;
 	private EditText price;
+	private EditText notes;
 	private static Button dateButton2;
 	private EditText gal;
 	int mIndex;
@@ -65,6 +66,11 @@ public class EditFillupFragment extends DialogFragment implements OnClickListene
 		String galtxt = tmp[9];
 		String ppgtxt = tmp[11];
 		String full = tmp[13];
+		String note = "";
+		if(tmp.length > 15){
+			note = tmp[15];
+			note = note.replace("_", " ");
+		}
 		
 		
 		final Calendar c = Calendar.getInstance();
@@ -89,6 +95,8 @@ public class EditFillupFragment extends DialogFragment implements OnClickListene
         gal.setText(galtxt);
         price = (EditText)rootView.findViewById(R.id.editTextPrice);
         price.setText(ppgtxt);
+		notes = (EditText)rootView.findViewById(R.id.editTextNotes);
+		notes.setText(note);
         //date = (EditText)rootView.findViewById(R.id.editTextDate);
         dateButton2 = (Button)rootView.findViewById(R.id.ButtonDate);
         dateButton2.setOnClickListener(this);
@@ -140,20 +148,37 @@ public class EditFillupFragment extends DialogFragment implements OnClickListene
 				Toast.makeText(CarLogHome.getCLH(), "No price entered. Try again", Toast.LENGTH_SHORT).show();
 				return;
 			}
-			
+
+			String noteEntry = "";
+			if(notes.getText() != null){
+				noteEntry = notes.getText().toString();
+			}
+			noteEntry = noteEntry.replace(" ", "_");
+			String formattedDate = dateButton2.getText().toString();
+			String[] dateParts = formattedDate.split("-");
+			int yearIndex = 0;
+			for(int i = 0; i < dateParts.length; i++){
+				if(dateParts[i].length()>2){
+					yearIndex = i;
+				}
+			}
+			if(yearIndex == 2){
+				formattedDate = new String(dateParts[2]+"-"+dateParts[0]+"-"+dateParts[1]);
+			}
 			String carname = CarLogHome.getVehicleList().get(CarLogHome.getmCurrentVehicle()).name();
 			//Toast.makeText(mContext, log, Toast.LENGTH_SHORT).show();
        	 String fillupentry = "ENTRY FILLUP" 
        			 			 + " NAME " + carname
-       			 			 + " DATE " + dateButton2.getText().toString() 
-		            			 + " ODO " + odo.getText().toString() 
-		            			 + " GAL " + gal.getText().toString() 
-		            			 + " PPG " + price.getText().toString() 
-		            			 + " FULL " + String.valueOf(tankfullbox.isChecked())
-		            			 + " ; ";
+       			 			 + " DATE " + formattedDate
+		            		 + " ODO " + odo.getText().toString()
+		            		 + " GAL " + gal.getText().toString()
+		            		 + " PPG " + price.getText().toString()
+		            		 + " FULL " + String.valueOf(tankfullbox.isChecked())
+				 			 + " NOTE " + noteEntry
+		            		 + " ; ";
        	CarLogHome.getVehicleList().get(CarLogHome.getmCurrentVehicle()).getEntries().set(mIndex, fillupentry);
 
-       	CarLogHome.buildLog();
+       	CarLogHome. buildLog();
 	         
 	        
 	         //backup file
@@ -161,14 +186,16 @@ public class EditFillupFragment extends DialogFragment implements OnClickListene
 	         if(CarLogHome.getmBackupDriveId() == null || CarLogHome.getmBackupDriveId() == ""){
 	        	//create Backup
 	        	 Log.i(TAG, "No Backup file Id - creating new file");
-	        	 Intent intent = new Intent(CarLogHome.getCLH(), CreateBackupFileActivity.class);
-	        	 startActivity(intent);
+	        	 //Intent intent = new Intent(CarLogHome.getCLH(), CreateBackupFileActivity.class);
+	        	 //startActivity(intent);
 	        	 //saveCheck();
+				 CarLogHome.createFile();
 	         }else{
 	        	//edit Backup
 	        	 Log.i(TAG, "Editing saved backup file");
-	        	 Intent intent = new Intent(CarLogHome.getCLH(), EditBackupFileActivity.class);
-	        	 startActivity(intent);
+	        	 //Intent intent = new Intent(CarLogHome.getCLH(), EditBackupFileActivity.class);
+	        	 //startActivity(intent);
+				 CarLogHome.saveFile();
 	         }
 	         CarLogHome.refresh();
 	         dismiss();

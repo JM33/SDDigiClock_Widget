@@ -31,14 +31,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="App Name"
-                android:textColor="#f4f4f4"
+                android:textColor="#555555"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textView_package_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#f4f4f4"
+                android:textColor="#555555"
                 android:text="package" />
         </LinearLayout>
 

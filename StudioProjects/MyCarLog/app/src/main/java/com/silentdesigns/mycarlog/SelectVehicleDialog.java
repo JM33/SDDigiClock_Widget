@@ -1,4 +1,4 @@
-package com.sd.mycarlog;
+package com.silentdesigns.mycarlog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,6 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SelectVehicleDialog extends DialogFragment{
+import androidx.fragment.app.DialogFragment;
+
+public class SelectVehicleDialog extends DialogFragment {
 	private View rootView;
 
 	@Override

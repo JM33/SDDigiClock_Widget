@@ -1,8 +1,7 @@
-package com.sd.mycarlog;
+package com.silentdesigns.mycarlog;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CreateVehicleFragment extends DialogFragment{
+import androidx.fragment.app.DialogFragment;
+
+public class CreateVehicleFragment extends DialogFragment {
 	private View rootView;
 	private EditText nameText;
 	private EditText makeText;

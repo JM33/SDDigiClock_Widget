@@ -129,9 +129,48 @@
                     android:id="@+id/checkBoxTankFull"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fp_tankfilled" />
+                    android:text="@string/fp_tankfilled"
+					android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-                <View
+				<LinearLayout
+					android:id="@+id/linearLayoutNotes"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:orientation="vertical"
+					android:padding="5dp">
+
+					<View
+						android:id="@+id/vertical_divider_notes_top"
+						android:layout_height="1dip"
+						android:layout_width="fill_parent"
+						android:background="@android:color/darker_gray" />
+
+					<TextView
+						android:id="@+id/textViewNotesTitle"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="center_horizontal"
+						android:text="@string/fillup_notes"
+						android:textAlignment="center"
+						android:textAppearance="?android:attr/textAppearanceMedium" />
+
+					<EditText
+						android:id="@+id/editTextNotes"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="center"
+						android:textAlignment="center" />
+
+					<View
+						android:id="@+id/vertical_divider_notes_bottom"
+						android:layout_height="1dip"
+						android:layout_width="fill_parent"
+						android:background="@android:color/darker_gray" />
+
+				</LinearLayout>
+
+				<View
 	                android:id="@+id/horizontaldividerFP1"
 	                android:layout_width="fill_parent"
 	                android:layout_height="1dp"

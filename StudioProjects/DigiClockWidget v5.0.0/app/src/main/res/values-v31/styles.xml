@@ -1,13 +1,14 @@
 <resources>
 
-    <style name="MyWidgetTheme">
-        <item name="backgroundRadius">@dimen/my_background_radius_dimen</item>
+    <style name="MyWidgetTheme" parent="@android:style/Theme.DeviceDefault.DayNight">
+        <item name="backgroundRadius">@android:dimen/system_app_widget_background_radius</item>
     </style>
 
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light">
 
         <item name="android:textColor">#F4F4F4</item>
         <item name="android:textColorAlertDialogListItem">#F4F4F4</item>
+        <item name="backgroundRadius">@android:dimen/system_app_widget_background_radius</item>
 
     </style>
 
@@ -16,6 +17,7 @@
     <style name="AppThemeTwo" parent="Theme.AppCompat.Light">
         <item name="android:colorControlActivated">#ffffff</item>
         <item name="android:colorControlNormal">#111111</item>
+        <item name="backgroundRadius">@android:dimen/system_app_widget_background_radius</item>
     </style>
 
 
