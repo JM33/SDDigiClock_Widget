@@ -131,6 +131,16 @@ public class AmbilWarnaDialog {
 		// kill all padding from the dialog window
 		dialog.setView(view, 0, 0, 0, 0);
 
+		dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+			@Override
+			public void onShow(final DialogInterface dialog) {
+
+				// Add or create your own background drawable for AlertDialog window
+				Window view = ((AlertDialog)dialog).getWindow();
+				view.setBackgroundDrawableResource(R.drawable.grey);
+
+			}
+		});
 		// move cursor & target on first draw
 		ViewTreeObserver vto = view.getViewTreeObserver();
 		vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:paddingBottom="25dp" >
+
+        <TextView
+            android:id="@+id/textViewVCtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/vc_title"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Name"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/editTexVCname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Make"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/EditTextVCmake"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10" >
+
+                        <requestFocus />
+                    </EditText>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Model"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/EditTextVCmodel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Year"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/EditTextVCyear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+
+                </LinearLayout>
+
+                <View
+	                android:id="@+id/horizontaldividerCV1"
+	                android:layout_width="fill_parent"
+	                android:layout_height="1dp"
+	                android:background="@android:color/darker_gray"
+	                android:paddingTop="0dp" />
+				<LinearLayout
+                    android:id="@+id/buttonBarCVP"
+                    android:layout_width="match_parent"
+                	android:layout_height="wrap_content"
+                	android:layout_gravity="center_horizontal"
+                	android:orientation="horizontal" >
+
+                    
+                    <Button style="?android:attr/buttonBarButtonStyle"
+	                    android:id="@+id/buttonCVcancel"
+	            		android:layout_width="0dp"
+	            		android:layout_height="wrap_content"
+	            		android:layout_weight="1"
+	            		android:text="@string/cancel" />
+                    
+
+                    <View
+			            android:id="@+id/vertical_divider"
+			            android:layout_width="1dip"
+			            android:layout_height="fill_parent"
+			            android:background="@android:color/darker_gray" />
+                    
+                    <Button style="?android:attr/buttonBarButtonStyle"
+	                    android:id="@+id/buttonCVok"
+	            		android:layout_width="0dp"
+	            		android:layout_height="wrap_content"
+	            		android:layout_weight="1"
+	            		android:text="@string/save" />
+
+                    
+
+                </LinearLayout>
+				<View
+	                android:id="@+id/horizontaldividerCV2"
+	                android:layout_width="fill_parent"
+	                android:layout_height="1dp"
+	                android:background="@android:color/darker_gray"
+	                android:paddingTop="0dp" />
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</FrameLayout>

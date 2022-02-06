@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
+    <item
+        android:id="@+id/action_backup"
+        android:orderInCategory="1"
+        android:showAsAction="never"
+        android:title="@string/action_backup"/>
+    <item
+        android:id="@+id/action_restore"
+        android:orderInCategory="2"
+        android:showAsAction="never"
+        android:title="@string/action_restore"/>
+    <item
+        android:id="@+id/action_upgrade"
+        android:orderInCategory="3"
+        android:showAsAction="never" 
+        android:title="@string/action_upgrade"/>
+    <item
+        android:id="@+id/action_choose_account"
+        android:orderInCategory="4"
+        android:showAsAction="never" 
+        android:title="@string/action_choose_account"/>
+    
+</menu>

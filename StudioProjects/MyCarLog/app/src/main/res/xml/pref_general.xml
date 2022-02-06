@@ -1,0 +1,8 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <Preference android:key="PurchasePro" android:title="@string/pref_purchase_pro"/><PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="@string/pref_choose_account" android:key="ChooseAccount">
+        
+    </PreferenceScreen>
+
+    
+
+</PreferenceScreen>
