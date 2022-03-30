@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/architects_daughter</item>
+        <item>@font/audiowide</item>
+        <item>@font/bubbler_one</item>
+        <item>@font/calligraffitti</item>
+        <item>@font/creepster</item>
+        <item>@font/ewert</item>
+        <item>@font/fugaz_one</item>
+        <item>@font/graduate</item>
+        <item>@font/happy_monkey</item>
+        <item>@font/slackey</item>
+        <item>@font/trade_winds</item>
+        <item>@font/walter_turncoat</item>
+    </array>
+</resources>

@@ -1,10 +1,10 @@
 <resources>
 
-    <style name="MyWidgetTheme" parent="@android:style/Theme.DeviceDefault.DayNight">
-        <item name="backgroundRadius">@android:dimen/system_app_widget_background_radius</item>
-    </style>
+
 
     <style name="Theme.MaterialYouColors" parent="Theme.MaterialComponents.DayNight">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
 
         <!-- Primary brand color. -->
         <item name="colorAccent">@color/primaryColor</item>
@@ -12,34 +12,24 @@
         <item name="colorPrimaryVariant">@color/primaryVariantColor</item>
         <item name="colorOnPrimary">@color/secondaryVariantColor</item>
 
-        <item name="colorSurface">@color/accent_1_800</item>
+
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorSecondaryVariant">@color/secondaryColor</item>
         <item name="colorOnSecondary">@color/secondaryVariantColor</item>
 
-        <!-- Status bar color. -->
-
-
-    </style>
-
-
-
-    <style name="AppTheme" parent="@style/Theme.AppCompat.Light">
-
-        <item name="android:textColor">#F4F4F4</item>
-        <item name="textColorAlertDialogListItem">#F4F4F4</item>
-        <item name="backgroundRadius">@android:dimen/system_app_widget_background_radius</item>
+        <item name="colorNavigationItem">@color/menu_item_color_state</item>
+        <item name="colorNavigationItemSelected">@color/primaryColor</item>
+        <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
 
     </style>
 
-    <style name="AppThemeDialog" parent="Theme.AppCompat.DayNight.Dialog" />
 
-    <style name="AppThemeTwo" parent="Theme.AppCompat.Light">
-        <item name="colorControlActivated">#ffffff</item>
-        <item name="colorControlNormal">#111111</item>
-        <item name="backgroundRadius">@android:dimen/system_app_widget_background_radius</item>
+    <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
+        <item name="itemIconTint">?attr/colorNavigationItem</item>
+        <item name="itemTextColor">?android:textColorPrimary</item>
+        <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
     </style>
 
 

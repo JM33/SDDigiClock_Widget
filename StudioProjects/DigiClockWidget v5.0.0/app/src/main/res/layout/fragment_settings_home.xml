@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsHomeFragment"
+    android:id="@+id/LinearLayoutSettingsHome"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/AppBarHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="vertical">
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="?android:attr/colorBackground"
+        >
+        <LinearLayout
+            android:id="@+id/tab0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="?attr/actionBarSize">
+
+
+
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutPreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewPreview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingLeft="25dp"
+                    android:paddingBottom="20dp"
+                    android:paddingRight="100dp"
+                    android:text="@string/p_preview_title"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="25dp"
+                    android:textStyle="bold"/>
+                <LinearLayout
+                    android:id="@+id/LinearLayoutPreviewImageBG"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/checker"
+                    >
+                    <ImageView
+                        android:id="@+id/WidgetPreview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@color/darkBackgroundColor"
+                        >
+
+                    </ImageView>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutHomeClockTextSize"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewClockTextSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="25dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="25dp"
+                    android:text="@string/p_clock_size"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="25dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/HomeClockSizeSB"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:progress="50"
+                android:paddingTop="10dp"
+                android:paddingLeft="25dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="20dp"
+                android:theme="@style/Theme.MaterialYouColors"/>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayoutHomeDateTextSize"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewHomeDateTextSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="25dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="25dp"
+                    android:text="@string/p_date_size"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="25dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/HomeDateSizeSB"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:progress="50"
+                android:paddingTop="10dp"
+                android:paddingLeft="25dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="20dp"
+                android:theme="@style/Theme.MaterialYouColors"/>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutCornerRadius"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left">
+                <TextView
+                    android:id="@+id/textViewCornerRadius"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="25dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="25dp"
+                    android:text="@string/p_corner_radius"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:gravity="left"/>
+
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/HomeCornerRadiusSB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progress="50"
+                android:paddingTop="10dp"
+                android:paddingLeft="25dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="20dp"
+                android:theme="@style/Theme.MaterialYouColors"/>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutBGService"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="vertical">
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/buttonStartBGService"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingStart="25dp"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="20dp"
+                    android:text="@string/p_bg_service_running_title"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:theme="@style/Theme.MaterialYouColors"/>
+                <TextView
+                    android:id="@+id/textViewSummaryServiceRunning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="0dp"
+                    android:paddingLeft="25dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="50dp"
+                    android:text="@string/p_bg_service_running_summary"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="20dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutUseHomeColors"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="vertical">
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/UseHomeColors"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingStart="25dp"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="20dp"
+                    android:text="@string/p_use_material_you"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:theme="@style/Theme.MaterialYouColors"/>
+
+
+
+                <TextView
+                    android:id="@+id/textViewSummaryUseHomeColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="0dp"
+                    android:paddingStart="25dp"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="50dp"
+                    android:text="@string/p_use_material_you_summary"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="20dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/LinearLayoutDarkTheme"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/buttonDarkTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingStart="25dp"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="20dp"
+                    android:text="@string/p_dark_theme"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"/>
+                <TextView
+                    android:id="@+id/textViewSummaryDarkTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="0dp"
+                    android:paddingLeft="25dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="50dp"
+                    android:text="@string/p_dark_theme_summary"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="20dp"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

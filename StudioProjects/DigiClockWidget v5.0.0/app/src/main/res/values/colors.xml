@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryColor">#FFBB86FC</color>
-    <color name="primaryVariantColor">#FF3700B3</color>
-    <color name="secondaryColor">#FF03DAC5</color>
+    <color name="primaryColor">#FF263170</color>
+    <color name="primaryVariantColor">#FF626A96</color>
+    <color name="secondaryColor">#FF3FBCF2</color>
+    <color name="darkBackgroundColor">#FF222224</color>
+    <color name="lightBackgroundColor">#FFFFFFFF</color>
 
+    <color name="disabled_text">#FF888888</color>
+    <color name="tab_unselected_text">#FFBBBBBB</color>
+
+    <color name="red">#FFFF0000</color>
+    <color name="green">#FF00FF00</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

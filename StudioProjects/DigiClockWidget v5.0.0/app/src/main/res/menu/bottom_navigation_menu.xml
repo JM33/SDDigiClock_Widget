@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:title="@string/home"
+        android:icon="@drawable/home"/>
+    <item
+        android:id="@+id/clock"
+        android:title="@string/clock"
+        android:icon="@drawable/clock"/>
+    <item
+        android:id="@+id/date"
+        android:title="@string/date"
+        android:icon="@drawable/date"/>
+    <item
+        android:id="@+id/background"
+        android:title="@string/background"
+        android:icon="@drawable/backgrounds"/>
+    <item
+        android:id="@+id/font"
+        android:title="@string/font"
+        android:icon="@drawable/fonts"/>
+</menu>

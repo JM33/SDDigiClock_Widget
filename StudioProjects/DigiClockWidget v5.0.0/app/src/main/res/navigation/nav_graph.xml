@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/settingsHomeFragment">
+    <fragment
+        android:id="@+id/backgroundSettingsFragment"
+        android:name="com.sd.sddigiclock.BackgroundSettingsFragment"
+        android:label="fragment_background_settings"
+        tools:layout="@layout/fragment_background_settings" />
+    <fragment
+        android:id="@+id/fontSettingsFragment"
+        android:name="com.sd.sddigiclock.FontSettingsFragment"
+        android:label="fragment_font_settings"
+        tools:layout="@layout/fragment_font_settings" />
+
+    <fragment
+        android:id="@+id/clockSettingsFragment"
+        android:name="com.sd.sddigiclock.ClockSettingsFragment"
+        android:label="fragment_clock_settings"
+        tools:layout="@layout/fragment_clock_settings" />
+    <fragment
+        android:id="@+id/dateSettingsFragment"
+        android:name="com.sd.sddigiclock.DateSettingsFragment"
+        android:label="fragment_date_settings"
+        tools:layout="@layout/fragment_date_settings" />
+    <fragment
+        android:id="@+id/settingsHomeFragment"
+        android:name="com.sd.sddigiclock.SettingsHomeFragment"
+        android:label="fragment_settings_home"
+        tools:layout="@layout/fragment_settings_home" >
+        <action
+            android:id="@+id/action_settingsHomeFragment_to_clockSettingsFragment"
+            app:destination="@id/clockSettingsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsHomeFragment_to_dateSettingsFragment"
+            app:destination="@id/dateSettingsFragment" />
+        <action
+            android:id="@+id/action_settingsHomeFragment_to_backgroundSettingsFragment"
+            app:destination="@id/backgroundSettingsFragment" />
+        <action
+            android:id="@+id/action_settingsHomeFragment_to_fontSettingsFragment"
+            app:destination="@id/fontSettingsFragment" />
+        <action
+            android:id="@+id/action_settingsHomeFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_settingsHomeFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.sd.sddigiclock.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.sd.sddigiclock.HelpFragment"
+        android:label="fragment_help"
+        tools:layout="@layout/fragment_help" />
+</navigation>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:background="@color/primaryColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="?android:attr/colorBackground"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primaryColor">
+            <TextView
+                android:id="@+id/textViewDonateTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/p_donate"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="30dp"
+                android:padding="10dp"/>
+        </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="?android:textColorPrimary"
+                        android:padding="25dp"
+                        android:text="@string/p_donate_summary" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="25dp"
+                    >
+
+                    <Button
+                        android:id="@+id/buttonDonateOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p_donate_one"
+                        android:padding="25dp"
+                        android:textColor="?android:textColorPrimary"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+                        >
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/buttonDonateTwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p_donate_two"
+                        android:textColor="?android:textColorPrimary"
+                        android:padding="25dp"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+                        >
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/buttonDonateFive"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p_donate_five"
+                        android:textColor="?android:textColorPrimary"
+                        android:padding="25dp"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="50dp"
+                        >
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/donateDialogButtonOK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image"
+        android:padding="5dp"
+        android:text="@android:string/ok"
+        android:textColor="?android:textColorPrimary"
+        android:layout_gravity="bottom"/>
+
+</FrameLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:background="@color/primaryColor">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/p_date_format"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:padding="10dp"
+            >
+
+        </TextView>
+
+        <ScrollView
+            android:id="@+id/ScrollViewDateFormat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="50dp"
+            android:background="?android:attr/colorBackground">
+            <LinearLayout
+                android:id="@+id/LinearLayoutDateFormats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RadioGroup
+                    android:id="@+id/RadioGroupDateFormats"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:theme="@style/Theme.MaterialYouColors"
+                    />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:padding="5dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:gravity="bottom|center_vertical"
+            android:background="@color/primaryColor">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:background="@color/primaryColor">
+                <TextView
+                    android:id="@+id/buttonDateFormatOK"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:text="@android:string/ok"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:background="@color/primaryColor"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</FrameLayout>
