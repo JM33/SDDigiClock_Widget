@@ -258,7 +258,7 @@ public class FontSettingsFragment extends Fragment {
 
         for (Field field : fontFields) {
             try {
-                fontIDs.add(field.getInt(null));
+                fontIDs.add(field.getInt(field));
                 fontNames.add(field.getName());
             } catch (Exception e) {
                 e.printStackTrace();

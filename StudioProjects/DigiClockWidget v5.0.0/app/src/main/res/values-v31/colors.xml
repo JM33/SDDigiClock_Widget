@@ -4,6 +4,7 @@
     <color name="primaryVariantColor">@color/accent_1_800</color>
     <color name="secondaryColor">@color/accent_2_500</color>
     <color name="secondaryVariantColor">@color/accent_2_700</color>
+    <color name="primaryColorDark">@color/accent_1_900</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
